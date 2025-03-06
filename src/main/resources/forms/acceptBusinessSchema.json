@@ -1,0 +1,186 @@
+{
+  "components": [
+    {
+      "content": "<button style=\"border:none;padding:10px; border-radius:10%;color:white;background-color:green;font-weight:600\"> Approve",
+      "type": "html",
+      "layout": {
+        "row": "Row_0pgwcwf",
+        "columns": null
+      },
+      "id": "Field_0x6qhqm"
+    },
+    {
+      "content": "<button style=\"border:none;padding:10px; border-radius:10%;color:white;background-color:red;font-weight:600\"> Reject",
+      "type": "html",
+      "layout": {
+        "row": "Row_0pgwcwf",
+        "columns": null
+      },
+      "id": "Field_0kqt95x"
+    },
+    {
+      "label": "",
+      "components": [
+        {
+          "label": "**Business Name**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0y2emuk",
+            "columns": null
+          },
+          "id": "Field_03flvs1",
+          "key": "textfield_7lvtv",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Phone Number**",
+          "type": "number",
+          "layout": {
+            "row": "Row_0y2emuk",
+            "columns": null
+          },
+          "id": "Field_1w3fuoh",
+          "key": "number_617ay",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Address**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0k3pzvs",
+            "columns": null
+          },
+          "id": "Field_1wjm5c4",
+          "key": "textfield_ns3u35",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Business Website(optional)**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0k3pzvs",
+            "columns": null
+          },
+          "id": "Field_0l2n4mn",
+          "key": "textfield_t25w8g"
+        },
+        {
+          "label": "**Integration Webhook**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_1n2bpe3",
+            "columns": null
+          },
+          "id": "Field_031y3gf",
+          "key": "textfield_qhk0e",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Business Logo**",
+          "type": "filepicker",
+          "layout": {
+            "row": "Row_1n2bpe3",
+            "columns": null
+          },
+          "id": "Field_0ld7otv",
+          "key": "filepicker_vywdgn",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "",
+          "components": [
+            {
+              "label": "**Bank Name**",
+              "type": "textfield",
+              "layout": {
+                "row": "Row_0llxd2k",
+                "columns": null
+              },
+              "id": "Field_0ob2v5e",
+              "key": "textfield_7uabom",
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "label": "**Account Number**",
+              "type": "number",
+              "layout": {
+                "row": "Row_0llxd2k",
+                "columns": null
+              },
+              "id": "Field_034s8s4",
+              "key": "number_heksa",
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "label": "**Account Name**",
+              "type": "textfield",
+              "layout": {
+                "row": "Row_0xagfsy",
+                "columns": null
+              },
+              "id": "Field_18ws62p",
+              "key": "textfield_nhf24b",
+              "validate": {
+                "required": true
+              }
+            },
+            {
+              "label": "**BVN**",
+              "type": "number",
+              "layout": {
+                "row": "Row_0xagfsy",
+                "columns": null
+              },
+              "id": "Field_05irbk3",
+              "key": "number_2gnpu",
+              "validate": {
+                "required": true
+              }
+            }
+          ],
+          "showOutline": true,
+          "isRepeating": true,
+          "allowAddRemove": true,
+          "defaultRepetitions": 1,
+          "type": "dynamiclist",
+          "layout": {
+            "row": "Row_01ylzlq",
+            "columns": null
+          },
+          "id": "Field_159z5yz",
+          "path": "dynamiclist_kly89f"
+        }
+      ],
+      "showOutline": true,
+      "type": "group",
+      "layout": {
+        "row": "Row_0az7cjd",
+        "columns": 16
+      },
+      "id": "Field_171yamw"
+    }
+  ],
+  "type": "default",
+  "id": "Form_1os0ef5",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.32.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.22.0",
+  "schemaVersion": 18
+}
