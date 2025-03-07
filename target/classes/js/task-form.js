@@ -3,6 +3,9 @@ const form = new Form({
     container: document.querySelector("#form-container"),
 });
 
+
+htmx.logAll();
+
 let formId=null;
 let modelSchema = document.getElementById("schemaId");
 

@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
+//document.addEventListener("DOMContentLoaded", function () {
+
+alert('Im here')
     const step1 = document.getElementById("form1");
     const step2 = document.getElementById("form2");
     const step3 = document.getElementById("form3");
@@ -194,5 +196,5 @@ $('#prev4').on('click', function(e) {
     window.scrollTo({ top: 0, behavior: "smooth" });
 })
 
-})
+//})
 
