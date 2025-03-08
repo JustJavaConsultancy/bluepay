@@ -22,7 +22,22 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         })
         .catch(error => console.error('Error fetching countries:', error));
+    function populateCities() {
+        const countrySelect = document.getElementById("country2");
+        const citySelect = document.getElementById("cities1");
+        citySelect.innerHTML = '<option value="">-- Select City --</option>'; // Clear existing options
 
+        if (countrySelect.value === "NG") { // NG is the country code for Nigeria
+            const nigerianCities = ["Lagos", "Abuja", "Kano", "Port Harcourt", "Ibadan", "Benin City"];
+            nigerianCities.forEach(city => {
+                let option = document.createElement("option");
+                option.value = city;
+                option.textContent = city;
+                citySelect.appendChild(option);
+            });
+        }
+    }
+    document.getElementById('country2').addEventListener('change',populateCities)
     const step1 = document.getElementById("form1");
     const step2 = document.getElementById("form2");
     const step3 = document.getElementById("form3");
@@ -260,4 +275,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         validateStep3(); // Revalidate after toggling
     });
+
 });
