@@ -30,7 +30,13 @@
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="email">Email Address<span style="color: #EF5350;">*</span></label>
-            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="email" class="form-control" id="email" required>
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="email" class="form-control" id="email" required _="on input
+              if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
+                remove .invalid from me
+              else
+                add .invalid to me
+              end">
+            <div class="error-message">Please enter a valid email address.</div>
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="jobTitle">Job Title<span style="color: #EF5350;">*</span></label>
@@ -38,7 +44,7 @@
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="termsCheckbox" name="acceptTerms" style="margin-top: 0.4rem;" required>
-            <label style="color: #6F768D;font-size: 0.75rem;" class="form-check-label" for="acceptTerms">
+            <label style="color: #6F768D;font-size: 0.75rem;" class="form-check-label" for="termsCheckbox">
                 I accept the Service Agreement
             </label>
         </div>

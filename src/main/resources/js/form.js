@@ -1,10 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const countrySelectIds = ['country1', 'country2', 'country3']; // Store IDs of select elements
+    console.log(countrySelectIds);
+
+    fetch('https://restcountries.com/v3.1/all')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country.cca2; // Use country code (e.g., 'US', 'CA')
+                option.textContent = country.name.common; // Use country name
+
+                // Append the new option to all select elements
+                countrySelectIds.forEach(id => {
+                    const selectElement = document.getElementById(id);
+                    if (selectElement) { // Ensure the element exists before appending
+                        selectElement.appendChild(option.cloneNode(true)); // Clone to prevent moving the same node
+                    } else {
+                        console.warn(`Element with ID '${id}' not found.`);
+                    }
+                });
+            });
+        })
+        .catch(error => console.error('Error fetching countries:', error));
+
     const step1 = document.getElementById("form1");
     const step2 = document.getElementById("form2");
     const step3 = document.getElementById("form3");
     const step4 = document.getElementById("form4");
     const step5 = document.getElementById("form5");
-    const nextlink = document.getElementById("link1")
+    const nextlink = document.getElementById("link1");
     const nextBtn = document.getElementById("next1");
     const nextBtn2 = document.getElementById("next2");
     const nextBtn3 = document.getElementById("next3");
@@ -27,39 +51,44 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         nextBtn.disabled = !isValid;
     }
+
     function validateStep2() {
         let isValid = true;
         step2Inputs.forEach(input => {
             if (input.type === "checkbox") {
-
+                // Handle checkbox validation if needed
             } else {
                 if (!input.value.trim() || input.value === "Select") isValid = false;
             }
         });
         nextBtn2.disabled = !isValid;
     }
+
     function validateStep3() {
         let isValid = true;
         step3Inputs.forEach(input => {
+            if (input.disabled) return; // Skip disabled fields
             if (input.type === "checkbox") {
-
+                // Handle checkbox validation if needed
             } else {
                 if (!input.value.trim() || input.value === "Select") isValid = false;
             }
         });
         nextBtn3.disabled = !isValid;
     }
+
     function validateStep4() {
         let isValid = true;
         step4Inputs.forEach(input => {
             if (input.type === "checkbox") {
-
+                // Handle checkbox validation if needed
             } else {
                 if (!input.value.trim() || input.value === "Select") isValid = false;
             }
         });
         nextBtn4.disabled = !isValid;
     }
+
     function validateStep5() {
         let isValid = true;
         step5Inputs.forEach(input => {
@@ -71,45 +100,63 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         submitBtn.disabled = !isValid;
     }
+
     step1Inputs.forEach(input => input.addEventListener("input", validateStep1));
     step2Inputs.forEach(input => input.addEventListener("input", validateStep2));
     step3Inputs.forEach(input => input.addEventListener("input", validateStep3));
     step4Inputs.forEach(input => input.addEventListener("input", validateStep4));
     step5Inputs.forEach(input => input.addEventListener("input", validateStep5));
 
-
     function scrollToTop() {
-        setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        }, 100); // Delay to ensure the new step is visible first
+        const content = document.querySelector(".content");
+        if (content && content.scrollHeight > content.clientHeight) {
+            // Force a reflow
+            content.offsetHeight;
+            console.log("Scrolling .content container to top");
+            if ('scrollBehavior' in document.documentElement.style) {
+                content.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+                content.scrollTo(0, 0); // Fallback for older browsers
+            }
+        } else {
+            // Force a reflow
+            document.body.offsetHeight;
+            console.log("Scrolling window to top");
+            if ('scrollBehavior' in document.documentElement.style) {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            } else {
+                window.scrollTo(0, 0); // Fallback for older browsers
+            }
+        }
     }
+
     function increaseProgress() {
         let numberElement = document.getElementById("increase");
-        let bar = document.getElementById("progress-bar")
+        let bar = document.getElementById("progress-bar");
         let currentNumber = parseInt(numberElement.textContent);
         numberElement.textContent = currentNumber + 20;
         bar.style.width = `${currentNumber + 20}%`;
     }
-    function decreaseProgress(){
+
+    function decreaseProgress() {
         let numberElement = document.getElementById("increase");
-        let bar = document.getElementById("progress-bar")
+        let bar = document.getElementById("progress-bar");
         let currentNumber = parseInt(numberElement.textContent);
         numberElement.textContent = currentNumber - 20;
         bar.style.width = `${currentNumber - 20}%`;
     }
 
-
-
     nextBtn.addEventListener("click", function (e) {
         e.preventDefault();
         step1.style.display = "none";
         step2.style.display = "block";
-        step3.style.display = "none"
+        step3.style.display = "none";
         step4.style.display = "none";
         step5.style.display = "none";
         $(".cb1").prop("checked", true);
-        increaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        increaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
     });
 
     $('#prev1').on('click', function(e) {
@@ -120,9 +167,10 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "none";
         step5.style.display = "none";
         $(".cb1").prop("checked", false);
-        decreaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    })
+        decreaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
+    });
 
     nextBtn2.addEventListener("click", function (e) {
         e.preventDefault();
@@ -132,8 +180,9 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "none";
         step5.style.display = "none";
         $(".cb2").prop("checked", true);
-        increaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        increaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
     });
 
     $('#prev2').on('click', function(e) {
@@ -144,9 +193,11 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "none";
         step5.style.display = "none";
         $(".cb2").prop("checked", false);
-        decreaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    })
+        decreaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
+    });
+
     nextBtn3.addEventListener("click", function (e) {
         e.preventDefault();
         step2.style.display = "none";
@@ -155,8 +206,9 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "block";
         step5.style.display = "none";
         $(".cb3").prop("checked", true);
-        increaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        increaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
     });
 
     $('#prev3').on('click', function(e) {
@@ -167,9 +219,11 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "none";
         step5.style.display = "none";
         $(".cb3").prop("checked", false);
-        decreaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    })
+        decreaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
+    });
+
     nextBtn4.addEventListener("click", function (e) {
         e.preventDefault();
         step2.style.display = "none";
@@ -178,8 +232,9 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "none";
         step5.style.display = "block";
         $(".cb4").prop("checked", true);
-        increaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        increaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
     });
 
     $('#prev4').on('click', function(e) {
@@ -190,9 +245,19 @@ document.addEventListener("DOMContentLoaded", function () {
         step4.style.display = "block";
         step5.style.display = "none";
         $(".cb4").prop("checked", false);
-        decreaseProgress()
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    })
+        decreaseProgress();
+        window.scrollTo({ top: 0, behavior: 'smooth' })
+        scrollToTop();
+    });
 
-})
-
+    $('#toggleCheckbox').change(function() {
+        if ($(this).is(':checked')) {
+            $('.toggle-fields').hide();
+            $('.toggle-fields input').prop('disabled', true).removeAttr('required');
+        } else {
+            $('.toggle-fields').show();
+            $('.toggle-fields input').prop('disabled', false).attr('required', 'required');
+        }
+        validateStep3(); // Revalidate after toggling
+    });
+});

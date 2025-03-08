@@ -325,3 +325,18 @@ input::placeholder {
 .fjs-table tbody tr:hover {
   background-color: lightgray;
 }
+input.invalid:focus {
+  border-color: red !important;
+  box-shadow: 0 0 5px red !important;
+}
+.error-message {
+  color: red;
+  font-size: 0.7rem;
+  margin-top: 5px;
+  display: none; /* Hidden by default */
+}
+
+/* Show error message when input is invalid */
+input.invalid + .error-message {
+  display: block;
+}

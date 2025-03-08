@@ -16,11 +16,23 @@
         <h1 style="color: #062C5A;font-size: 1rem;">Contact</h1>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="generalEmail">General Email<span style="color: #EF5350;">*</span></label>
-            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="generalEmail" class="form-control" id="generalEmail" required >
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="generalEmail" class="form-control" id="generalEmail" required  _="on input
+              if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
+                remove .invalid from me
+              else
+                add .invalid to me
+              end">
+            <div class="error-message">Please enter a valid email address.</div>
         </div>
         <div class="mb-3">
-            <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="supportEmail">Support Email<span style="color: #EF5350;">*</span></label>
-            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="supportEmail" class="form-control" id="supportEmail" required >
+            <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="supportingEmail">Support Email<span style="color: #EF5350;">*</span></label>
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="supportingEmail" class="form-control" id="supportingEmail" required _="on input
+              if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
+                remove .invalid from me
+              else
+                add .invalid to me
+              end">
+            <div class="error-message">Please enter a valid email address.</div>
         </div>
         <div class="form-check">
             <input name="useGeneralEmail" class="form-check-input" type="checkbox" id="useGeneralEmail" style="margin-top: 0.4rem;">
@@ -30,7 +42,13 @@
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="supportEmail">Dispute Email<span style="color: #EF5350;">*</span></label>
-            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="disputeEmail" class="form-control" id="disputeEmail" required >
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="disputeEmail" class="form-control" id="disputeEmail" required _="on input
+              if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
+                remove .invalid from me
+              else
+                add .invalid to me
+              end">
+            <div class="error-message">Please enter a valid email address.</div>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="useGeneralEmail" name="useGeneralEmail" style="margin-top: 0.4rem;">
@@ -46,11 +64,10 @@
             <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="website" class="form-control" id="website" >              </div>
         <h1 class="mt-5" style="color: #062C5A;font-size: 1rem;">Business Address</h1>
         <div class="mb-3">
-            <label style="font-size: 0.75rem;color: #405979;" for="country" class="form-label">Country<span style="color: #EF5350;">*</span></label>
-            <select required name="country" id="country" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+            <label style="font-size: 0.75rem;color: #405979;" for="country2" class="form-label">Country<span style="color: #EF5350;">*</span></label>
+            <select required name="businesscountry" id="country2" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
                 <option value="Select">Select</option>
-                <option value="Afghanistan">Afghanistan</option>
-                <option value="Nigeria">Nigeria</option>
+
             </select>
         </div>
         <div class="mb-3">
