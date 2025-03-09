@@ -61,7 +61,7 @@
                         </li>
                     </ul>
                 </div>
-                <form style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
+                <form hx-post="/compliance/save" style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
                     <div th:replace="~{/compliance/profile :: form1}" />
                     <div th:replace="~{/compliance/contact :: form2}" />
                     <div th:replace="~{/compliance/businessOwner :: form3}" />
