@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 <div id="form1" th:fragment="form1">
@@ -12,7 +12,7 @@
     <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
     <div class="mb-3 mt-4">
       <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
-      <select name="country" id="country1" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select  _="on change set #profile-country.textContent to me.options[me.selectedIndex].text" name="country" id="country1" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
         <option value="">Select a country</option>
         <!-- Countries will be populated here -->
 
@@ -20,11 +20,11 @@
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessName" class="form-label">Business Name<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" >
+      <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" >
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
-      <select name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
         <option value="Select">Select business type</option>
         <option value="Unregistered/Starterbusiness">Unregistered/Starter business</option>
         <option value="Businessnameregistration">Business name registration</option>

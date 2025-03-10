@@ -43,18 +43,21 @@ document.addEventListener("DOMContentLoaded", function () {
     const step3 = document.getElementById("form3");
     const step4 = document.getElementById("form4");
     const step5 = document.getElementById("form5");
-    const nextlink = document.getElementById("link1");
+    const step6 = document.getElementById("form6");
     const nextBtn = document.getElementById("next1");
     const nextBtn2 = document.getElementById("next2");
     const nextBtn3 = document.getElementById("next3");
     const nextBtn4 = document.getElementById("next4");
     const submitBtn = document.getElementById("submitBtn");
-    const step5Inputs = step5.querySelectorAll("input[required], select[required]");
-    const step4Inputs = step4.querySelectorAll("input[required], select[required]");
-    const step3Inputs = step3.querySelectorAll("input[required], select[required]");
-    const step2Inputs = step2.querySelectorAll("input[required], select[required]");
-    const step1Inputs = step1.querySelectorAll("input, select");
 
+    // Get all required inputs for each step
+    const step1Inputs = step1.querySelectorAll("input, select");
+    const step2Inputs = step2.querySelectorAll("input[required], select[required]");
+    const step3Inputs = step3.querySelectorAll("input[required], select[required]");
+    const step4Inputs = step4.querySelectorAll("input[required], select[required]");
+    const step5Inputs = step5.querySelectorAll("input[required], select[required]");
+
+    // Validation functions
     function validateStep1() {
         let isValid = true;
         step1Inputs.forEach(input => {
@@ -116,27 +119,25 @@ document.addEventListener("DOMContentLoaded", function () {
         submitBtn.disabled = !isValid;
     }
 
+    // Attach event listeners to inputs for validation
     step1Inputs.forEach(input => input.addEventListener("input", validateStep1));
     step2Inputs.forEach(input => input.addEventListener("input", validateStep2));
     step3Inputs.forEach(input => input.addEventListener("input", validateStep3));
     step4Inputs.forEach(input => input.addEventListener("input", validateStep4));
     step5Inputs.forEach(input => input.addEventListener("input", validateStep5));
 
+    // Scroll to top function
     function scrollToTop() {
         const content = document.querySelector(".content");
         if (content && content.scrollHeight > content.clientHeight) {
-            // Force a reflow
-            content.offsetHeight;
-            console.log("Scrolling .content container to top");
+            content.offsetHeight; // Force reflow
             if ('scrollBehavior' in document.documentElement.style) {
                 content.scrollTo({ top: 0, behavior: "smooth" });
             } else {
                 content.scrollTo(0, 0); // Fallback for older browsers
             }
         } else {
-            // Force a reflow
-            document.body.offsetHeight;
-            console.log("Scrolling window to top");
+            document.body.offsetHeight; // Force reflow
             if ('scrollBehavior' in document.documentElement.style) {
                 window.scrollTo({ top: 0, behavior: "smooth" });
             } else {
@@ -145,22 +146,24 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Progress bar functions
     function increaseProgress() {
-        let numberElement = document.getElementById("increase");
-        let bar = document.getElementById("progress-bar");
-        let currentNumber = parseInt(numberElement.textContent);
+        const numberElement = document.getElementById("increase");
+        const bar = document.getElementById("progress-bar");
+        const currentNumber = parseInt(numberElement.textContent);
         numberElement.textContent = currentNumber + 20;
         bar.style.width = `${currentNumber + 20}%`;
     }
 
     function decreaseProgress() {
-        let numberElement = document.getElementById("increase");
-        let bar = document.getElementById("progress-bar");
-        let currentNumber = parseInt(numberElement.textContent);
+        const numberElement = document.getElementById("increase");
+        const bar = document.getElementById("progress-bar");
+        const currentNumber = parseInt(numberElement.textContent);
         numberElement.textContent = currentNumber - 20;
         bar.style.width = `${currentNumber - 20}%`;
     }
 
+    // Navigation between steps
     nextBtn.addEventListener("click", function (e) {
         e.preventDefault();
         step1.style.display = "none";
@@ -170,7 +173,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb1").prop("checked", true);
         increaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -183,7 +185,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb1").prop("checked", false);
         decreaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -196,7 +197,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb2").prop("checked", true);
         increaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -209,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb2").prop("checked", false);
         decreaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -222,7 +221,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb3").prop("checked", true);
         increaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -235,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "none";
         $(".cb3").prop("checked", false);
         decreaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -248,7 +245,6 @@ document.addEventListener("DOMContentLoaded", function () {
         step5.style.display = "block";
         $(".cb4").prop("checked", true);
         increaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
@@ -259,12 +255,37 @@ document.addEventListener("DOMContentLoaded", function () {
         step3.style.display = "none";
         step4.style.display = "block";
         step5.style.display = "none";
+        step6.style.display = "none";
         $(".cb4").prop("checked", false);
         decreaseProgress();
-        window.scrollTo({ top: 0, behavior: 'smooth' })
         scrollToTop();
     });
 
+    submitBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        step6.style.display = "block";
+        step1.style.display = "none";
+        step3.style.display = "none";
+        step4.style.display = "none";
+        step5.style.display = "none";
+        $(".cb5").prop("checked", true);
+        increaseProgress();
+        scrollToTop();
+    });
+    $('#prev5').on('click', function(e) {
+        e.preventDefault();
+        step2.style.display = "none";
+        step1.style.display = "none";
+        step3.style.display = "none";
+        step4.style.display = "none";
+        step5.style.display = "block";
+        step6.style.display = "none";
+        $(".cb5").prop("checked", false);
+        decreaseProgress();
+        scrollToTop();
+    });
+
+    // Toggle fields for home address
     $('#toggleCheckbox').change(function() {
         if ($(this).is(':checked')) {
             $('.toggle-fields').hide();
@@ -275,5 +296,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         validateStep3(); // Revalidate after toggling
     });
+
 
 });

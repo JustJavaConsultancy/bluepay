@@ -9,6 +9,12 @@
 <body>
 <div layout:fragment="content">
     <script th:src="@{/js/bundle.js}"></script>
+    <div th:replace="~{fragments/modal :: modal('exampleModal', 'Merchant Services Agreement', 'xl')}">
+        <!-- Define Modal Body Content -->
+        <div th:fragment="modal-body">
+
+        </div>
+    </div>
 
     <div class="d-flex flex-column flex-grow-1">
         <div class="content container-fluid">
@@ -53,9 +59,17 @@
                         </li>
                         <li class="mb-3">
                             <div class="form-check">
-                                <input class="form-check-input " type="checkbox" value="" id="flexCheckCheckedDisabled" disabled>
+                                <input class="form-check-input cb5" type="checkbox" value="" id="flexCheckCheckedDisabled" disabled>
                                 <label style="font-size: 0.75rem;color: #6F768D;font-weight: 400;" class="form-check-label" for="flexCheckCheckedDisabled">
                                     Service Agreement
+                                </label>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input " type="checkbox" value="" id="flexCheckCheckedDisabled" disabled>
+                                <label style="font-size: 0.75rem;color: #6F768D;font-weight: 400;" class="form-check-label" for="flexCheckCheckedDisabled">
+                                    Summary
                                 </label>
                             </div>
                         </li>
@@ -67,6 +81,7 @@
                     <div th:replace="~{/compliance/businessOwner :: form3}" />
                     <div th:replace="~{/compliance/bankAccount :: form4}" />
                     <div th:replace="~{/compliance/serviceAgreement :: form5}" />
+                    <div th:replace="~{/compliance/summary :: form6}" />
                 </form>
             </div>
         </div>

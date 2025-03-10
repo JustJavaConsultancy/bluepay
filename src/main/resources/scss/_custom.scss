@@ -22,6 +22,31 @@ body {
   height: 100vh;
   overflow: hidden; /* This might need adjustment */
 }
+/* Ensure the accordion and its items take full width */
+.accordion,
+.accordion-item,
+.accordion-button,
+.accordion-collapse {
+  width: 100% !important; /* Force full width */
+}
+
+
+/* Prevent the accordion button from shrinking */
+.accordion-button {
+  white-space: nowrap; /* Prevent text wrapping */
+  text-align: left; /* Align text to the left */
+  padding: 10px 15px; /* Adjust padding as needed */
+}
+
+/* Ensure the accordion content does not affect the width */
+.accordion-collapse {
+  width: 100% !important; /* Ensure the content takes the full width */
+}
+
+/* Optional: Add a transition effect for smooth collapsing */
+.accordion-collapse.collapsing {
+  transition: height 0.35s ease;
+}
 
 .ativ {
   color: #f0f0f0;
@@ -226,6 +251,9 @@ input::placeholder {
     position: relative; /* Change to relative for mobile view */
     top: 0;
   }
+  .colla{
+    width: 90vw;
+  }
 
   #form5 {
     margin-right: 10px;
@@ -334,6 +362,9 @@ input.invalid:focus {
   font-size: 0.7rem;
   margin-top: 5px;
   display: none; /* Hidden by default */
+}
+.colla{
+  width: 25rem;
 }
 
 /* Show error message when input is invalid */

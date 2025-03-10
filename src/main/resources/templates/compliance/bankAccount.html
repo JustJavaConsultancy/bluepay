@@ -16,7 +16,7 @@
     <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">The bank account name must match the name of the business owner</div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
-      <select required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
         <option value="Select">Select</option>
         <option value="UBA">UBA</option>
         <option value="firstbank">First Bank</option>
@@ -25,6 +25,7 @@
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accNumber">Account Number<span style="color: #EF5350;">*</span></label>
       <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="accNumber" class="form-control" id="accNumber" required _="on input
+              set #bank-account-number.textContent to me.value
               if my.value.length >= 10
                 remove .invalid from me
               else
@@ -34,7 +35,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accName">Name on Account<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" id="accName" required >
+      <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" id="accName" required >
     </div>
   </div>
   <button id="next4" class="mt-2 saveButton" disabled >Save</button>
