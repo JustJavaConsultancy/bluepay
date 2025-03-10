@@ -9,6 +9,14 @@ fjs-container {
   padding: 20px;
   border-radius: 5px;
 }
+.hideSummary{
+  display: none;
+}
+/* Custom CSS to make the modal backdrop lighter */
+.modal-backdrop {
+  opacity: 0.5 !important; /* Adjust the opacity to make it lighter */
+  background-color: rgba(0, 0, 0, 0.5) !important; /* Adjust the alpha value for transparency */
+}
 
 /* Style form fields */
 fjs-form-field {
