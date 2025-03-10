@@ -12,7 +12,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/merchant")
 public class MerchantController {
-
     @Autowired
     MerchantService merchantService;
     @PostMapping("/submitDetails")

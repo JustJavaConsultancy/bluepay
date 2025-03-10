@@ -5,6 +5,7 @@ import org.flowable.common.engine.api.delegate.event.FlowableEngineEventType;
 import org.flowable.common.engine.api.delegate.event.FlowableEntityEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEvent;
 import org.flowable.common.engine.api.delegate.event.FlowableEventListener;
+import org.flowable.engine.RuntimeService;
 import org.flowable.task.api.Task;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -14,7 +15,6 @@ public class JustJavaFlowableListener implements FlowableEventListener {
 
 
     private final SimpMessagingTemplate messagingTemplate;
-
     public JustJavaFlowableListener(SimpMessagingTemplate messagingTemplate) {
         this.messagingTemplate = messagingTemplate;
     }
@@ -28,15 +28,20 @@ public class JustJavaFlowableListener implements FlowableEventListener {
             if (entityEvent.getEntity() instanceof Task) {
                 Task task = (Task) entityEvent.getEntity();
                 if (event.getType() == FlowableEngineEventType.TASK_CREATED) {
+
+                    String assignin=task.getAssignee();
+
                     ChatMessage chatMessage=ChatMessage.builder()
                             .content(task.getName())
-                            .groupId("123")
-                            .sender("kazeem")
+                            .groupId(assignin)
+                            .sender("Process Engine")
                             .build();
                     String destination = "/topic/group/" + chatMessage.getGroupId();
                     messagingTemplate.convertAndSend(destination, chatMessage);
-                    System.out.println("Task Created: " + task.getName()+" form key== "+task.getId()
-                            +" assignee=="+task.getAssignee());
+                    System.out.println("Task Created: " + task.getName()+"" +
+                            " form key== "+task.getId()
+                            +" assignee=="+task.getAssignee()+
+                    " the  variables===");
                 }
 
             }

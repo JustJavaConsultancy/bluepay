@@ -13,7 +13,9 @@ public class MerchantService {
     private final AuthenticationManager authenticationManager;
     private final RuntimeService runtimeService;
     private final CustomProcessService processService;
-    public MerchantService(AuthenticationManager authenticationManager, RuntimeService runtimeService, CustomProcessService processService) {
+    public MerchantService(AuthenticationManager authenticationManager,
+                           RuntimeService runtimeService,
+                           CustomProcessService processService) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
@@ -21,18 +23,16 @@ public class MerchantService {
     public String getMerchantStatus(String merchantId){
         String result="NEW";
         // Check for active process instance
-        ProcessInstance activeInstance = runtimeService.createProcessInstanceQuery()
-                .processInstanceBusinessKey(merchantId)
-                .singleResult();
 
-        System.out.println();
-        if(activeInstance==null){
+        if(processService.getProcessInstanceByBusinessKey(merchantId)==null)
             return result;
-        }
+
         return "UNDER_REVIEW";
     }
     public ProcessInstance submitMyDetail(Map<String,Object> data){
+
         String loginUser= (String) authenticationManager.get("sub");
-        return processService.startProcess("merchantOnboardingProcess",loginUser,data);
+        return processService
+                .startProcess("merchantOnboardingProcess",loginUser,data);
     }
 }

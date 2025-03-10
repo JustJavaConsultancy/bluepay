@@ -1,12 +1,12 @@
 
-var socket = new SockJS('http://localhost:9090/ws');
+var socket = new SockJS('/ws');
 var stompClient = Stomp.over(socket);
 var notification = 0;
 const badge = document.querySelector('.badge');
 badge.innerText = notification;
 
 stompClient.connect({}, function () {
-    stompClient.subscribe('/topic/group/123', function (message) {
+    stompClient.subscribe('/topic/group/compliance', function (message) {
         var chatMessage = JSON.parse(message.body);
         pushMail(chatMessage);
         console.log(' This particular one is from the server...'

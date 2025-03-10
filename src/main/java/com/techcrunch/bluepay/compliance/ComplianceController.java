@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ComplianceController {
     @GetMapping("/compliance")
     public String getCompliance(){
+
         return "/compliance/compliance";
     }
 }
