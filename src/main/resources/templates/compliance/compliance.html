@@ -75,13 +75,13 @@
                         </li>
                     </ul>
                 </div>
-                <form hx-post="/compliance/save" style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
+                <form hx-post="/merchant/submitDetails" style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
                     <div th:replace="~{/compliance/profile :: form1}" />
                     <div th:replace="~{/compliance/contact :: form2}" />
                     <div th:replace="~{/compliance/businessOwner :: form3}" />
                     <div th:replace="~{/compliance/bankAccount :: form4}" />
                     <div th:replace="~{/compliance/serviceAgreement :: form5}" />
-                    <div th:replace="~{/compliance/summary :: form6}" />
+                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',null)}" />
                 </form>
             </div>
         </div>
