@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch('https://restcountries.com/v3.1/all')
         .then(response => response.json())
         .then(data => {
+            // Sort countries alphabetically by name
+            data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+
             data.forEach(country => {
                 const option = document.createElement('option');
                 option.value = country.cca2; // Use country code (e.g., 'US', 'CA')

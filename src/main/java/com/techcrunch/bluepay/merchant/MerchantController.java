@@ -31,4 +31,10 @@ public class MerchantController {
 
         return "merchant/merchantStatus";
     }
+    @GetMapping("/failed")
+    public String merchantFailed() {
+
+
+        return "merchant/merchantFailed";
+    }
 }

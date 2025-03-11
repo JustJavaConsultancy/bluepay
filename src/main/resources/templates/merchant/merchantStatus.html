@@ -38,7 +38,19 @@
             </div>
         </div>
     </div>
+    <div style="display: flex;justify-content: center;align-items: center;margin-top: 15px">
+        <div>
+    <div style="background-color: #29AF4B;color: white;padding: 10px;border-radius: 6px;margin-bottom: 20px">
+        <div style="display: flex;gap: 11px">
+            <div style="color:white "><i class="bi bi-check-circle-fill" style="font-size: 2.3rem;"></i></div>
+            <div style="color: white;font-size:1rem;font-weight: 700">Compliance Verification Successful<br><span style="font-size: 0.75rem;font-family: 500">
+                You’ve have successfully completed your compliance
+            </span></div>
+        </div>
+    </div>
     <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails})}" />
+    </div>
+    </div>
 </div>
 </body>
 </html>
