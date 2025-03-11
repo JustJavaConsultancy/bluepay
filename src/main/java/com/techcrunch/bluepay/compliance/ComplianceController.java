@@ -13,4 +13,24 @@ public class ComplianceController {
 
         return "/compliance/compliance";
     }
+    @GetMapping("/complianceOfficer")
+    public String getComplianceOfficer(){
+
+        return "/complianceOfficer/officerDashboard";
+    }
+    @GetMapping("/pendingRequest")
+    public String getpendingRequest(){
+
+        return "/complianceOfficer/pendingRequest";
+    }
+    @GetMapping("/succesfulCompliance")
+    public String getsuccesfulCompliance(){
+
+        return "/complianceOfficer/sucessfulCompliance";
+    }
+    @GetMapping("/rejectedCompliance")
+    public String getrejectedCompliance(){
+
+        return "/complianceOfficer/failedCompliance";
+    }
 }

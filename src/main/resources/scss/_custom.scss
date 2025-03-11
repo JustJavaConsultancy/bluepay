@@ -172,6 +172,7 @@ input::placeholder {
   padding: 20px;
   transition: transform 0.3s ease-in-out;
   z-index: 999;
+  overflow-y: scroll;
 }
 
 .sidebar.collapsed {
@@ -393,3 +394,27 @@ input.invalid:focus {
 input.invalid + .error-message {
   display: block;
 }
+.table {
+  margin-bottom: 0; /* Removes extra space at the bottom */
+}
+th{
+  background-color: #F9FAFB !important;
+  font-size: 0.75rem !important;
+  font-weight: 500;
+}
+td{
+  font-size: 0.85rem !important;
+  font-weight: 500;
+}
+tr{
+  padding: 20px !important;
+}
+.custom-container {
+  width: 100%;
+  margin: auto;
+  border: 1px solid #E4E7EC;
+  background-color: #fff;
+  border-radius: 6px;
+  overflow: hidden;
+}
+

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Landing Page</title>
+    <style>
+        .row {
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 1.5rem;
+        }
+        .search-container {
+            position: relative;
+            max-width: 400px;
+        }
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            color: blue;
+            font-size: 18px;
+        }
+        .form-control {
+            padding-left: 40px; /* Creates space for the icon */
+        }
+        .table {
+            margin-bottom: 0; /* Removes extra space at the bottom */
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" >
+    <script th:src="@{/js/bundle.js}"></script>
+    <div style="margin: 15px;">
+        <h3 class="mb-3" style="color: #062C5A;font-weight: 700;font-size: 1.2rem;">Successful Compliance(32)</h3>
+        <div class="mb-3" style="display: flex;justify-content: space-between;">
+            <div style="display: flex;gap: 10px;">
+                <div class="search-container">
+                    <i class="bi bi-search search-icon"></i>
+                    <input style="font-size: 0.85rem;" type="text" class="form-control" placeholder="Search Country, Business Name...">
+                </div>
+                <select class="form-select" style="font-size: 0.85rem;">
+                    <option value="">Business Type</option>
+                </select>
+                <select class="form-select" style="font-size: 0.85rem;">
+                    <option value="">Period</option>
+                </select>
+            </div>
+            <div>
+                <select class="form-select" style="font-size: 0.85rem;">
+                    <option value="">Download as</option>
+                </select>
+            </div>
+        </div>
+        <div class="custom-container">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Business Name</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Business Type</th>
+                    <th>Date & Timestamp</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>PI Ventures</td>
+                    <td>Nigeria</td>
+                    <td>@piventures@gmail.com</td>
+                    <td>Private</td>
+                    <td>6 Jul, 2023 <br> <span style="color: #667185;">10:30:45</span></td>
+                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>JustJava Limited</td>
+                    <td>Nigeria</td>
+                    <td>justjava@gmail.com</td>
+                    <td>Private</td>
+                    <td>10 May, 2023 <br> <span style="color: #667185;">10:30:45</span></td>
+                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Redstar Express</td>
+                    <td>Kenya</td>
+                    <td>Express@gmail.com</td>
+                    <td>Stater</td>
+                    <td>18 Jun, 2023 <br> <span style="color: #667185;">10:10:45</span></td>
+                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <nav class="mt-3" aria-label="...">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
