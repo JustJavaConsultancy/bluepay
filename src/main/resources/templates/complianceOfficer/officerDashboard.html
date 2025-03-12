@@ -82,31 +82,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>PI Ventures</td>
-                    <td>Nigeria</td>
-                    <td>@piventures@gmail.com</td>
-                    <td>Private</td>
-                    <td>6 Jul, 2023 <br> <span style="color: #667185;">10:30:45</span></td>
-                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>JustJava Limited</td>
-                    <td>Nigeria</td>
-                    <td>justjava@gmail.com</td>
-                    <td>Private</td>
-                    <td>10 May, 2023 <br> <span style="color: #667185;">10:30:45</span></td>
-                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Redstar Express</td>
-                    <td>Kenya</td>
-                    <td>Express@gmail.com</td>
-                    <td>Stater</td>
-                    <td>18 Jun, 2023 <br> <span style="color: #667185;">10:10:45</span></td>
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee['id']}"></td>
+                    <td th:text="${employee['businessName']}"></td>
+                    <td th:text="${employee['country']}"></td>
+                    <td th:text="${employee['email']}"></td>
+                    <td th:text="${employee['businessType']}"></td>
+                    <td th:text="${employee['date']}"> <br> <span th:text="${employee['time']}" style="color: #667185;"></span></td>
                     <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
                 </tr>
                 </tbody>
