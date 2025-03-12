@@ -8,7 +8,27 @@
 </head>
 <body>
 <div th:fragment="accept">
+    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
 
+    <div style="display: flex;justify-content: center;text-align: center;padding: 25px;">
+        <div>
+            <div style="color: #FFCA28;">
+                <i class="bi bi-info-circle-fill" style="font-size: 3.2rem;"></i>
+            </div>
+            <h2 style="color: #062C5A;font-size: 1rem;font-weight: 500;margin-top: 20px;">You’re about to approve this compliance, are you sure you want to approve?</h2>
+            <p style="color: #6F768D;font-size: 0.75rem;line-height: 1.5;">This action is irreversible </p>
+            <div class="row" style="margin-top: 70px;">
+                <div data-bs-dismiss="modal" class="col"> <button style="color: #0C74B1;border-radius: 6px;font-size: 0.75rem;font-weight: 500;background-color: white;border: none;cursor: pointer;width: 10.02rem;height: 2.25rem;border: 1px solid #0C74B1;">
+                    No, Cancel
+                </button></div>
+                <div class="col">
+                    <button style="background-color: #0C74B1;border-radius: 6px;font-size: 0.75rem;font-weight: 500;color: white;border: none;cursor: pointer;width: 10.02rem;height: 2.25rem;">
+                        Yes, Approve
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>
