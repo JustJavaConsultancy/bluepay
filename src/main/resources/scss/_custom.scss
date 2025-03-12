@@ -30,6 +30,10 @@ body {
   height: 100vh;
   overflow: hidden; /* This might need adjustment */
 }
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .accordion-button {
   cursor: pointer;
