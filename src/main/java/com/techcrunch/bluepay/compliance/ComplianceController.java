@@ -131,4 +131,9 @@ public class ComplianceController {
         model.addAttribute("employees", employees);
         return "/complianceOfficer/failedCompliance";
     }
+    @GetMapping("/complianceDetail")
+    public String getcomplianceDetail(){
+
+        return "/complianceOfficer/complianceDetails";
+    }
 }

@@ -90,7 +90,7 @@
                     <td th:text="${employee['email']}"></td>
                     <td th:text="${employee['businessType']}"></td>
                     <td th:text="${employee['date']}"> <br> <span th:text="${employee['time']}" style="color: #667185;"></span></td>
-                    <td><a href="#" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
+                    <td><a th:href="@{/compliance/complianceDetail}" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View Details</a></td>
                 </tr>
                 </tbody>
             </table>
