@@ -30,17 +30,20 @@ public class HomeController {
     public String index() {
 
 
+/*
         System.out.println(" Starting to debug");
         processService.startProcess("verificationProcess",
                 "akinkunmikinrinde", Map.of("test","Inside Out"));
         System.out.println(" Ending the debug..");
+*/
 
         String loginUser= (String) authenticationManager.get("sub");
+
+        System.out.println(" loging user here==="+loginUser);
         String page="home/index";
+        String status=merchantService.getMerchantStatus(loginUser);
         if(authenticationManager.isMerchant()){
-            if("NEW".equalsIgnoreCase(merchantService.getMerchantStatus(loginUser))){
-                page="redirect:compliance/compliance";
-            }
+            page="redirect:merchant/"+status.toLowerCase();
         }
 
         return page;
