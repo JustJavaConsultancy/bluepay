@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+
+    const buttons = document.querySelectorAll(".btn-group .btn");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", function () {
+            buttons.forEach(btn => btn.classList.remove("present"));
+            this.classList.add("present");
+        });
+    });
+
     const accordionButtons = document.querySelectorAll(".accordion-button");
 
     accordionButtons.forEach(button => {

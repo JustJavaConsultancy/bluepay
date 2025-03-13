@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div th:fragment="reject">
+    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div style="display: flex;justify-content: center;padding: 25px;">
+        <div>
+            <div>
+                <h3 style="font-size: 1rem;font-weight: 500;color: #313957;">Reject Compliance</h3>
+            </div>
+            <p style="color: #828FA3;font-size: 0.85rem;line-height: 1.5;font-weight: 400;">Enter reason for declining this submission</p>
+            <label for="rejectinReason" class="form-label" style="font-size: 0.85rem;font-weight: 400;color: #405979;">
+                Comment
+            </label>
+            <form>
+                <textarea class="form-control" name="rejectinReason" id="rejectinReason" style="width: 100%;height: 100px;border-radius: 6px;border: 1px solid #E0E6F2;padding: 10px;font-size: 0.85rem;resize: none;background-color: #FAFAFA;"></textarea>
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col"> <button data-bs-dismiss="modal" type="button" style="color: #EB3A37;border-radius: 6px;font-size: 0.75rem;font-weight: 500;background-color: white;border: none;cursor: pointer;width: 10.02rem;height: 2.25rem;border: 1px solid #EB3A37;">
+                        Cancel
+                    </button></div>
+                    <div class="col">
+                        <button type="submit" style="background-color: #EB3A37;border-radius: 6px;font-size: 0.75rem;font-weight: 500;color: white;border: none;cursor: pointer;width: 10.02rem;height: 2.25rem;">
+                            Reject
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .modal-body{
+            padding: 0;
+        }
+        .btn-close{
+            position: absolute;
+            right: 0;
+            padding: 1em;
+        }
+        .btn-group {
+            width: 100%; /* Make the button group fill the available space */
+            margin-bottom: 20px;
+        }
+        .btn-group .btn {
+            flex: 1; /* Make buttons equally share the available space */
+            border-radius: 0;
+        }
+        .btn-group .btn:first-child {
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
+            border: 1px solid #F0F0F0;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background-color: #F0F2F5;
+            color:#475367;
+        }
+        .btn-group .btn:last-child {
+            border-top-right-radius: 5px;
+            border-bottom-right-radius: 5px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background-color: #F0F2F5;
+            color:#475367;
+            border: 1px solid #F0F0F0;
+        }
+        .btn-group .btn.present {
+            background-color: white !important;
+            color: #0C74B1 !important;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content" >
+    <script th:src="@{/js/bundle.js}"></script>
+    <div class="modal fade" id="acceptModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" >
+            <div class="modal-content">
+                <!-- Modal content -->
+                <div th:replace="~{/complianceOfficer/acceptModal :: accept}" />
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rejectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-md" >
+            <div class="modal-content">
+                <!-- Modal content -->
+                <div th:replace="~{/complianceOfficer/rejectModal :: reject}" />
+
+            </div>
+    </div>
+    </div>
+    <div style="display: flex;justify-content: center;align-items: center;margin-top: 15px">
+        <div>
+            <div class="btn-group">
+                <button id="btn1" class="btn btn-primary present">Compliance Details</button>
+                <button id="btn2" class="btn btn-primary">Third Party Verification</button>
+            </div>
+            <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails})}" />
+            <div class="row mt-2">
+                <div class="col">
+                    <button data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn" style="width: 100%; background-color:#EB3A37;color: white;font-size: 1rem;font-weight: 700">Reject</button>
+                </div>
+                <div class="col">
+                    <button data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn" style="width: 100%; background-color:#0C74B1;color: white;font-size: 1rem;font-weight: 700">Accept</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
