@@ -11,7 +11,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: https://ngcloak.onrender.com//realms/justjavarealm
+            issuer-uri: https://ngcloak.onrender.com/realms/justjavaRealm
             # user-name-attribute: preferred_username
         registration:
           keycloak-oidc:
