@@ -17,7 +17,12 @@
         <java.version>21</java.version>
         <jackson.version>2.18.2</jackson.version>
     </properties>
-
+    <pluginRepositories>
+        <pluginRepository>
+            <id>google-maven-central</id>
+            <url>https://maven-central.storage-download.googleapis.com/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -179,6 +184,30 @@
                     <nodeVersion>v22.13.1</nodeVersion>
                 </configuration>
             </plugin>
+            <plugin><!-- https://mvnrepository.com/artifact/com.google.cloud.tools/jib-maven-plugin -->
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.3</version>
+                <configuration>
+                    <from>
+                        <image>alpine/java:21-jdk</image>
+                    </from>
+                    <to>
+                        <image>kazeemakinrinde/bluepay-v0</image>
+                        <auth>
+                            <username>kazeemakinrinde</username>
+                            <password>020775Rashy!</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <ports>
+                            <port>8080</port>
+                        </ports>
+                        <format>OCI</format>
+                    </container>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>
