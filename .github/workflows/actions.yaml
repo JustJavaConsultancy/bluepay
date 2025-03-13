@@ -14,9 +14,11 @@ jobs:
           cache: maven
       - name: Build jar
         run: mvn clean compile jib:build
-#      - name: Deploy to test
-#        uses: johnbeynon/render-deploy-action@v0.0.8
-#        with:
-#          service-id: srv-cs2ffge8ii6s739h971g
-#          api-key: rnd_OAgy4dIBWs4IjWZlreSPXVkAN6Nc
-#          wait-for-success: true
+      - name: Deploy to test
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: srv-cv9kavaj1k6c739949b0
+          api-key: rnd_ej4GSVJK4GTCRmnt4qCcOuEJZpKj
+          wait-for-success: true
+
+# https://api.render.com/deploy/srv-cv9kavaj1k6c739949b0?key=zkxrEHgmc-Q
