@@ -11,7 +11,7 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: http://localhost:8080/realms/justjavarealm
+            issuer-uri: https://ngcloak.onrender.com/realms/justjavaRealm
             # user-name-attribute: preferred_username
         registration:
           keycloak-oidc:
@@ -22,7 +22,6 @@ spring:
             authorization-grant-type: authorization_code
             scope: openid,profile,email
             #redirect-uri: http://coaching-app-test-alb-222659239.us-east-1.elb.amazonaws.com/
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -52,11 +51,14 @@ spring:
         smtp:
           auth: true
     default-encoding: UTF-8
-  kafka:
-    bootstrap-servers: localhost:9092
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+#  kafka:
+#    bootstrap-servers: localhost:9092
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  devtools:
+    restart:
+      enabled: true
 
 error:
   handling:
@@ -83,4 +85,4 @@ flowable:
     enabled: true
   eventregistry:
     enabled: true
-    resource-location: "classpath*:/eventregistry/"
+    resource-location: "classpath*:/eventregistries/"
