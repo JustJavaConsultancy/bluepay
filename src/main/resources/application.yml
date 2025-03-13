@@ -21,7 +21,7 @@ spring:
             client-secret: ${CLIENT-SECRET:3rXI9p0LcG7jgst5LwrdxAso28j9Dlfj}
             authorization-grant-type: authorization_code
             scope: openid,profile,email
-            #redirect-uri: http://coaching-app-test-alb-222659239.us-east-1.elb.amazonaws.com/
+            #redirect-uri:http://coaching-app-test-alb-222659239.us-east-1.elb.amazonaws.com/
   jpa:
     hibernate:
       ddl-auto: update
