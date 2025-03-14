@@ -25,6 +25,8 @@ public class JustJavaFlowableListener implements FlowableEventListener {
             FlowableEntityEvent entityEvent = (FlowableEntityEvent) event;
 
             // Ensure that the entity is a Task
+
+            System.out.println(" The task fired here==="+entityEvent.getType().name());
             if (entityEvent.getEntity() instanceof Task) {
                 Task task = (Task) entityEvent.getEntity();
                 if (event.getType() == FlowableEngineEventType.TASK_CREATED) {

@@ -1,0 +1,28 @@
+name: build-bluepay
+on:
+  push:
+    branches:
+      - dev
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+      - name: Set up JDK 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: '21'
+          cache: maven
+      - name: Build jar
+        run: mvn clean compile jib:build
+      - name: Deploy to test
+        uses: johnbeynon/render-deploy-action@v0.0.8
+        with:
+          service-id: srv-cv9kavaj1k6c739949b0
+          api-key: rnd_ej4GSVJK4GTCRmnt4qCcOuEJZpKj
+          wait-for-success: true
+
+# https://api.render.com/deploy/srv-cv9kavaj1k6c739949b0?key=zkxrEHgmc-Q

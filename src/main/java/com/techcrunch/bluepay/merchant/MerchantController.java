@@ -13,14 +13,19 @@ import java.util.Map;
 public class MerchantController {
     @Autowired
     MerchantService merchantService;
-    @PostMapping("/submitDetails")
+
+    @GetMapping("/new")
+    public String getCompliance(){
+        return "/compliance/compliance";
+    }
+    @PostMapping("/submitted")
     public String submitDetails(@RequestParam Map<String,Object> formData){
 
         System.out.println(" The Submitted Data==="+formData);
         merchantService.submitMyDetail(formData);
         return "home/index";
     }
-    @GetMapping("/status")
+    @GetMapping("/successful")
     public String merchantStatus(Model model) {
 
 
@@ -33,8 +38,7 @@ public class MerchantController {
     }
     @GetMapping("/failed")
     public String merchantFailed() {
-
-
         return "merchant/merchantFailed";
     }
+
 }

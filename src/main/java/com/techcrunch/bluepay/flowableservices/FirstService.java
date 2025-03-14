@@ -9,7 +9,7 @@ public class FirstService implements JavaDelegate {
     @Override
     public void execute(DelegateExecution execution) {
 
-        System.out.println(" All the variables in this process==="+execution.getVariables());
+        //System.out.println(" All the variables in this process==="+execution.getVariables());
         // Retrieve a process variable (optional)
         String myVariable = (String) execution.getVariable("myVariable");
         // Business logic

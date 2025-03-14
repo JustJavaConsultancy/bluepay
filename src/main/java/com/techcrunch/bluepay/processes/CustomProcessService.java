@@ -42,6 +42,9 @@ public class CustomProcessService {
                 .processInstanceBusinessKey(businessKey)
                 .singleResult();
     }
+    public Map getProcessInstanceVariables(String processInstanceId){
+        return runtimeService.getVariables(processInstanceId);
+    }
 
     public ProcessInstance starSimpletProcess(String procesKey){
 
