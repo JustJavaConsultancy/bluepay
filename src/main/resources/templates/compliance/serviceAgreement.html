@@ -11,7 +11,7 @@
     <button id="prev4" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
         <i class="bi bi-arrow-left-circle-fill fs-6"></i>
     </button>
-    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
+    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;max-width: 350px">
         <h1 style="color: #062C5A;font-size: 1rem;">Service Agreement</h1>
         <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">Please ensure that the information you provide is correct. <p class="mt-3" style="font-weight: 500;"> DO NOT ACCEPT THIS AGREEMENT IF YOUR DETAILS ARE INCORRECT.</p></div>
         <h1 class="mt-3" style="color: #062C5A;font-size: 0.75rem;font-weight: 500;">About Bluepay’s Merchant Services Agreement</h1>
@@ -22,15 +22,15 @@
                 Full Name <span style="color: #EF5350;">*</span>
             </label>
             <input _="on input set #agreement-full-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-                   id="fullname" name="fullname" required/>
+                   id="fullname" name="fullname" th:value="${data!=null?data['fullName']:''}" required/>
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="phoneNumber">Phone Number<span style="color: #EF5350;">*</span></label>
-            <input _="on input set #agreement-phone-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="tel" name="agreementPhoneNumber" class="form-control" id="phoneNumber" required>
+            <input _="on input set #agreement-phone-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="tel" name="agreementPhoneNumber" class="form-control" id="phoneNumber" th:value="${data!=null?data['agreementPhoneNumber']:''}" required>
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="email">Email Address<span style="color: #EF5350;">*</span></label>
-            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="email" class="form-control" id="email" required _="on input
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="email" th:value="${data!=null?data['email']:''}" class="form-control" id="email" required _="on input
               set #agreement-email.textContent to me.value
               if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
                 remove .invalid from me
@@ -41,7 +41,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="jobTitle">Job Title<span style="color: #EF5350;">*</span></label>
-            <input _="on input set #agreement-job-title.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="jobTitle" class="form-control" id="jobTitle" required>
+            <input _="on input set #agreement-job-title.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="jobTitle" th:value="${data!=null?data['jobTitle']:''}" class="form-control" id="jobTitle" required>
         </div>
         <div class="form-check">
             <input class="form-check-input" type="checkbox" id="termsCheckbox" name="acceptTerms" style="margin-top: 0.4rem;" required>

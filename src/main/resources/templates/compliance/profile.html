@@ -7,20 +7,31 @@
   <title>Title</title>
 </head>
 <body>
-<div id="form1" th:fragment="form1">
+<div id="form1" th:fragment="form1(data)">
   <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
     <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
     <div class="mb-3 mt-4">
       <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
-      <select  _="on change set #profile-country.textContent to me.options[me.selectedIndex].text" name="country" id="country1" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select
+              _="on load
+        set selectedCountry to @data-country
+        wait 1s
+        set my value to selectedCountry
+      on change
+        set #profile-country.textContent to me.options[me.selectedIndex].text"
+              name="country"
+              id="country1"
+              class="form-select"
+              style="font-size: 0.75rem; background-color: #FAFAFA;"
+              data-country="${data != null ? data['country'] : ''}">
+
         <option value="">Select a country</option>
         <!-- Countries will be populated here -->
-
       </select>
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessName" class="form-label">Business Name<span style="color: #EF5350;">*</span></label>
-      <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" >
+      <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" th:value="${data!=null?data['businessName']:''}" >
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>

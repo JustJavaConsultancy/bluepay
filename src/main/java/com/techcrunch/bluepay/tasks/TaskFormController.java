@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -67,5 +68,36 @@ public class TaskFormController {
             throw new RuntimeException(e);
         }
         return "tasks/task-form";
+    }
+}
+@Controller
+@RequestMapping("/api/menu")
+class MenuController {
+
+    private final List<Map<String, String>> menuItems = List.of(
+            createMenuItem("Inbox Items","/start-form/acceptBusinessSchema"),
+            createMenuItem("Merchant Details","/start-form/businessRegistrationSchema"),
+            createMenuItem("Registered Merchants","/start-form/table"),
+            createMenuItem("Compliance", "/compliance/compliance"),
+            createMenuItem("MerchantStatus", "/merchant/successful"),
+            createMenuItem("Merchant failed", "/merchant/failed"),
+            createMenuItem("Compliance Officer", "/compliance/complianceOfficer")
+    );
+
+    @GetMapping("/count")
+    @ResponseBody
+    public String getMenuCount() {
+        return "<span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">" + menuItems.size() + "</span>";
+    }
+
+    @GetMapping("/items")
+    public String getMenuItems(Model model) {
+        model.addAttribute("count", menuItems.size());
+        model.addAttribute("menuItems", menuItems);
+        return "fragments/menu-items"; // Thymeleaf fragment
+    }
+
+    private Map<String, String> createMenuItem(String name, String url) {
+        return Map.of("name", name, "url", url);
     }
 }

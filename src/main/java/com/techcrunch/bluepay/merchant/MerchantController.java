@@ -37,7 +37,13 @@ public class MerchantController {
         return "merchant/merchantStatus";
     }
     @GetMapping("/failed")
-    public String merchantFailed() {
+    public String merchantFailed(Model model) {
+        Map merchantDetails= new HashMap();
+        merchantDetails.put("businessType","Partnership");
+        merchantDetails.put("businessName","Just Java");
+        merchantDetails.put("country","Nigeria");
+        model.addAttribute("merchantDetails",merchantDetails);
+
         return "merchant/merchantFailed";
     }
 

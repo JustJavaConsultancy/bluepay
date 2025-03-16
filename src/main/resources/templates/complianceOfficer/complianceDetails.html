@@ -71,8 +71,10 @@
         <div>
             <div class="btn-group">
                 <button id="btn1" class="btn btn-primary present">Compliance Details</button>
-                <button id="btn2" class="btn btn-primary">Third Party Verification</button>
             </div>
+            <button _="on click history.back()" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
+                <i class="bi bi-arrow-left-circle-fill fs-6"></i>
+            </button>
             <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails})}" />
             <div class="row mt-2">
                 <div class="col">

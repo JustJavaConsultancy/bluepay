@@ -7,6 +7,7 @@ import './chat'
 import './form'
 import './document'
 import './compliance'
+import './dateValidation'
 function initDatepicker() {
   document.querySelectorAll('.js-datepicker, .js-timepicker, .js-datetimepicker').forEach(($item) => {
     const flatpickrConfig = {
