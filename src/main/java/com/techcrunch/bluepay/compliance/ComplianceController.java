@@ -6,10 +6,7 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
 
 import java.util.ArrayList;
@@ -31,6 +28,18 @@ public class ComplianceController {
     public String getCompliance(){
 
         return "/compliance/compliance";
+    }
+    @PostMapping("/accept")
+    public String acceptedDetails(@RequestParam Map<String,Object> formData){
+
+        System.out.println(" The Submitted Data==="+formData);
+        return "/complianceOfficer/officerDashboard";
+    }
+    @PostMapping("/rejected")
+    public String rejectionDetails(@RequestParam Map<String,Object> formData){
+
+        System.out.println(" The Submitted Data==="+formData);
+        return "/complianceOfficer/officerDashboard";
     }
     @GetMapping("/complianceOfficer")
     public String getComplianceOfficer(Model model){

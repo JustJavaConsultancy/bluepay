@@ -3,8 +3,8 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
 <div id="form4" style="display: none; margin-bottom: 20px;" th:fragment="form4">
@@ -16,14 +16,21 @@
     <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">The bank account name must match the name of the business owner</div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accNumber">Account Number<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="accNumber" class="form-control" id="accNumber" required _="on input
-              set #bank-account-number.textContent to me.value
+      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;"
+             type="number" name="accNumber" class="form-control" id="accNumber"
+             th:value="${data!=null?data['accNumber']:''}"
+             required
+             oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10)"
+             _="on input
+             set #bank-account-number.textContent to me.value
               if my.value.length >= 10
-                remove .invalid from me
+               remove .invalid from me
               else
-                add .invalid to me
+               add .invalid to me
               end">
+
       <div class="error-message">Please enter at least 10 digits.</div>
+
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
@@ -35,7 +42,7 @@
     </div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accName">Name on Account<span style="color: #EF5350;">*</span></label>
-      <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" id="accName" readonly >
+      <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
     </div>
   </div>
   <button id="next4" class="mt-2 saveButton" disabled >Save</button>
