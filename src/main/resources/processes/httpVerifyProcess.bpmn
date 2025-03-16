@@ -3,8 +3,8 @@
   <process id="httpVerifyProcess" name="Verification Process" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
     <extensionElements>
       <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
-      <design:creationdate><![CDATA[2025-03-10T13:26:19.097Z]]></design:creationdate>
-      <design:modificationdate><![CDATA[2025-03-11T11:51:09.180Z]]></design:modificationdate>
+      <design:creationdate><![CDATA[2025-03-14T14:56:16.758Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2025-03-15T23:27:15.378Z]]></design:modificationdate>
     </extensionElements>
     <serviceTask id="bvnTask" name="BVN Http Task" flowable:parallelInSameTransaction="false" flowable:type="http">
       <extensionElements>
@@ -53,15 +53,9 @@ token: ${tokenValue}]]></flowable:expression>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <userTask id="bvnFormTask" name="Bvn/Nin User Task" flowable:assignee="${initiator}" flowable:formKey="bVNDisplayForm" flowable:formFieldValidation="false">
-      <extensionElements>
-        <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
-        <design:stencilid><![CDATA[FormTask]]></design:stencilid>
-        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
-      </extensionElements>
-    </userTask>
     <serviceTask id="VariableActivity_16" name="Initialize variables" flowable:delegateExpression="${initVariablesService}" flowable:extensionId="VariableActivity">
       <extensionElements>
+        <flowable:executionListener event="end" delegateExpression="${firstService}"></flowable:executionListener>
         <flowable:overwrite><![CDATA[true]]></flowable:overwrite>
         <flowable:variableMapping name="tokenValue" valueType="string" value="YNSvRx1u.g6rh0CM2OJ5aa1U9kPFtyrGkSeqn3kMxQAOH"></flowable:variableMapping>
         <flowable:variableMapping name="baseUrl" valueType="string" value="https://api.sandbox.youverify.co"></flowable:variableMapping>
@@ -159,17 +153,11 @@ token: ${tokenValue}]]></flowable:expression>
         <flowable:field name="saveResponseVariableAsJson">
           <flowable:string><![CDATA[true]]></flowable:string>
         </flowable:field>
+        <flowable:executionListener event="end" delegateExpression="${firstService}"></flowable:executionListener>
         <design:stencilid><![CDATA[HttpTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <userTask id="FormTask_18" name="CAC/TIN Task" flowable:assignee="${initiator}" flowable:formKey="cacTinForm" flowable:formFieldValidation="false">
-      <extensionElements>
-        <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
-        <design:stencilid><![CDATA[FormTask]]></design:stencilid>
-        <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
-      </extensionElements>
-    </userTask>
     <serviceTask id="tinTask" name="TIN Http Task" flowable:parallelInSameTransaction="false" flowable:type="http">
       <extensionElements>
         <flowable:field name="requestMethod">
@@ -215,6 +203,7 @@ token: ${tokenValue}]]></flowable:expression>
     </serviceTask>
     <startEvent id="startnoneevent1" flowable:initiator="initiator" flowable:formFieldValidation="false">
       <extensionElements>
+        <flowable:executionListener event="start" expression="println &quot;Process ${execution.processDefinitionId} started by ${execution.getVariable('initiator')}&quot;"></flowable:executionListener>
         <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
         <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
       </extensionElements>
@@ -225,11 +214,6 @@ token: ${tokenValue}]]></flowable:expression>
       </extensionElements>
     </endEvent>
     <sequenceFlow id="SequenceFlow_15" sourceRef="bvnTask" targetRef="ninTask">
-      <extensionElements>
-        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
-      </extensionElements>
-    </sequenceFlow>
-    <sequenceFlow id="SequenceFlow_6" sourceRef="bvnFormTask" targetRef="FormTask_18">
       <extensionElements>
         <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
       </extensionElements>
@@ -249,12 +233,7 @@ token: ${tokenValue}]]></flowable:expression>
         <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
       </extensionElements>
     </sequenceFlow>
-    <sequenceFlow id="SequenceFlow_22" sourceRef="FormTask_18" targetRef="EndNoneEvent_5">
-      <extensionElements>
-        <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
-      </extensionElements>
-    </sequenceFlow>
-    <sequenceFlow id="SequenceFlow_19" sourceRef="tinTask" targetRef="bvnFormTask">
+    <sequenceFlow id="SequenceFlow_19" sourceRef="tinTask" targetRef="EndNoneEvent_5">
       <extensionElements>
         <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
       </extensionElements>
@@ -270,9 +249,6 @@ token: ${tokenValue}]]></flowable:expression>
       <bpmndi:BPMNShape bpmnElement="bvnTask" id="BPMNShape_bvnTask">
         <omgdc:Bounds height="80.0" width="100.0" x="541.56288" y="236.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="bvnFormTask" id="BPMNShape_bvnFormTask">
-        <omgdc:Bounds height="80.0" width="100.0" x="1135.8704" y="236.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="VariableActivity_16" id="BPMNShape_VariableActivity_16">
         <omgdc:Bounds height="80.0" width="100.0" x="353.01816910188916" y="236.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -281,9 +257,6 @@ token: ${tokenValue}]]></flowable:expression>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="cacHttpTask" id="BPMNShape_cacHttpTask">
         <omgdc:Bounds height="80.0" width="100.0" x="845.4182399999997" y="236.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="FormTask_18" id="BPMNShape_FormTask_18">
-        <omgdc:Bounds height="80.0" width="100.0" x="1271.624" y="236.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="tinTask" id="BPMNShape_tinTask">
         <omgdc:Bounds height="80.0" width="99.99999999999989" x="997.3459199999999" y="236.0"></omgdc:Bounds>
@@ -299,16 +272,8 @@ token: ${tokenValue}]]></flowable:expression>
         <omgdi:waypoint x="687.0" y="276.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_17" id="BPMNEdge_SequenceFlow_17" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="453.01816910188916" y="276.0"></omgdi:waypoint>
-        <omgdi:waypoint x="541.56288" y="276.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_22" id="BPMNEdge_SequenceFlow_22" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
-        <omgdi:waypoint x="1371.0" y="276.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1413.0" y="276.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_6" id="BPMNEdge_SequenceFlow_6" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="1235.0" y="276.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1271.0" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="453.0" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="541.0" y="276.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_20" id="BPMNEdge_SequenceFlow_20" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
         <omgdi:waypoint x="945.0" y="276.0"></omgdi:waypoint>
@@ -320,11 +285,11 @@ token: ${tokenValue}]]></flowable:expression>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_5" id="BPMNEdge_SequenceFlow_5" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
         <omgdi:waypoint x="282.0" y="276.0"></omgdi:waypoint>
-        <omgdi:waypoint x="353.01816910188916" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="353.0" y="276.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_19" id="BPMNEdge_SequenceFlow_19" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="1097.0" y="276.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1135.0" y="276.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="SequenceFlow_19" id="BPMNEdge_SequenceFlow_19" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
+        <omgdi:waypoint x="1097.3459199999998" y="276.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1413.8890880000001" y="276.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

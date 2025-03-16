@@ -22,16 +22,16 @@ public class ProcessController {
                                  @RequestBody Map<String, Object> formData,
                                  final Model model) {
         formData.put("assignee","compliance");
-        System.out.println(" Entering the home................."+formData);
+        //System.out.println(" Entering the home................."+formData);
         ProcessInstance processInstance=runtimeService.createProcessInstanceBuilder()
                 .processDefinitionKey(processId)
                 .variables(formData)
                 .start();
         request.getSession(true).setAttribute(processId,processInstance.getProcessInstanceId());
-        System.out.println(" Process instance id......."+processInstance.getProcessInstanceId());
+        //System.out.println(" Process instance id......."+processInstance.getProcessInstanceId());
 
-        System.out.println(" Starting a process here and the " +
-                "submitted data=="+formData);
+/*        System.out.println(" Starting a process here and the " +
+                "submitted data=="+formData);*/
         return "tasks/task-form";
     }
 }

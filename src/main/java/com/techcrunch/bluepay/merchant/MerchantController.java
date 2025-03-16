@@ -15,15 +15,19 @@ public class MerchantController {
     MerchantService merchantService;
 
     @GetMapping("/new")
-    public String getCompliance(){
+    public String getCompliance(Model model){
         return "/compliance/compliance";
     }
-    @PostMapping("/submitted")
+    @PostMapping("/submit")
     public String submitDetails(@RequestParam Map<String,Object> formData){
 
-        System.out.println(" The Submitted Data==="+formData);
         merchantService.submitMyDetail(formData);
         return "home/index";
+    }
+    @GetMapping("/submitted")
+    public String getSubmittedStatus(){
+
+        return "merchant/merchantStatus";
     }
     @GetMapping("/successful")
     public String merchantStatus(Model model) {

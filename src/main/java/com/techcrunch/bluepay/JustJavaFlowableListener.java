@@ -26,12 +26,18 @@ public class JustJavaFlowableListener implements FlowableEventListener {
 
             // Ensure that the entity is a Task
 
-            System.out.println(" The task fired here==="+entityEvent.getType().name());
+
             if (entityEvent.getEntity() instanceof Task) {
                 Task task = (Task) entityEvent.getEntity();
                 if (event.getType() == FlowableEngineEventType.TASK_CREATED) {
 
+
+
+
                     String assignin=task.getAssignee();
+
+                    System.out.println(" The Task Name=="+task.getName() + " and assign to " +
+                             assignin);
 
                     ChatMessage chatMessage=ChatMessage.builder()
                             .content(task.getName())
@@ -40,10 +46,10 @@ public class JustJavaFlowableListener implements FlowableEventListener {
                             .build();
                     String destination = "/topic/group/" + chatMessage.getGroupId();
                     messagingTemplate.convertAndSend(destination, chatMessage);
-                    System.out.println("Task Created: " + task.getName()+"" +
+/*                    System.out.println("Task Created: " + task.getName()+"" +
                             " form key== "+task.getId()
                             +" assignee=="+task.getAssignee()+
-                    " the  variables===");
+                    " the  variables===");*/
                 }
 
             }

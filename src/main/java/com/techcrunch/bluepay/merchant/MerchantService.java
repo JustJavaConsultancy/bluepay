@@ -3,12 +3,15 @@ package com.techcrunch.bluepay.merchant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.processes.CustomProcessService;
+import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -17,34 +20,36 @@ public class MerchantService {
     private final RuntimeService runtimeService;
     private final CustomProcessService processService;
 
+    private final TaskRepository taskRepository;
+
     @Autowired
     JsonFileReaderService jsonFileReaderService;
+
+
     public MerchantService(AuthenticationManager authenticationManager,
                            RuntimeService runtimeService,
-                           CustomProcessService processService) {
+                           CustomProcessService processService, TaskRepository taskRepository) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
+        this.taskRepository = taskRepository;
     }
-    public String getMerchantStatus(String merchantId){
-        String result="NEW";
+    public Map<String,Object> getMerchantStatus(String merchantId){
+        Map<String,Object> result=new HashMap<String,Object>();
         // Check for active process instance
 
         ProcessInstance activeProcessInstance=processService.getProcessInstanceByBusinessKey(merchantId);
-        if(activeProcessInstance==null)
+        if(activeProcessInstance==null) {
+            result.put("status", "NEW");
+            result.put("variables",new HashMap<>());
             return result;
-        else {
+        }else {
             Map<String,Object> processVariables=processService
                     .getProcessInstanceVariables(activeProcessInstance.getProcessInstanceId());
-            System.out.println(" activeProcessInstance.getProcessVariables()=="+
-                    processVariables);
-            try {
-                System.out.println("JSON Representation===="+jsonFileReaderService.returnObjectAsJSONString(processVariables));
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException(e);
-            }
-
-            result= "SUCCESSFUL";//(String) processVariables.get("onboardStatus");
+/*            System.out.println(" activeProcessInstance.getProcessVariables()=="+
+                    processVariables);*/
+            result.put("status",processVariables.get("onboardStatus"));
+            result.put("variables",processVariables);
         }
         return result;
     }
@@ -54,5 +59,19 @@ public class MerchantService {
         String loginUser= (String) authenticationManager.get("sub");
         return processService
                 .startProcess("merchantOnboardingProcess",loginUser,data);
+    }
+
+    public List<Map<String, Object>> getMyActiveTasks(){
+        String loginId= "compliance";
+        if(authenticationManager.isMerchant())
+            loginId= (String) authenticationManager.get("sub");
+
+        return taskRepository.getMyPendingTasksWithVariables(loginId);
+    }
+    public List<Map<String, Object>> getSpecificDataMyVariables(List<String> specificVariable){
+        String loginId= "compliance";
+        if(authenticationManager.isMerchant())
+            loginId= (String) authenticationManager.get("sub");
+        return taskRepository.fetchSpecificVariablesForAssignee(specificVariable,loginId);
     }
 }

@@ -13,7 +13,7 @@ public class FormController {
                 && params.get("email") != null && !params.get("email").isEmpty()
                 && params.get("password") != null && !params.get("password").isEmpty();
 
-        System.out.println(" the sent params ==="+params);
+        //System.out.println(" the sent params ==="+params);
         model.addAttribute("enabled", isFormValid);
         return "fragments/submit-button :: button";
     }
