@@ -51,6 +51,7 @@ public class ComplianceController {
                 }
         );
 
+        model.addAttribute("pending",employees.size());
         model.addAttribute("employees", employees);
 
         return "/complianceOfficer/officerDashboard";

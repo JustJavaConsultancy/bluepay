@@ -29,18 +29,8 @@ public class HomeController {
     MerchantService merchantService;
 
     @GetMapping("/")
-    public String index(RedirectAttributes redirectAttributes) {
-
-
+    public String index(HttpServletRequest request,RedirectAttributes redirectAttributes) {
         String loginUser= (String) authenticationManager.get("sub");
- /*       List<String> variableNames = List.of("initiator", "businessType");
-        List<Map<String, Object>> taskList=
-                merchantService.getSpecificDataMyVariables(variableNames);
-        taskList.forEach(task-> System.out.println(" The task are===="+task));
-*/
-
-
-        //System.out.println(" loging user here==="+loginUser);
         String page="home/index";
         String status= (String) merchantService
                 .getMerchantStatus(loginUser).get("status");
@@ -52,9 +42,11 @@ public class HomeController {
         redirectAttributes.addFlashAttribute("merchantDetails",variables);
         if(authenticationManager.isMerchant()){
             page="redirect:merchant/"+status.toLowerCase();
+            request.getSession(true).setAttribute("chatGroup",loginUser);
         }
         if(authenticationManager.isComplianceOfficer()){
             page="redirect:compliance/complianceOfficer";
+            request.getSession(true).setAttribute("chatGroup","compliance");
         }
         return page;
     }

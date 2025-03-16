@@ -25,10 +25,10 @@
                 <div class="card" style="background-color: #FFF8E3;color: #977718;border: 1px solid #F5BA04;">
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 0.75rem;font-weight: 500;">Pending Request</h5>
-                        <h3 style="font-weight: 600;margin-top: 20px;">45,823</h3>
+                        <h3 style="font-weight: 600;margin-top: 20px;" th:text="${pending}">45,823</h3>
                         <div style="display: flex;justify-content: space-between;">
                             <div>
-                                <p style="font-size: 0.75rem;font-weight: 500;">1,382 today</p>
+                                <p style="font-size: 0.75rem;font-weight: 500;" th:text="${pending} + ' today'">1,382 today</p>
                             </div>
                             <div><a th:href="@{/compliance/pendingRequest}" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View</a></div>
                         </div>
@@ -39,10 +39,10 @@
                 <div class="card" style="background-color: #DDFEE5; border: 1px solid #34C759;color: #235630;">
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 0.75rem;font-weight: 500;">Approved Compliance</h5>
-                        <h3 style="font-weight: 600;margin-top: 20px;">45,823</h3>
+                        <h3 style="font-weight: 600;margin-top: 20px;">0</h3>
                         <div style="display: flex;justify-content: space-between;">
                             <div>
-                                <p style="font-size: 0.75rem;font-weight: 500;">1,382 today</p>
+                                <p style="font-size: 0.75rem;font-weight: 500;">0 today</p>
                             </div>
                             <div><a th:href="@{/compliance/succesfulCompliance}" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View</a></div>
                         </div>
@@ -53,10 +53,10 @@
                 <div class="card" style="background-color: #FFE6E5;border: 1px solid #EF5350;color: #5E1B19;">
                     <div class="card-body">
                         <h5 class="card-title" style="font-size: 0.75rem;font-weight: 500;">Rejected Compliance</h5>
-                        <h3 style="font-weight: 600;margin-top: 20px;">45,823</h3>
+                        <h3 style="font-weight: 600;margin-top: 20px;">0</h3>
                         <div style="display: flex;justify-content: space-between;">
                             <div>
-                                <p style="font-size: 0.75rem;font-weight: 500;">1,382 today</p>
+                                <p style="font-size: 0.75rem;font-weight: 500;">0 today</p>
                             </div>
                             <div><a th:href="@{/compliance/rejectedCompliance}" style="text-decoration: none;font-size: 0.75rem;font-weight: 500;color: #0C74B1;">View</a></div>
                         </div>

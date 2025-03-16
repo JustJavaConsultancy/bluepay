@@ -7,9 +7,9 @@
     <extensionElements>
       <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
       <design:creationdate><![CDATA[2025-03-14T14:56:35.365Z]]></design:creationdate>
-      <design:modificationdate><![CDATA[2025-03-16T00:41:04.312Z]]></design:modificationdate>
+      <design:modificationdate><![CDATA[2025-03-16T08:04:30.824Z]]></design:modificationdate>
     </extensionElements>
-    <userTask id="FormTask_5" name="KYC Check for ${businessName}" flowable:assignee="compliance" flowable:owner="${initiator}" flowable:formKey="kycForm" flowable:formFieldValidation="false">
+    <userTask id="FormTask_5" name="KYC Check for ${businessName}" flowable:assignee="compliance" flowable:owner="${initiator}" flowable:formFieldValidation="false">
       <extensionElements>
         <flowable:executionListener event="start" delegateExpression="${firstService}"></flowable:executionListener>
         <flowable:taskListener event="create" delegateExpression="${customTaskListener}"></flowable:taskListener>
@@ -237,14 +237,14 @@
         <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
         <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalDecision == true}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onboardingStatus == 'APPROVED'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="approvalNo" name="No" sourceRef="Exclusive_Databased_Gateway_60" targetRef="complianceDeclinedEmail">
       <extensionElements>
         <design:stencilid><![CDATA[SequenceFlow]]></design:stencilid>
         <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
       </extensionElements>
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${approvalDecision == false}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onboardingStatus == 'DECLINED'}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="paymentSuccessful" name="successful" sourceRef="Exclusive_Databased_Gateway_76" targetRef="EmailTask_81">
       <extensionElements>
@@ -374,8 +374,8 @@
         <omgdi:waypoint x="988.0" y="239.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="approvalYes" id="BPMNEdge_approvalYes" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="539.0" y="199.0"></omgdi:waypoint>
-        <omgdi:waypoint x="600.0" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="539.7375126511623" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="600.0972607204259" y="199.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="18.0" width="20.0" x="549.0" y="169.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
@@ -393,8 +393,8 @@
         <omgdi:waypoint x="1270.0" y="199.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_61" id="BPMNEdge_SequenceFlow_61" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="20.0" flowable:targetDockerY="20.0">
-        <omgdi:waypoint x="366.0" y="199.0"></omgdi:waypoint>
-        <omgdi:waypoint x="499.0" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="366.47514977824596" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="499.7375126511623" y="199.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_103" id="BPMNEdge_SequenceFlow_103" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
         <omgdi:waypoint x="1038.0" y="199.0"></omgdi:waypoint>

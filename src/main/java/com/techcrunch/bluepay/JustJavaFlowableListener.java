@@ -34,14 +34,14 @@ public class JustJavaFlowableListener implements FlowableEventListener {
 
 
 
-                    String assignin=task.getAssignee();
+                    String assignee=task.getAssignee();
 
                     System.out.println(" The Task Name=="+task.getName() + " and assign to " +
-                             assignin);
+                            assignee);
 
                     ChatMessage chatMessage=ChatMessage.builder()
                             .content(task.getName())
-                            .groupId(assignin)
+                            .groupId(assignee)
                             .sender("Process Engine")
                             .build();
                     String destination = "/topic/group/" + chatMessage.getGroupId();
