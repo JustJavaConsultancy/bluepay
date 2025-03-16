@@ -36,8 +36,6 @@ public class ComplianceController {
     public String getComplianceOfficer(Model model){
 
         List<Map<String, Object>> employees = new ArrayList<>();
-
-
         List<TaskDTO> tasks = complianceService.getComplianceTasks();
         tasks.forEach(
                 task -> {
