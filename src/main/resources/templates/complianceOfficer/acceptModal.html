@@ -7,8 +7,9 @@
     <title>Title</title>
 </head>
 <body>
-<div th:fragment="accept">
-    <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+<div th:fragment="accept(id)">
+    <button type="button" class="btn-close btn-close-black"
+            data-bs-dismiss="modal" aria-label="Close"></button>
 
     <div style="display: flex;justify-content: center;text-align: center;padding: 15px;">
         <div>
@@ -17,7 +18,7 @@
             </div>
             <h2 style="color: #062C5A;font-size: 1rem;font-weight: 500;margin-top: 20px;">You’re about to approve this compliance, are you sure you want to approve?</h2>
             <form id="acceptForm" hx-post="/compliance/accept">
-                <input type="hidden" name="id" value="5">
+                <input type="hidden" name="id" th:value="${id}">
             </form>
             <p style="color: #6F768D;font-size: 0.75rem;line-height: 1.5;">This action is irreversible </p>
             <div class="row" style="margin-top: 70px;">

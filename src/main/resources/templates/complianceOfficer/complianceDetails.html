@@ -54,7 +54,7 @@
         <div class="modal-dialog modal-dialog-centered modal-md" >
             <div class="modal-content">
                 <!-- Modal content -->
-                <div th:replace="~{/complianceOfficer/acceptModal :: accept}" />
+                <div th:replace="~{/complianceOfficer/acceptModal :: accept(${taskId})}" />
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
         <div class="modal-dialog modal-dialog-centered modal-md" >
             <div class="modal-content">
                 <!-- Modal content -->
-                <div th:replace="~{/complianceOfficer/rejectModal :: reject}" />
+                <div th:replace="~{/complianceOfficer/rejectModal :: reject(${taskId})}" />
 
             </div>
     </div>
