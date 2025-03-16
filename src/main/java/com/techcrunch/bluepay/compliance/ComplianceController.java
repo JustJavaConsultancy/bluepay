@@ -5,6 +5,9 @@ import com.techcrunch.bluepay.tasks.TaskDTO;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -29,17 +32,24 @@ public class ComplianceController {
 
         return "/compliance/compliance";
     }
-    @PostMapping("/accept")
-    public String acceptedDetails(@RequestParam Map<String,Object> formData){
-
-        System.out.println(" The Submitted Data==="+formData);
-        return "/complianceOfficer/officerDashboard";
-    }
     @PostMapping("/rejected")
-    public String rejectionDetails(@RequestParam Map<String,Object> formData){
+    public ResponseEntity<Void> acceptedDetails(@RequestParam Map<String, Object> formData) {
+        System.out.println("The Submitted Data === " + formData);
 
-        System.out.println(" The Submitted Data==="+formData);
-        return "/complianceOfficer/officerDashboard";
+        // Return HX-Redirect to navigate to the compliance officer dashboard
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/compliance/complianceOfficer");
+
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
+    }
+    @PostMapping("/accept")
+    public ResponseEntity<Void> rejectionDetails(@RequestParam Map<String, Object> formData) {
+        System.out.println("The Submitted Data === " + formData);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/compliance/complianceOfficer");
+
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @GetMapping("/complianceOfficer")
     public String getComplianceOfficer(Model model){

@@ -67,21 +67,40 @@
             </div>
     </div>
     </div>
-    <div style="display: flex;justify-content: center;align-items: center;margin-top: 15px">
+    <div style="display: flex; justify-content: center; height: 100vh;margin-top: 20px">
         <div>
-            <div class="btn-group">
-                <button id="btn1" class="btn btn-primary present">Compliance Details</button>
-            </div>
-            <button _="on click history.back()" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
-                <i class="bi bi-arrow-left-circle-fill fs-6"></i>
-            </button>
-            <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails})}" />
-            <div class="row mt-2">
-                <div class="col">
-                    <button data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn" style="width: 100%; background-color:#EB3A37;color: white;font-size: 1rem;font-weight: 700">Reject</button>
-                </div>
-                <div class="col">
-                    <button data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn" style="width: 100%; background-color:#0C74B1;color: white;font-size: 1rem;font-weight: 700">Accept</button>
+            <div style="display: flex; justify-content: center; align-items: center; ">
+                <div>
+                    <div class="btn-group">
+                        <button id="btn1"
+                                class="btn btn-primary present"
+                                onclick="document.getElementById('veridetails').style.display='none'
+                                 document.getElementById('dets').style.display='block'">Compliance Details</button>
+                        <button id="btn2"
+                                class="btn btn-primary"
+                                onclick="document.getElementById('veridetails').style.display='block'
+                                 document.getElementById('dets').style.display='none'" >Verification Result</button>
+                    </div>
+                    <button _="on click history.back()" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
+                        <i class="bi bi-arrow-left-circle-fill fs-6"></i>
+                    </button>
+                    <div id="veridetails" class="reject" style="margin-top: 2%; background-color: #0C2CB10F; color: #2050A8; border-radius: 4px; padding: 10px 15px; width: 350px; max-height: fit-content; font-size: 0.75rem; font-weight: 400;display: none">
+                        <p style="font-weight: 500;">Reason for failed compliance</p>
+                        <p style="font-weight: 500;">Reason for failed compliance
+                            Please ensure that the information you provide is correct.
+                            Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. </p>
+                    </div>
+                    <div id="dets">
+                    <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails})}" />
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col">
+                            <button data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn" style="width: 100%; background-color:#EB3A37;color: white;font-size: 1rem;font-weight: 700">Reject</button>
+                        </div>
+                        <div class="col">
+                            <button data-bs-toggle="modal" data-bs-target="#acceptModal" class="btn" style="width: 100%; background-color:#0C74B1;color: white;font-size: 1rem;font-weight: 700">Accept</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
