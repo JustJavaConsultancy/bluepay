@@ -2,14 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
     var socket = new SockJS('/ws');
     var stompClient = Stomp.over(socket);
 
+    let layoutDiv = document.getElementById("layoutDiv");
+    const chatGroup = layoutDiv.getAttribute("chat-group");
+
+
     const badge = document.getElementById("notificationBadge");
     if (badge && parseInt(badge.textContent, 10) === 0) {
         badge.style.display = "none";
     }
 
     stompClient.connect({}, function () {
-        stompClient.subscribe('/topic/group/compliance', function (message) {
+        stompClient.subscribe('/topic/group/'+chatGroup, function (message) {
             var chatMessage = JSON.parse(message.body);
+            alert(' A message arrives=='+chatMessage)
             pushMail(chatMessage);
             console.log(' This particular one is from the server...'
                 + chatMessage.sender + ": " + chatMessage.content);

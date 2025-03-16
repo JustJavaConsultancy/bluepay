@@ -20,7 +20,7 @@
 </head>
 <body>
 <div th:replace="~{/sidebar :: sidebar}" />
-<div class="d-flex flex-column flex-grow-1">
+<div id="layoutDiv" class="d-flex flex-column flex-grow-1" th:chat-group="${session.chatGroup}">
     <div th:replace="~{/header :: header}" />
     <div class="content container-fluid">
         <!--        <h2 class="fs-5">"Is this it "+[[#{app.title}]]</h2>-->
