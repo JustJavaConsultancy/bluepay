@@ -28,11 +28,11 @@ public class TaskFormController {
 
         try {
 
-            System.out.println(" processInstanceId == "+processInstanceId);
+            //System.out.println(" processInstanceId == "+processInstanceId);
 
             TaskInfo taskInfo = justJavaTaskService.getTaskInfo(processInstanceId,taskid);
-            System.out.println(" The String loaded schema here==="+ taskInfo.getSchema());
-            System.out.println(" The String loaded data here==="+ taskInfo.getData());
+            //System.out.println(" The String loaded schema here==="+ taskInfo.getSchema());
+            //System.out.println(" The String loaded data here==="+ taskInfo.getData());
             model.addAttribute("schema",taskInfo.getSchema());
             model.addAttribute("data",taskInfo.getData());
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class TaskFormController {
                                  @RequestBody Map<String, Object> formData,
                                  final Model model) {
 
-        System.out.println(" Here is the submitted data=="+formData);
+        //System.out.println(" Here is the submitted data=="+formData);
         return "tasks/task-form";
     }
     @GetMapping("/start-form/{formKey}")
@@ -59,8 +59,8 @@ public class TaskFormController {
 
         try {
             TaskInfo taskInfo = justJavaTaskService.getProcessStartForm(formKey);
-            System.out.println(" The String loaded schema here==="+ taskInfo.getSchema());
-            System.out.println(" The String loaded data here==="+ taskInfo.getData());
+            //System.out.println(" The String loaded schema here==="+ taskInfo.getSchema());
+            //System.out.println(" The String loaded data here==="+ taskInfo.getData());
             model.addAttribute("schema",taskInfo.getSchema());
             model.addAttribute("data",taskInfo.getData());
         } catch (IOException e) {

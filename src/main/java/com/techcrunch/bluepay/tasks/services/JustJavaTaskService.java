@@ -27,7 +27,7 @@ public class JustJavaTaskService {
 
     public TaskInfo getTaskInfo(String processInstanceId,String taskId) throws IOException {
 
-        System.out.println(" The sent task id==="+taskId);
+        //System.out.println(" The sent task id==="+taskId);
 
         List<Task> tasks = taskService.createTaskQuery()
                 .processInstanceId(processInstanceId)
@@ -36,10 +36,12 @@ public class JustJavaTaskService {
                 .filter(task -> taskId.equalsIgnoreCase(task.getFormKey()))
                 .collect(Collectors.toList());
 
+/*
         tasks.forEach(task -> System.out.println(" The task full info here getExecutionId=="+
                 task.getExecutionId() +" name=="+task.getName() + "  getFormKey===="+task.getFormKey()));
+*/
 
-        System.out.println(" the name of the retrieved task =="+tasks.get(0).getName());
+        //System.out.println(" the name of the retrieved task =="+tasks.get(0).getName());
         Task flowableTask = taskService.createTaskQuery().taskId(tasks.get(0).getId()).singleResult();
 
         Map variables=runtimeService.getVariables(flowableTask.getProcessInstanceId());
