@@ -32,13 +32,16 @@ public class ComplianceController {
     @PostMapping("/accept")
     public String acceptedDetails(@RequestParam Map<String,Object> formData){
 
-        System.out.println(" The Submitted Data==="+formData);
+
+        //System.out.println(" The Submitted Data==="+formData);
+        complianceService.accept((String) formData.get("id"));
         return "/complianceOfficer/officerDashboard";
     }
     @PostMapping("/rejected")
     public String rejectionDetails(@RequestParam Map<String,Object> formData){
 
-        System.out.println(" The Submitted Data==="+formData);
+        System.out.println(" The Submitted Data inside rejected ==="+formData);
+        complianceService.decline((String) formData.get("id"),(String) formData.get("rejectinReason"));
         return "/complianceOfficer/officerDashboard";
     }
     @GetMapping("/complianceOfficer")

@@ -1,5 +1,8 @@
 package com.techcrunch.bluepay.tasks;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techcrunch.bluepay.account.AuthenticationManager;
+import com.techcrunch.bluepay.compliance.ComplianceService;
+import com.techcrunch.bluepay.merchant.MerchantService;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
 import com.techcrunch.bluepay.tasks.services.JustJavaTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +21,8 @@ public class TaskFormController {
 
     @Autowired
     JustJavaTaskService justJavaTaskService;
+
+
 
     @GetMapping("/test-form/{taskid}")
     public String testForm(@PathVariable String taskid,final Model model) {
@@ -73,25 +79,46 @@ public class TaskFormController {
 @Controller
 @RequestMapping("/api/menu")
 class MenuController {
+    @Autowired
+    MerchantService merchantService;
 
-    private final List<Map<String, String>> menuItems = List.of(
-            createMenuItem("Inbox Items","/start-form/acceptBusinessSchema"),
-            createMenuItem("Merchant Details","/start-form/businessRegistrationSchema"),
-            createMenuItem("Registered Merchants","/start-form/table"),
-            createMenuItem("Compliance", "/compliance/compliance"),
-            createMenuItem("MerchantStatus", "/merchant/successful"),
-            createMenuItem("Merchant failed", "/merchant/failed"),
-            createMenuItem("Compliance Officer", "/compliance/complianceOfficer")
-    );
+    @Autowired
+    ComplianceService complianceService;
 
+    @Autowired
+    AuthenticationManager authenticationManager;
     @GetMapping("/count")
     @ResponseBody
     public String getMenuCount() {
-        return "<span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">" + menuItems.size() + "</span>";
+
+        List<TaskDTO> taskDTOS = merchantService.getMyTasks();
+        if(authenticationManager.isComplianceOfficer()){
+            taskDTOS = complianceService.getComplianceTasks();
+        }
+
+        return "<span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">" + taskDTOS.size() + "</span>";
     }
 
     @GetMapping("/items")
     public String getMenuItems(Model model) {
+
+
+        List<Map<String, Object>> menuItems = new ArrayList<>();
+        List<TaskDTO> taskDTOS = new ArrayList<>();
+        if(authenticationManager.isMerchant()){
+            taskDTOS = merchantService.getMyTasks();
+        }
+        if(authenticationManager.isComplianceOfficer()){
+            taskDTOS = complianceService.getComplianceTasks();
+        }
+        System.out.println(" My Task here size=="+taskDTOS.size());
+        taskDTOS.forEach(taskDTO -> {
+            Map<String,Object> menuItem = new HashMap<>();
+            menuItem.put("name",taskDTO.getTaskName());
+            menuItem.put("url","/compliance/complianceDetail/"+taskDTO.getTaskId());
+            menuItems.add(menuItem);
+        });
+
         model.addAttribute("count", menuItems.size());
         model.addAttribute("menuItems", menuItems);
         return "fragments/menu-items"; // Thymeleaf fragment
