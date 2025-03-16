@@ -5,9 +5,6 @@ import com.techcrunch.bluepay.tasks.TaskDTO;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
@@ -32,24 +29,20 @@ public class ComplianceController {
 
         return "/compliance/compliance";
     }
-    @PostMapping("/rejected")
-    public ResponseEntity<Void> acceptedDetails(@RequestParam Map<String, Object> formData) {
-        System.out.println("The Submitted Data === " + formData);
-
-        // Return HX-Redirect to navigate to the compliance officer dashboard
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("HX-Redirect", "/compliance/complianceOfficer");
-
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
-    }
     @PostMapping("/accept")
-    public ResponseEntity<Void> rejectionDetails(@RequestParam Map<String, Object> formData) {
-        System.out.println("The Submitted Data === " + formData);
+    public String acceptedDetails(@RequestParam Map<String,Object> formData){
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("HX-Redirect", "/compliance/complianceOfficer");
 
-        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
+        //System.out.println(" The Submitted Data==="+formData);
+        complianceService.accept((String) formData.get("id"));
+        return "/complianceOfficer/officerDashboard";
+    }
+    @PostMapping("/rejected")
+    public String rejectionDetails(@RequestParam Map<String,Object> formData){
+
+        System.out.println(" The Submitted Data inside rejected ==="+formData);
+        complianceService.decline((String) formData.get("id"),(String) formData.get("rejectinReason"));
+        return "/complianceOfficer/officerDashboard";
     }
     @GetMapping("/complianceOfficer")
     public String getComplianceOfficer(Model model){

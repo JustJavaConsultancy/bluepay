@@ -76,4 +76,9 @@ public class TaskRepository {
         Task task = taskService.createTaskQuery().taskId(id).singleResult();
         return task;
     }
+
+    public void completeTask(String taskId,Map<String,Object> variables){
+        //System.out.println(" Variable inside the complete task=="+variables);
+        taskService.complete(taskId,variables);
+    }
 }

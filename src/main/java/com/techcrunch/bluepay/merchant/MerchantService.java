@@ -3,13 +3,16 @@ package com.techcrunch.bluepay.merchant;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.processes.CustomProcessService;
+import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.runtime.ProcessInstance;
+import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,5 +76,18 @@ public class MerchantService {
         if(authenticationManager.isMerchant())
             loginId= (String) authenticationManager.get("sub");
         return taskRepository.fetchSpecificVariablesForAssignee(specificVariable,loginId);
+    }
+    public List<TaskDTO> getMyTasks(){
+        List<Task> tasks = taskRepository.getTaskByAssignee((String) authenticationManager.get("sub"));
+        List<TaskDTO> taskDTOS = new ArrayList<>();
+        tasks.forEach(task -> {
+            TaskDTO taskDTO = new TaskDTO();
+            taskDTO.setTaskName(task.getName());
+            taskDTO.setTaskId(task.getId());
+            taskDTO.setCreatedDate(task.getCreateTime());
+            taskDTO.setVariables(processService.getProcessInstanceVariables(task.getProcessInstanceId()));
+            taskDTOS.add(taskDTO);
+        });
+        return taskDTOS;
     }
 }

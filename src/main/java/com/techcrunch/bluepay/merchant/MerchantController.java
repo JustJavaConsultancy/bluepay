@@ -29,6 +29,10 @@ public class MerchantController {
 
         return "merchant/merchantStatus";
     }
+    @GetMapping("/approved")
+    public String getApprovedStatus(){
+        return "merchant/merchantStatus";
+    }
     @GetMapping("/successful")
     public String merchantStatus(Model model) {
 
@@ -40,14 +44,8 @@ public class MerchantController {
 
         return "merchant/merchantStatus";
     }
-    @GetMapping("/failed")
+    @GetMapping("/declined")
     public String merchantFailed(Model model) {
-        Map merchantDetails= new HashMap();
-        merchantDetails.put("businessType","Partnership");
-        merchantDetails.put("businessName","Just Java");
-        merchantDetails.put("country","Nigeria");
-        model.addAttribute("merchantDetails",merchantDetails);
-
         return "merchant/merchantFailed";
     }
 
