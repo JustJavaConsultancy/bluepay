@@ -41,7 +41,8 @@ public class MerchantService {
         Map<String,Object> result=new HashMap<String,Object>();
         // Check for active process instance
 
-        ProcessInstance activeProcessInstance=processService.getProcessInstanceByBusinessKey(merchantId);
+        ProcessInstance activeProcessInstance=processService
+                .getProcessInstanceByBusinessKey(merchantId);
         if(activeProcessInstance==null) {
             result.put("status", "NEW");
             result.put("variables",new HashMap<>());

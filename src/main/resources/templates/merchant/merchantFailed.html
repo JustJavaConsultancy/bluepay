@@ -131,11 +131,11 @@
                         </div>
                     </div>
                     <div th:replace="~{/compliance/profile :: form1(${merchantDetails})}"></div>
-                    <div th:replace="~{/compliance/contact :: form2}"></div>
-                    <div th:replace="~{/compliance/businessOwner :: form3}"></div>
-                    <div th:replace="~{/compliance/bankAccount :: form4}"></div>
-                    <div th:replace="~{/compliance/serviceAgreement :: form5}"></div>
-                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',null)}"></div>
+                    <div th:replace="~{/compliance/contact :: form2(${merchantDetails})}"></div>
+                    <div th:replace="~{/compliance/businessOwner :: form3(${merchantDetails})}"></div>
+                    <div th:replace="~{/compliance/bankAccount :: form4(${merchantDetails})}"></div>
+                    <div th:replace="~{/compliance/serviceAgreement :: form5(${merchantDetails})}"></div>
+                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',${merchantDetails})}"></div>
                 </form>
                 <div class="reject" style="margin-top: 2%;background-color: #B1250C0F;color: #A82220;border-radius: 4px;padding: 10px 15px 10px 15px;width: 70%;max-height: fit-content;font-size: 0.75rem;font-weight: 400 ">
                     <p style="font-weight: 500">Reason for failed compliance</p>

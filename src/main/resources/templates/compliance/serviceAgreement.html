@@ -7,7 +7,7 @@
     <title>Title</title>
 </head>
 <body>
-<div id="form5" style="display: none;" th:fragment="form5">
+<div id="form5" style="display: none;" th:fragment="form5(data)">
     <button id="prev4" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
         <i class="bi bi-arrow-left-circle-fill fs-6"></i>
     </button>
@@ -22,7 +22,7 @@
                 Full Name <span style="color: #EF5350;">*</span>
             </label>
             <input _="on input set #agreement-full-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-                   id="fullname" name="fullname" th:value="${data!=null?data['fullName']:''}" required/>
+                   id="fullname" name="fullname" th:value="${data!=null?data['fullname']:''}" required/>
         </div>
         <div class="mb-3">
             <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="phoneNumber">Phone Number<span style="color: #EF5350;">*</span></label>
