@@ -39,6 +39,7 @@ public class ComplianceController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("HX-Redirect", "/compliance/complianceOfficer");
 
+        complianceService.accept((String) formData.get("id"));
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @PostMapping("/rejected")
@@ -49,6 +50,7 @@ public class ComplianceController {
         HttpHeaders headers = new HttpHeaders();
         headers.add("HX-Redirect", "/compliance/complianceOfficer");
 
+        complianceService.decline((String) formData.get("id"), (String) formData.get("rejectinReason"));
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @GetMapping("/complianceOfficer")
