@@ -167,12 +167,9 @@
         </div>
 
 
-    <button
-            type="submit"
+    <button type="submit"
             th:class="@{'mt-2 saveButton '+${hideButton}}"
-            _="on click
-               set my innerText to 'Submitting...'
-               then set my disabled to true"
+            id="submitCompliance"
     >Submit</button>
     </div>
 </div>
