@@ -24,16 +24,19 @@ public class TaskFormController {
     @Autowired
     ComplianceService complianceService;
 
+    @Autowired
+    TaskRepository taskRepository;
+
     @GetMapping("/resubmit/{taskId}")
     public String merchantFailedWithoutTaskId(@PathVariable String taskId, Model model) {
         model.addAttribute("merchantDetails",
-                complianceService.getSingleTask(taskId).getVariables());
+                taskRepository.getSingleTask(taskId).getVariables());
         return "merchant/merchantFailed";
     }
     @GetMapping("/complianceVerification/{taskId}")
     public String getcomplianceDetail(@PathVariable String taskId, Model model){
 
-        TaskDTO taskDTO = complianceService.getSingleTask(taskId);
+        TaskDTO taskDTO = taskRepository.getSingleTask(taskId);
         model.addAttribute("merchantDetails",taskDTO.getVariables());
         return "/complianceOfficer/complianceDetails";
     }

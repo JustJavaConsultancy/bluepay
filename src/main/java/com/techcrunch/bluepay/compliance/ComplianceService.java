@@ -20,42 +20,31 @@ public class ComplianceService {
 
     private final AuthenticationManager authenticationManager;
 
-    private final CustomProcessService customProcessService;
-
     public ComplianceService(TaskRepository taskRepository, AuthenticationManager authenticationManager, RuntimeService runtimeService, CustomProcessService customProcessService) {
         this.taskRepository = taskRepository;
         this.authenticationManager = authenticationManager;
-        this.customProcessService = customProcessService;
     }
 
     public List<TaskDTO> getComplianceTasks(){
         List<Task> tasks = taskRepository.getTaskByAssignee("compliance");
         List<TaskDTO> taskDTOS = new ArrayList<>();
         tasks.forEach(task -> {
-            TaskDTO taskDTO = new TaskDTO();
-            taskDTO.setTaskName(task.getName());
-            taskDTO.setTaskId(task.getId());
-            taskDTO.setFormKey(task.getFormKey());
-            taskDTO.setCreatedDate(task.getCreateTime());
-            taskDTO.setVariables(customProcessService.getProcessInstanceVariables(task.getProcessInstanceId()));
-            taskDTOS.add(taskDTO);
+            taskDTOS.add(taskRepository.getSingleTask(task.getId()));
         });
         return taskDTOS;
     }
 
-    public TaskDTO getSingleTask(String id){
-        Task task = taskRepository.getTaskById(id);
-        return TaskDTO.builder()
-                .taskId(task.getId())
-                .taskName(task.getName())
-                .formKey(task.getFormKey())
-                .createdDate(task.getCreateTime())
-                .variables(customProcessService.getProcessInstanceVariables(task.getProcessInstanceId()))
-                .build();
+    public List<TaskDTO> getAllApprovedKYC(){
+        return taskRepository.getCompletedTaskByAssigneeAndVariable("compliance",
+                "onboardStatus","APPROVED");
+    }
+    public List<TaskDTO> getAllDeclinedKYC(){
+        return taskRepository
+                .getCompletedTaskByAssigneeAndVariable("compliance","onboardStatus","DECLINED");
     }
 
     public Boolean accept(String taskId){
-        TaskDTO taskDTO = getSingleTask(taskId);
+        TaskDTO taskDTO = taskRepository.getSingleTask(taskId);
         Map<String,Object> variables=taskDTO.getVariables();
         variables.replace("onboardStatus","APPROVED");
 
@@ -64,7 +53,7 @@ public class ComplianceService {
         return true;
     }
     public Boolean decline(String taskId, String rejectReason){
-        TaskDTO taskDTO = getSingleTask(taskId);
+        TaskDTO taskDTO = taskRepository.getSingleTask(taskId);
         Map<String,Object> variables=taskDTO.getVariables();
         variables.replace("onboardStatus","DECLINED");
         variables.put("rejectReason",rejectReason);

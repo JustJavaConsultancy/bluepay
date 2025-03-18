@@ -2,6 +2,7 @@ package com.techcrunch.bluepay.compliance;
 
 import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
+import com.techcrunch.bluepay.tasks.TaskRepository;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
@@ -27,6 +28,9 @@ public class ComplianceController {
 
     @Autowired
     ComplianceService complianceService;
+
+    @Autowired
+    TaskRepository taskRepository;
     @GetMapping("/compliance")
     public String getCompliance(){
 
@@ -56,7 +60,7 @@ public class ComplianceController {
     @GetMapping("/complianceOfficer")
     public String getComplianceOfficer(Model model){
 
-        List<Map<String, Object>> employees = new ArrayList<>();
+        List<Map<String, Object>> pending = new ArrayList<>();
         List<TaskDTO> tasks = complianceService.getComplianceTasks();
         tasks.forEach(
                 task -> {
@@ -65,12 +69,23 @@ public class ComplianceController {
                             + " task id==" + task.getTaskId());
                     Map<String,Object> variables= task.getVariables();
                     variables.put("taskId",task.getTaskId());
-                    employees.add(variables);
+                    pending.add(variables);
                 }
         );
+        List<Map<String, Object>> successful = new ArrayList<>();
+        List<TaskDTO> successfulTasks = complianceService.getAllApprovedKYC();
+        List<TaskDTO> failedTasks = complianceService.getAllDeclinedKYC();
 
-        model.addAttribute("pending",employees.size());
-        model.addAttribute("employees", employees);
+        System.out.println(" The failed task count=="+failedTasks.size());
+        failedTasks.forEach(failed->{
+            System.out.println(" The failed task id ==="+failed.getTaskId());
+        });
+
+        model.addAttribute("pending",pending.size());
+        model.addAttribute("approveCount",successfulTasks.size());
+        model.addAttribute("failedTaskCount",failedTasks.size());
+
+        model.addAttribute("employees", pending);
 
         return "/complianceOfficer/officerDashboard";
     }
@@ -78,26 +93,10 @@ public class ComplianceController {
     public String getpendingRequest(Model model){
         List<Map<String, Object>> employees = new ArrayList<>();
 
-        Map<String, Object> emp1 = new HashMap<>();
-        emp1.put("id", 1);
-        emp1.put("businessName", "Justjava");
-        emp1.put("country", "Nigeria");
-        emp1.put("email", "justjava@gmail.com");
-        emp1.put("businessType", "Status");
-        emp1.put("date", "6 july,2025");
-        emp1.put("time", "10:20:15");
-        employees.add(emp1);
-
-        Map<String, Object> emp2 = new HashMap<>();
-        emp2.put("id", 2);
-        emp2.put("businessName", "PI Ventures");
-        emp2.put("country", "Ghana");
-        emp2.put("email", "piventures@gmail.com");
-        emp2.put("businessType", "Private");
-        emp2.put("date", "10 july,2025");
-        emp2.put("time", "10:50:15");
-        employees.add(emp2);
-
+        List<TaskDTO> tasks = complianceService.getComplianceTasks();
+        tasks.forEach(taskDTO -> {
+            employees.add(taskDTO.getVariables());
+        });
         model.addAttribute("employees", employees);
 
         return "/complianceOfficer/pendingRequest";
@@ -107,27 +106,13 @@ public class ComplianceController {
 
         List<Map<String, Object>> employees = new ArrayList<>();
 
-        Map<String, Object> emp1 = new HashMap<>();
-        emp1.put("id", 1);
-        emp1.put("businessName", "Justjava");
-        emp1.put("country", "Nigeria");
-        emp1.put("email", "justjava@gmail.com");
-        emp1.put("businessType", "Status");
-        emp1.put("date", "6 july,2025");
-        emp1.put("time", "10:20:15");
-        employees.add(emp1);
-
-        Map<String, Object> emp2 = new HashMap<>();
-        emp2.put("id", 2);
-        emp2.put("businessName", "PI Ventures");
-        emp2.put("country", "Ghana");
-        emp2.put("email", "piventures@gmail.com");
-        emp2.put("businessType", "Private");
-        emp2.put("date", "10 july,2025");
-        emp2.put("time", "10:50:15");
-        employees.add(emp2);
+        List<TaskDTO> tasks = complianceService.getAllApprovedKYC();
+        tasks.forEach(taskDTO -> {
+            employees.add(taskDTO.getVariables());
+        });
 
         model.addAttribute("employees", employees);
+
         return "/complianceOfficer/sucessfulCompliance";
     }
     @GetMapping("/rejectedCompliance")
@@ -135,33 +120,17 @@ public class ComplianceController {
 
         List<Map<String, Object>> employees = new ArrayList<>();
 
-        Map<String, Object> emp1 = new HashMap<>();
-        emp1.put("id", 1);
-        emp1.put("businessName", "Justjava");
-        emp1.put("country", "Nigeria");
-        emp1.put("email", "justjava@gmail.com");
-        emp1.put("businessType", "Status");
-        emp1.put("date", "6 july,2025");
-        emp1.put("time", "10:20:15");
-        employees.add(emp1);
-
-        Map<String, Object> emp2 = new HashMap<>();
-        emp2.put("id", 2);
-        emp2.put("businessName", "PI Ventures");
-        emp2.put("country", "Ghana");
-        emp2.put("email", "piventures@gmail.com");
-        emp2.put("businessType", "Private");
-        emp2.put("date", "10 july,2025");
-        emp2.put("time", "10:50:15");
-        employees.add(emp2);
-
+        List<TaskDTO> tasks = complianceService.getAllDeclinedKYC();
+        tasks.forEach(taskDTO -> {
+            employees.add(taskDTO.getVariables());
+        });
         model.addAttribute("employees", employees);
         return "/complianceOfficer/failedCompliance";
     }
     @GetMapping("/complianceDetail/{taskId}")
     public String getcomplianceDetail(@PathVariable String taskId, Model model){
 
-        TaskDTO taskDTO = complianceService.getSingleTask(taskId);
+        TaskDTO taskDTO = taskRepository.getSingleTask(taskId);
         model.addAttribute("merchantDetails",taskDTO.getVariables());
         return "/complianceOfficer/complianceDetails";
     }

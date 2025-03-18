@@ -20,6 +20,7 @@ public class MerchantController {
 
     @GetMapping("/new")
     public String getCompliance(Model model){
+
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
@@ -29,29 +30,28 @@ public class MerchantController {
     }
     @PostMapping("/resubmit")
     public String reSubmitDetails(@RequestParam Map<String,Object> formData){
-
-        System.out.println(" The variable I'm throwing in here===\n\n\n\n\n\n\n\n\n\n" +
-                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+formData);
         merchantService.completeDocumentResubmittion(formData);
         return "home/index";
     }
     @GetMapping("/submitted")
     public String getSubmittedStatus(){
-
         return "merchant/merchantStatus";
     }
     @GetMapping("/approved")
     public String getApprovedStatus(){
+
         return "merchant/merchantStatus";
     }
     @GetMapping("/successful")
     public String merchantStatus(Model model) {
 
 
+/*
         Map merchantDetails= new HashMap();
         merchantDetails.put("businessType","Partnership");
         merchantDetails.put("businessName","Just Java");
         model.addAttribute("merchantDetails",merchantDetails);
+*/
 
         return "merchant/merchantStatus";
     }
