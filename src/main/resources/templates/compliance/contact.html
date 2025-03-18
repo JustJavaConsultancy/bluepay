@@ -72,14 +72,14 @@
         <h1 class="mt-5" style="color: #062C5A;font-size: 1rem;">Business Address</h1>
         <div class="mb-3">
             <label style="font-size: 0.75rem;color: #405979;" for="country2" class="form-label">Country<span style="color: #EF5350;">*</span></label>
-            <select _="on change set #contact-business-country.textContent to me.options[me.selectedIndex].text" required name="businesscountry" id="country2" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+            <select _="on change set #contact-business-country.textContent to me.options[me.selectedIndex].text" required name="businesscountry" id="country2" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['businesscountry'] : ''}" >
                 <option value="Select">Select</option>
 
             </select>
         </div>
         <div class="mb-3">
             <label style="font-size: 0.75rem;color: #405979;" for="cities1" class="form-label">State<span style="color: #EF5350;">*</span></label>
-            <select _="on change set #contact-business-state.textContent to me.options[me.selectedIndex].text" required name="state" id="cities1" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+            <select _="on change set #contact-business-state.textContent to me.options[me.selectedIndex].text" required name="state" id="cities1" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['state'] : ''}">
                 <option value="Select">Select</option>
 
             </select>

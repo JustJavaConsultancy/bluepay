@@ -16,7 +16,8 @@
               name="country"
               id="country1"
               class="form-select"
-              style="font-size: 0.75rem; background-color: #FAFAFA;">
+              style="font-size: 0.75rem; background-color: #FAFAFA;"
+              th:data-selected="${data != null ? data['country'] : ''}">
 
         <option value="">Select a country</option>
         <!-- Countries will be populated here -->
@@ -29,14 +30,14 @@
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
       <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;">
-        <option value="Select" th:selected="${data['businessType'] == 'Select'}">Select business type</option>
-        <option value="Unregistered/Starterbusiness"  th:selected="${data['businessType'] == 'Unregistered/Starterbusiness'}">Unregistered/Starter business</option>
-        <option value="Businessnameregistration" th:selected="${data['businessType'] == 'Businessnameregistration'}">Business name registration</option>
-        <option value="Partnership" th:selected="${data['businessType'] == 'Partnership'}">Partnership</option>
-        <option value="Privatelimitedliabilitycompany" th:selected="${data['businessType'] == 'Privatelimitedliabilitycompany'}">Private limited liability company</option>
-        <option value="Publiclimitedliabilitycompany" th:selected="${data['businessType'] == 'Publiclimitedliabilitycompany'}">Public limited liability company</option>
-        <option value="ngo" th:selected="${data['businessType'] == 'ngo'}">Non-governmental organization (NGO)</option>
-        <option value="Co-operativesociety" th:selected="${data['businessType'] == 'Co-operativesociety'}">Co-operative society</option>
+        <option value="Select" th:selected="${data !=null ? data['businessType'] == 'Select':''}">Select business type</option>
+        <option value="Unregistered/Starterbusiness"  th:selected="${data !=null ? data['businessType'] == 'Unregistered/Starterbusiness':''}">Unregistered/Starter business</option>
+        <option value="Businessnameregistration" th:selected="${data !=null ? data['businessType'] == 'Businessnameregistration':''}">Business name registration</option>
+        <option value="Partnership" th:selected="${data !=null ? data['businessType'] == 'Partnership':''}">Partnership</option>
+        <option value="Privatelimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Privatelimitedliabilitycompany':''}">Private limited liability company</option>
+        <option value="Publiclimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Publiclimitedliabilitycompany':''}">Public limited liability company</option>
+        <option value="ngo" th:selected="${data != null ? data['businessType'] == 'ngo':''}">Non-governmental organization (NGO)</option>
+        <option value="Co-operativesociety" th:selected="${data != null ? data['businessType'] == 'Co-operativesociety':''}">Co-operative society</option>
       </select>
     </div>
   </div>

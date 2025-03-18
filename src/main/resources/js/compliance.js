@@ -1,34 +1,54 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const countrySelectIds = ['country1', 'country2', 'country3']; // Store IDs of select elements
-    console.log(countrySelectIds);
 
-    fetch('https://restcountries.com/v3.1/all')
-        .then(response => response.json())
-        .then(data => {
-            // Sort countries alphabetically by name
-            data.sort((a, b) => a.name.common.localeCompare(b.name.common));
+    function populateCountrySelect(selectElement, selectedCountry, callback) {
+        fetch("https://restcountries.com/v3.1/all")
+            .then(response => response.json())
+            .then(countries => {
+                countries.sort((a, b) => (a.name?.common || "").localeCompare(b.name?.common || ""));
+                selectElement.innerHTML = '';
 
-            data.forEach(country => {
-                const option = document.createElement('option');
-                option.value = country.cca2; // Use country code (e.g., 'US', 'CA')
-                option.textContent = country.name.common; // Use country name
+                if (!selectedCountry) {
+                    const defaultOption = document.createElement("option");
+                    defaultOption.value = "";
+                    defaultOption.textContent = "Select a country";
+                    selectElement.appendChild(defaultOption);
+                }
 
-                // Append the new option to all select elements
-                countrySelectIds.forEach(id => {
-                    const selectElement = document.getElementById(id);
-                    if (selectElement) { // Ensure the element exists before appending
-                        selectElement.appendChild(option.cloneNode(true)); // Clone to prevent moving the same node
-                    } else {
-                        console.warn(`Element with ID '${id}' not found.`);
+                countries.forEach(country => {
+                    const option = document.createElement("option");
+                    const countryCode = country.cca2;
+
+                    option.value = countryCode;
+                    option.textContent = country.name?.common || 'Unknown Country';
+
+                    if (countryCode === selectedCountry) {
+                        option.selected = true;
                     }
+
+                    selectElement.appendChild(option);
                 });
-            });
-        })
-        .catch(error => console.error('Error fetching countries:', error));
+
+                if (callback) callback(); // Ensure populateCities runs AFTER population
+            })
+            .catch(error => console.error("Error fetching countries:", error));
+    }
+
+
+    // Get all select elements
+    const countrySelect1 = document.getElementById("country1");
+    const countrySelect2 = document.getElementById("country2");
+    const countrySelect3 = document.getElementById("country3");
+
+    // Populate each select box with data
+    populateCountrySelect(countrySelect1, countrySelect1.getAttribute("data-selected"));
+    populateCountrySelect(countrySelect2, countrySelect2.getAttribute("data-selected"), populateCities); // Ensuring it runs after population
+    populateCountrySelect(countrySelect3, countrySelect3.getAttribute("data-selected"));
+
 
     function populateCities() {
         const countrySelect = document.getElementById("country2");
         const citySelect = document.getElementById("cities1");
+        const selectedState = citySelect.getAttribute("data-selected");
         citySelect.innerHTML = '<option value="">-- Select City --</option>'; // Clear existing options
 
         if (countrySelect.value === "NG") { // NG is the country code for Nigeria
@@ -38,9 +58,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 option.value = city;
                 option.textContent = city;
                 citySelect.appendChild(option);
+                if (city === selectedState) {
+                    option.selected = true;
+                }
+
+                citySelect.appendChild(option);
             });
+
         }
+
     }
+
 
     document.getElementById('country2').addEventListener('change', populateCities)
     const step1 = document.getElementById("form1");

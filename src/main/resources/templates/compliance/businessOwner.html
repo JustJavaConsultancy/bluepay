@@ -39,19 +39,19 @@
     </div>
     <div>
       <label style="font-size: 0.75rem;color: #405979;" for="country3" class="form-label">Nationality<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #owner-nationality.textContent to me.options[me.selectedIndex].text" required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select _="on change set #owner-nationality.textContent to me.options[me.selectedIndex].text" required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['nationality'] : ''}">
         <option value="Select">Select</option>
       </select>
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="identificationDoc" class="form-label">Identification Document<span style="color: #EF5350;">*</span></label>
       <select _="on change set #owner-id-document.textContent to me.options[me.selectedIndex].text" required name="identificationDoc" id="identificationDoc" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select" th:selected="${data['identificationDoc'] == 'Select'}">Select</option>
-        <option value="BVN" th:selected="${data['identificationDoc'] == 'BVN'}">BVN</option>
-        <option value="license" th:selected="${data['identificationDoc'] == 'license'}">Driver’s license</option>
-        <option value="NIN" th:selected="${data['identificationDoc'] == 'NIN'}">NIN</option>
-        <option value="vCard" th:selected="${data['identificationDoc'] == 'vCard'}">Voter’s card</option>
-        <option value="passport" th:selected="${data['identificationDoc'] == 'passport'}">International passport</option>
+        <option value="Select" th:selected="${data != null ? data['identificationDoc'] == 'Select':''}">Select</option>
+        <option value="BVN" th:selected="${data != null ? data['identificationDoc'] == 'BVN':''}">BVN</option>
+        <option value="license" th:selected="${data != null ? data['identificationDoc'] == 'license':''}">Driver’s license</option>
+        <option value="NIN" th:selected="${data !=null ? data['identificationDoc'] == 'NIN':''}">NIN</option>
+        <option value="vCard" th:selected="${data !=null ? data['identificationDoc'] == 'vCard':''}">Voter’s card</option>
+        <option value="passport" th:selected="${data !=null ? data['identificationDoc'] == 'passport':''}">International passport</option>
       </select>
     </div>
     <div class="mb-3">
@@ -83,7 +83,7 @@
     </ul>
   </div>
   <button id="next3"
-          th:class="@{'mt-2 saveButton '+${complianceButton}}"
+          class="mt-2 saveButton"
           disabled >Save</button>
 </div>
 

@@ -35,9 +35,9 @@
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
       <select _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select" th:selected="${data['bankName'] == 'Select'}">Select</option>
-        <option value="UBA" th:selected="${data['bankName'] == 'UBA'}">UBA</option>
-        <option value="firstbank" th:selected="${data['firstbank'] == 'UBA'}">First Bank</option>
+        <option value="Select" th:selected="${data !=null ? data['bankName'] == 'Select':''}">Select</option>
+        <option value="UBA" th:selected="${data !=null ? data['bankName'] == 'UBA':''}">UBA</option>
+        <option value="firstbank" th:selected="${data !=null ? data['bankName'] == 'firstbank':''}">First Bank</option>
       </select>
     </div>
     <div class="mb-3">
