@@ -76,8 +76,7 @@
                     </ul>
                 </div>
                 <form hx-post="/merchant/submit"
-                      hx-on::beforeRequest="document.getElementById('submitBtn').disabled = true"
-                      hx-on::afterRequest="document.getElementById('submitBtn').disabled = false"
+                      onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';"
                       style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
                     <div th:replace="~{/compliance/profile :: form1(null,null)}" />
                     <div th:replace="~{/compliance/contact :: form2(null,null)}" />
