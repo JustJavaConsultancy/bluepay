@@ -21,9 +21,22 @@ public class TaskFormController {
 
     @Autowired
     JustJavaTaskService justJavaTaskService;
+    @Autowired
+    ComplianceService complianceService;
 
+    @GetMapping("/resubmit/{taskId}")
+    public String merchantFailedWithoutTaskId(@PathVariable String taskId, Model model) {
+        model.addAttribute("merchantDetails",
+                complianceService.getSingleTask(taskId).getVariables());
+        return "merchant/merchantFailed";
+    }
+    @GetMapping("/complianceVerification/{taskId}")
+    public String getcomplianceDetail(@PathVariable String taskId, Model model){
 
-
+        TaskDTO taskDTO = complianceService.getSingleTask(taskId);
+        model.addAttribute("merchantDetails",taskDTO.getVariables());
+        return "/complianceOfficer/complianceDetails";
+    }
     @GetMapping("/test-form/{taskid}")
     public String testForm(@PathVariable String taskid,final Model model) {
 
@@ -115,7 +128,7 @@ class MenuController {
         taskDTOS.forEach(taskDTO -> {
             Map<String,Object> menuItem = new HashMap<>();
             menuItem.put("name",taskDTO.getTaskName());
-            menuItem.put("url","/compliance/complianceDetail/"+taskDTO.getTaskId());
+            menuItem.put("url","/"+taskDTO.getFormKey()+"/"+taskDTO.getTaskId());
             menuItems.add(menuItem);
         });
 
