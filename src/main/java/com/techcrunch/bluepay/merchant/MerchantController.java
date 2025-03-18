@@ -20,38 +20,44 @@ public class MerchantController {
 
     @GetMapping("/new")
     public String getCompliance(Model model){
-
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
-    public String submitDetails(@RequestParam Map<String,Object> formData){
+    public ResponseEntity<Void> submitDetails(@RequestParam Map<String,Object> formData){
         merchantService.submitMyDetail(formData);
-        return "home/index";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/overview");
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @PostMapping("/resubmit")
     public String reSubmitDetails(@RequestParam Map<String,Object> formData){
+
+        System.out.println(" The variable I'm throwing in here===\n\n\n\n\n\n\n\n\n\n" +
+                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+formData);
         merchantService.completeDocumentResubmittion(formData);
-        return "home/index";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/overview");
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @GetMapping("/submitted")
     public String getSubmittedStatus(){
+
         return "merchant/merchantStatus";
     }
     @GetMapping("/approved")
     public String getApprovedStatus(){
-
         return "merchant/merchantStatus";
     }
     @GetMapping("/successful")
     public String merchantStatus(Model model) {
 
 
-/*
         Map merchantDetails= new HashMap();
         merchantDetails.put("businessType","Partnership");
         merchantDetails.put("businessName","Just Java");
         model.addAttribute("merchantDetails",merchantDetails);
-*/
 
         return "merchant/merchantStatus";
     }
