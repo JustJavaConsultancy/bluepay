@@ -16,5 +16,6 @@ public class TaskDTO {
     private String taskName;
     private String taskId;
     private Date createdDate;
+    private String formKey;
     private Map<String,Object> variables;
 }

@@ -9,7 +9,7 @@
       <design:creationdate><![CDATA[2025-03-14T14:56:35.365Z]]></design:creationdate>
       <design:modificationdate><![CDATA[2025-03-16T15:56:55.194Z]]></design:modificationdate>
     </extensionElements>
-    <userTask id="FormTask_5" name="KYC Check for ${businessName}" flowable:assignee="compliance" flowable:owner="${initiator}" flowable:formFieldValidation="false">
+    <userTask id="FormTask_5" name="KYC Check for ${businessName}" flowable:assignee="compliance" flowable:owner="${initiator}" flowable:formKey="complianceVerification" flowable:formFieldValidation="false">
       <extensionElements>
         <flowable:executionListener event="start" delegateExpression="${firstService}"></flowable:executionListener>
         <flowable:taskListener event="create" delegateExpression="${customTaskListener}"></flowable:taskListener>
@@ -31,7 +31,7 @@
         <design:stencilid><![CDATA[CallActivity]]></design:stencilid>
       </extensionElements>
     </callActivity>
-    <userTask id="correctData" name="Merchant Re-enter the details" flowable:assignee="${initiator}" flowable:formKey="userInitialsForm" flowable:formFieldValidation="false">
+    <userTask id="correctData" name="Merchant Re-enter the details" flowable:assignee="${initiator}" flowable:formKey="resubmit" flowable:formFieldValidation="false">
       <extensionElements>
         <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
         <design:stencilid><![CDATA[FormTask]]></design:stencilid>

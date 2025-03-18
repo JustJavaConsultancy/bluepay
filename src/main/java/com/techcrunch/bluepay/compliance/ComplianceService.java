@@ -35,6 +35,7 @@ public class ComplianceService {
             TaskDTO taskDTO = new TaskDTO();
             taskDTO.setTaskName(task.getName());
             taskDTO.setTaskId(task.getId());
+            taskDTO.setFormKey(task.getFormKey());
             taskDTO.setCreatedDate(task.getCreateTime());
             taskDTO.setVariables(customProcessService.getProcessInstanceVariables(task.getProcessInstanceId()));
             taskDTOS.add(taskDTO);
@@ -47,6 +48,7 @@ public class ComplianceService {
         return TaskDTO.builder()
                 .taskId(task.getId())
                 .taskName(task.getName())
+                .formKey(task.getFormKey())
                 .createdDate(task.getCreateTime())
                 .variables(customProcessService.getProcessInstanceVariables(task.getProcessInstanceId()))
                 .build();

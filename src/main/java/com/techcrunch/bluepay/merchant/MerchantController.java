@@ -1,5 +1,6 @@
 package com.techcrunch.bluepay.merchant;
 
+import com.techcrunch.bluepay.compliance.ComplianceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +15,24 @@ public class MerchantController {
     @Autowired
     MerchantService merchantService;
 
+    @Autowired
+    ComplianceService complianceService;
+
     @GetMapping("/new")
     public String getCompliance(Model model){
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
     public String submitDetails(@RequestParam Map<String,Object> formData){
-
         merchantService.submitMyDetail(formData);
+        return "home/index";
+    }
+    @PostMapping("/resubmit")
+    public String reSubmitDetails(@RequestParam Map<String,Object> formData){
+
+        System.out.println(" The variable I'm throwing in here===\n\n\n\n\n\n\n\n\n\n" +
+                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+formData);
+        merchantService.completeDocumentResubmittion(formData);
         return "home/index";
     }
     @GetMapping("/submitted")
