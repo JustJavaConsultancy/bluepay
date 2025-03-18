@@ -7,23 +7,16 @@
   <title>Title</title>
 </head>
 <body>
-<div id="form1" th:fragment="form1(data)">
+<div id="form1" th:fragment="form1(data,complianceButton)">
   <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
     <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
     <div class="mb-3 mt-4">
       <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
       <select
-              _="on load
-        set selectedCountry to @data-country
-        wait 1s
-        set my value to selectedCountry
-      on change
-        set #profile-country.textContent to me.options[me.selectedIndex].text"
               name="country"
               id="country1"
               class="form-select"
-              style="font-size: 0.75rem; background-color: #FAFAFA;"
-              data-country="${data != null ? data['country'] : ''}">
+              style="font-size: 0.75rem; background-color: #FAFAFA;">
 
         <option value="">Select a country</option>
         <!-- Countries will be populated here -->
@@ -35,19 +28,22 @@
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select">Select business type</option>
-        <option value="Unregistered/Starterbusiness">Unregistered/Starter business</option>
-        <option value="Businessnameregistration">Business name registration</option>
-        <option value="Partnership">Partnership</option>
-        <option value="Privatelimitedliabilitycompany">Private limited liability company</option>
-        <option value="Publiclimitedliabilitycompany">Public limited liability company</option>
-        <option value="ngo">Non-governmental organization (NGO)</option>
-        <option value="Co-operativesociety">Co-operative society</option>
+      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;">
+        <option value="Select" th:selected="${data['businessType'] == 'Select'}">Select business type</option>
+        <option value="Unregistered/Starterbusiness"  th:selected="${data['businessType'] == 'Unregistered/Starterbusiness'}">Unregistered/Starter business</option>
+        <option value="Businessnameregistration" th:selected="${data['businessType'] == 'Businessnameregistration'}">Business name registration</option>
+        <option value="Partnership" th:selected="${data['businessType'] == 'Partnership'}">Partnership</option>
+        <option value="Privatelimitedliabilitycompany" th:selected="${data['businessType'] == 'Privatelimitedliabilitycompany'}">Private limited liability company</option>
+        <option value="Publiclimitedliabilitycompany" th:selected="${data['businessType'] == 'Publiclimitedliabilitycompany'}">Public limited liability company</option>
+        <option value="ngo" th:selected="${data['businessType'] == 'ngo'}">Non-governmental organization (NGO)</option>
+        <option value="Co-operativesociety" th:selected="${data['businessType'] == 'Co-operativesociety'}">Co-operative society</option>
       </select>
     </div>
   </div>
-  <button id="next1" class="mt-2 saveButton" disabled >Save</button>
+  <button id="next1"
+          th:class="@{'mt-2 saveButton '+${complianceButton}}"
+          disabled >Save</button>
+
 </div>
 <script>
   alert('ggg')

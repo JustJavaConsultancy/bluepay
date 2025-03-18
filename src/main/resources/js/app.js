@@ -9,6 +9,7 @@ import './document'
 import './compliance'
 import './dateValidation'
 import './logOut'
+import './complianceButton'
 
 function initDatepicker() {
   document.querySelectorAll('.js-datepicker, .js-timepicker, .js-datetimepicker').forEach(($item) => {

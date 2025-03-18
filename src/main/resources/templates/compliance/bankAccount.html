@@ -7,7 +7,7 @@
   <title>Title</title>
 </head>
 <body>
-<div id="form4" style="display: none; margin-bottom: 20px;" th:fragment="form4(data)">
+<div id="form4" style="display: none; margin-bottom: 20px;" th:fragment="form4(data,complianceButton)">
   <button id="prev3" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
     <i class="bi bi-arrow-left-circle-fill fs-6"></i>
   </button>
@@ -35,9 +35,9 @@
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
       <select _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select">Select</option>
-        <option value="UBA">UBA</option>
-        <option value="firstbank">First Bank</option>
+        <option value="Select" th:selected="${data['bankName'] == 'Select'}">Select</option>
+        <option value="UBA" th:selected="${data['bankName'] == 'UBA'}">UBA</option>
+        <option value="firstbank" th:selected="${data['firstbank'] == 'UBA'}">First Bank</option>
       </select>
     </div>
     <div class="mb-3">
@@ -45,7 +45,9 @@
       <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
     </div>
   </div>
-  <button id="next4" class="mt-2 saveButton" disabled >Save</button>
+  <button id="next4"
+          th:class="@{'mt-2 saveButton '+${complianceButton}}"
+          disabled >Save</button>
 </div>
 
 </body>

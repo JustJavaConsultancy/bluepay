@@ -7,7 +7,7 @@
     <title>Title</title>
 </head>
 <body>
-<div id="form2" style="display: none; margin-bottom: 20px;" th:fragment="form2(data)">
+<div id="form2" style="display: none; margin-bottom: 20px;" th:fragment="form2(data,complianceButton)">
     <button id="prev1" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
         <i class="bi bi-arrow-left-circle-fill fs-6"></i>
     </button>
@@ -95,7 +95,9 @@
             <input _="on input set #contact-business-building-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="building" class="form-control" placeholder="E.g: Unit required/Floor Number" th:value="${data!=null?data['building']:''}" id="building" >
         </div>
     </div>
-    <button id="next2" class="mt-2 saveButton" disabled >Save</button>
+    <button id="next2"
+            th:class="@{'mt-2 saveButton '+${complianceButton}}"
+            disabled >Save</button>
 </div>
 </body>
 </html>

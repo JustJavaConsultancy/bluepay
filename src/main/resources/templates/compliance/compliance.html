@@ -79,10 +79,10 @@
                       hx-on::beforeRequest="document.getElementById('submitBtn').disabled = true"
                       hx-on::afterRequest="document.getElementById('submitBtn').disabled = false"
                       style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
-                    <div th:replace="~{/compliance/profile :: form1(null)}" />
-                    <div th:replace="~{/compliance/contact :: form2(null)}" />
-                    <div th:replace="~{/compliance/businessOwner :: form3(null)}" />
-                    <div th:replace="~{/compliance/bankAccount :: form4(null)}" />
+                    <div th:replace="~{/compliance/profile :: form1(null,null)}" />
+                    <div th:replace="~{/compliance/contact :: form2(null,null)}" />
+                    <div th:replace="~{/compliance/businessOwner :: form3(null,null)}" />
+                    <div th:replace="~{/compliance/bankAccount :: form4(null,null)}" />
                     <div th:replace="~{/compliance/serviceAgreement :: form5(null)}" />
                     <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',null)}" />
                 </form>

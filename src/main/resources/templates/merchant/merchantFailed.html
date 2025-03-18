@@ -130,10 +130,10 @@
                             </span></div>
                         </div>
                     </div>
-                    <div th:replace="~{/compliance/profile :: form1(${merchantDetails})}"></div>
-                    <div th:replace="~{/compliance/contact :: form2(${merchantDetails})}"></div>
-                    <div th:replace="~{/compliance/businessOwner :: form3(${merchantDetails})}"></div>
-                    <div th:replace="~{/compliance/bankAccount :: form4(${merchantDetails})}"></div>
+                    <div th:replace="~{/compliance/profile :: form1(${merchantDetails},'saveCompliance')}"></div>
+                    <div th:replace="~{/compliance/contact :: form2(${merchantDetails},'saveCompliance')}"></div>
+                    <div th:replace="~{/compliance/businessOwner :: form3(${merchantDetails},'saveCompliance')}"></div>
+                    <div th:replace="~{/compliance/bankAccount :: form4(${merchantDetails},'saveCompliance')}"></div>
                     <div th:replace="~{/compliance/serviceAgreement :: form5(${merchantDetails})}"></div>
                     <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',${merchantDetails})}"></div>
                 </form>
