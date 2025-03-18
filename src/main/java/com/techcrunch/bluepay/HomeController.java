@@ -51,5 +51,8 @@ public class HomeController {
         }
         return page;
     }
-
+@GetMapping("/overview")
+    public String overview(){
+        return "/home/index";
+}
 }

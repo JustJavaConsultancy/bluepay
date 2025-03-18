@@ -2,6 +2,9 @@ package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.compliance.ComplianceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +26,23 @@ public class MerchantController {
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
-    public String submitDetails(@RequestParam Map<String,Object> formData){
+    public ResponseEntity<Void> submitDetails(@RequestParam Map<String,Object> formData){
         merchantService.submitMyDetail(formData);
-        return "home/index";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/overview");
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @PostMapping("/resubmit")
-    public String reSubmitDetails(@RequestParam Map<String,Object> formData){
+    public ResponseEntity<Void> reSubmitDetails(@RequestParam Map<String,Object> formData){
 
         System.out.println(" The variable I'm throwing in here===\n\n\n\n\n\n\n\n\n\n" +
                 "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+formData);
         merchantService.completeDocumentResubmittion(formData);
-        return "home/index";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("HX-Redirect", "/overview");
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @GetMapping("/submitted")
     public String getSubmittedStatus(){
