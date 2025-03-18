@@ -38,8 +38,8 @@ public class HomeController {
                 merchantService.getMerchantStatus(loginUser).get("variables");
 
 
-        System.out.println("the status now=="+status+
-                " ---The Variables i'm redirecting is====="+variables);
+/*        System.out.println("the status now=="+status+
+                " ---The Variables i'm redirecting is====="+variables);*/
         redirectAttributes.addFlashAttribute("merchantDetails",variables);
         if(authenticationManager.isMerchant()){
             page="redirect:merchant/"+status.toLowerCase();
