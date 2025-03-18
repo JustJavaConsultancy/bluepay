@@ -45,9 +45,9 @@ public class MerchantController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @GetMapping("/submitted")
-    public String getSubmittedStatus(){
+    public String getSubmittedStatus(Model model){
 
-        return "merchant/merchantStatus";
+        return "merchant/merchantPending";
     }
     @GetMapping("/approved")
     public String getApprovedStatus(){
