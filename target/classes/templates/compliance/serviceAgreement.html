@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="form5" style="display: none;" th:fragment="form5(data)">
+    <button id="prev4" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
+        <i class="bi bi-arrow-left-circle-fill fs-6"></i>
+    </button>
+    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;max-width: 350px">
+        <h1 style="color: #062C5A;font-size: 1rem;">Service Agreement</h1>
+        <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">Please ensure that the information you provide is correct. <p class="mt-3" style="font-weight: 500;"> DO NOT ACCEPT THIS AGREEMENT IF YOUR DETAILS ARE INCORRECT.</p></div>
+        <h1 class="mt-3" style="color: #062C5A;font-size: 0.75rem;font-weight: 500;">About Bluepay’s Merchant Services Agreement</h1>
+        <p style="font-size: 0.75rem;font-weight: 400;color: #6F768D;">The <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color:#0C74B1 ;text-decoration: none;">Bluepay’s Merchant Services Agreement</a> is an agreement between you and Bluepay. It details Bluepay obligations to you and your obligations to Bluepay. It also highlights certain risks and requirements on using the services and you must consider them carefully as you will be bound by the provision of this agreement through your use of Bluepay services</p>
+        <p style="font-size: 0.75rem;font-weight: 700;color: #6F768D;">By signing this agreement, I am accepting this agreement on behalf of [Business Name]. I represent and warrant that (a) I have the full authority to bind the entity to this Agreement, (b) I have read and understand this Agreement, and (c) I agree to all the terms and conditions of this Agreement on behalf of the entity that I represent</p>
+        <div class=" mb-3">
+            <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="fullname">
+                Full Name <span style="color: #EF5350;">*</span>
+            </label>
+            <input _="on input set #agreement-full-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
+                   id="fullname" name="fullname" th:value="${data!=null?data['fullname']:''}" required/>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="phoneNumber">Phone Number<span style="color: #EF5350;">*</span></label>
+            <input _="on input set #agreement-phone-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="tel" name="agreementPhoneNumber" class="form-control" id="phoneNumber" th:value="${data!=null?data['agreementPhoneNumber']:''}" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="email">Email Address<span style="color: #EF5350;">*</span></label>
+            <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="email" name="email" th:value="${data!=null?data['email']:''}" class="form-control" id="email" required _="on input
+              set #agreement-email.textContent to me.value
+              if my.value matches '^[^@]+@[^@]+\\.[^@]+$'
+                remove .invalid from me
+              else
+                add .invalid to me
+              end">
+            <div class="error-message">Please enter a valid email address.</div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="jobTitle">Job Title<span style="color: #EF5350;">*</span></label>
+            <input _="on input set #agreement-job-title.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="jobTitle" th:value="${data!=null?data['jobTitle']:''}" class="form-control" id="jobTitle" required>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="termsCheckbox" name="acceptTerms" style="margin-top: 0.4rem;" required>
+            <label style="color: #6F768D;font-size: 0.75rem;" class="form-check-label" for="termsCheckbox">
+                I accept the Service Agreement
+            </label>
+        </div>
+    </div>
+    <button id="submitBtn"
+            class="mt-2 saveButton"
+            disabled >Save</button>
+</div>
+</body>
+</html>

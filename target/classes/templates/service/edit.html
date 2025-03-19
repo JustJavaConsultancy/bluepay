@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{service.edit.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{service.edit.headline}]]</h1>
+                <div>
+                    <a th:href="@{/services}" class="btn btn-secondary">[[#{service.edit.back}]]</a>
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('service')}" />
+            <form th:action="${requestUri}" method="post" novalidate="">
+                <div th:replace="~{fragments/forms::inputRow(object='service', field='id', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='service', field='code', required=true)}" />
+                <div th:replace="~{fragments/forms::inputRow(object='service', field='name', required=true)}" />
+                <input type="submit" th:value="#{service.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>

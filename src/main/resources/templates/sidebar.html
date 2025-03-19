@@ -1,0 +1,20 @@
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<div class="sidebar" id="sidebar" th:fragment="sidebar">
+  <button class="close-btn" id="closeSidebar"><i class="bi bi-x"></i></button>
+  <div class="logo text-center mb-5">
+    <img src="https://res.cloudinary.com/danmwswcg/image/upload/v1740863120/Logo-v1_xydzee.svg" alt="Logo">
+  </div>
+  <ul class="nav flex-column">
+    <li class="nav-item ativ mb-3">
+      <a class="nav-link text-white d-flex align-items-center" th:href="@{'/merchant/'+${session.status}}">
+        <i class="bi bi-house-door-fill me-2"></i> <span style="font-size:0.85rem ">Compliance</span>
+      </a>
+    </li>
+  </ul>
+</div>
+
+</html>

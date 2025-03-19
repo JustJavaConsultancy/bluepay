@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="form1" th:fragment="form1(data,complianceButton)">
+  <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
+    <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
+    <div class="mb-3 mt-4">
+      <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
+      <select
+              name="country"
+              id="country1"
+              class="form-select"
+              style="font-size: 0.75rem; background-color: #FAFAFA;"
+              th:data-selected="${data != null ? data['country'] : ''}" th:disabled="true">
+
+        <option value="">Select a country</option>
+        <!-- Countries will be populated here -->
+      </select>
+    </div>
+    <div class="mb-3">
+      <label style="font-size: 0.75rem;color: #405979;" for="businessName" class="form-label">Business Name<span style="color: #EF5350;">*</span></label>
+      <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" th:value="${data!=null?data['businessName']:''}" >
+    </div>
+    <div class="mb-3">
+      <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
+      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType"
+              class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:disabled="true">
+        <option value="Select" th:selected="${data !=null ? data['businessType'] == 'Select':''}">Select business type</option>
+        <option value="Unregistered/Starterbusiness"  th:selected="${data !=null ? data['businessType'] == 'Unregistered/Starterbusiness':''}">Unregistered/Starter business</option>
+        <option value="Businessnameregistration" th:selected="${data !=null ? data['businessType'] == 'Businessnameregistration':''}">Business name registration</option>
+        <option value="Partnership" th:selected="${data !=null ? data['businessType'] == 'Partnership':''}">Partnership</option>
+        <option value="Privatelimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Privatelimitedliabilitycompany':''}">Private limited liability company</option>
+        <option value="Publiclimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Publiclimitedliabilitycompany':''}">Public limited liability company</option>
+        <option value="ngo" th:selected="${data != null ? data['businessType'] == 'ngo':''}">Non-governmental organization (NGO)</option>
+        <option value="Co-operativesociety" th:selected="${data != null ? data['businessType'] == 'Co-operativesociety':''}">Co-operative society</option>
+      </select>
+    </div>
+  </div>
+  <button id="next1"
+          th:class="@{'mt-2 saveButton '+${complianceButton}}"
+          disabled >Save</button>
+
+</div>
+<script>
+  alert('ggg')
+  const countrySelect = document.getElementById('country');
+  console.log(countrySelect)
+  fetch('https://restcountries.com/v3.1/all')
+          .then(response => response.json())
+          .then(data => {
+            // const countrySelect = document.getElementById('country');
+            data.forEach(country => {
+              const option = document.createElement('option');
+              option.value = country.cca2; // Use country code (e.g., 'US', 'CA')
+              option.textContent = country.name.common; // Use country name
+              countrySelect.appendChild(option);
+            });
+          });
+</script>
+</body>
+</html>
