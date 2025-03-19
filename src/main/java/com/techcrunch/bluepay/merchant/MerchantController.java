@@ -1,5 +1,6 @@
 package com.techcrunch.bluepay.merchant;
 
+import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.compliance.ComplianceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,10 +20,20 @@ public class MerchantController {
     MerchantService merchantService;
 
     @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Autowired
     ComplianceService complianceService;
 
     @GetMapping("/new")
     public String getCompliance(Model model){
+        Map<String,Object> variables=new HashMap<>();
+
+        System.out.println(" I'm going to new endpoint....");
+        variables.put("country","NG");
+        variables.put("businessName",authenticationManager.get("businessName"));
+        variables.put("businessType","Unregistered/Starterbusiness");
+        model.addAttribute("merchantDetails",variables);
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
@@ -46,11 +57,29 @@ public class MerchantController {
     }
     @GetMapping("/submitted")
     public String getSubmittedStatus(Model model){
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMyRegistrationStatus()
+                        .get("variables");
+
+
+/*        System.out.println("the status now=="+status+
+                " ---The Variables i'm redirecting is====="+variables);*/
+        model.addAttribute("merchantDetails",variables);
 
         return "merchant/merchantPending";
     }
     @GetMapping("/approved")
-    public String getApprovedStatus(){
+    public String getApprovedStatus(Model model){
+
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMyRegistrationStatus()
+                        .get("variables");
+
+
+/*        System.out.println("the status now=="+status+
+                " ---The Variables i'm redirecting is====="+variables);*/
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantStatus";
     }
     @GetMapping("/successful")
@@ -66,6 +95,14 @@ public class MerchantController {
     }
     @GetMapping("/declined")
     public String merchantFailed(Model model) {
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMyRegistrationStatus()
+                        .get("variables");
+
+
+/*        System.out.println("the status now=="+status+
+                " ---The Variables i'm redirecting is====="+variables);*/
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantFailed";
     }
 

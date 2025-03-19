@@ -48,10 +48,29 @@ public class MerchantService {
         }else {
             Map<String,Object> processVariables=processService
                     .getProcessInstanceVariables(activeProcessInstance.getProcessInstanceId());
+/*            System.out.println(" activeProcessInstance.getProcessVariables()=="+
+                    processVariables);*/
+            result.put("status",processVariables.get("onboardStatus"));
+            result.put("variables",processVariables);
+        }
+        return result;
+    }
+    public Map<String,Object> getMyRegistrationStatus(){
 
-//           System.out.println(" activeProcessInstance.getProcessVariables()=="+
-//                    processVariables);
-
+        Map<String,Object> result=new HashMap<String,Object>();
+        // Check for active process instance
+        String merchantId = (String) authenticationManager.get("sub");
+        ProcessInstance activeProcessInstance=processService
+                .getProcessInstanceByBusinessKey(merchantId);
+        if(activeProcessInstance==null) {
+            result.put("status", "NEW");
+            result.put("variables",new HashMap<>());
+            return result;
+        }else {
+            Map<String,Object> processVariables=processService
+                    .getProcessInstanceVariables(activeProcessInstance.getProcessInstanceId());
+/*            System.out.println(" activeProcessInstance.getProcessVariables()=="+
+                    processVariables);*/
             result.put("status",processVariables.get("onboardStatus"));
             result.put("variables",processVariables);
         }

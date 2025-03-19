@@ -78,7 +78,7 @@
                 <form hx-post="/merchant/submit"
                       onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';"
                       style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
-                    <div th:replace="~{/compliance/profile :: form1(null,null)}" />
+                    <div th:replace="~{/compliance/profile :: form1(${merchantDetails},null)}" />
                     <div th:replace="~{/compliance/contact :: form2(null,null)}" />
                     <div th:replace="~{/compliance/businessOwner :: form3(null,null)}" />
                     <div th:replace="~{/compliance/bankAccount :: form4(null,null)}" />
