@@ -3,11 +3,11 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-<div id="form3" style="display: none;" th:fragment="form3">
+<div id="form3" style="display: none;" th:fragment="form3(data,complianceButton)">
   <button id="prev2" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
     <i class="bi bi-arrow-left-circle-fill fs-6"></i>
   </button>
@@ -18,44 +18,45 @@
         <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="firstname">
           First Name <span style="color: #EF5350;">*</span>
         </label>
-        <input class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-               id="firstname" name="firstname" required/>
+        <input _="on input set #owner-first-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
+               id="firstname" name="firstname" th:value="${data!=null?data['firstname']:''}" required/>
       </div>
       <div class="col-md-6 mb-3">
         <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="lastname">
           Last Name <span style="color: #EF5350;">*</span>
         </label>
-        <input class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-               id="lastname" name="lastname" required/>
+        <input _="on input set #owner-last-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
+               id="lastname" name="lastname" th:value="${data!=null?data['lastname']:''}" required/>
       </div>
     </div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="city">City<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="city" class="form-control" id="city" required >
+      <input _="on input set #owner-city.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="ownerCity" class="form-control" id="city" th:value="${data!=null?data['ownerCity']:''}" required >
     </div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="dob">Date of Birth<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="date" name="dob" class="form-control" id="dob" required >
+      <input _="on input set #owner-dob.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="date" name="dob" class="form-control" id="dob" th:value="${data!=null?data['dob']:''}" required >
     </div>
+    <div>
       <label style="font-size: 0.75rem;color: #405979;" for="country3" class="form-label">Nationality<span style="color: #EF5350;">*</span></label>
-      <select required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+      <select _="on change set #owner-nationality.textContent to me.options[me.selectedIndex].text" required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['nationality'] : ''}">
         <option value="Select">Select</option>
       </select>
     </div>
     <div class="mb-3">
-      <label style="font-size: 0.75rem;color: #405979;" for="identificationDoc" class="form-label">Identification Document*<span style="color: #EF5350;">*</span></label>
-      <select required name="identificationDoc" id="identificationDoc" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select">Select</option>
-        <option value="BVN">BVN</option>
-        <option value="license">Driver’s license</option>
-        <option value="NIN">NIN</option>
-        <option value="vCard">Voter’s card</option>
-        <option value="passport">International passport</option>
+      <label style="font-size: 0.75rem;color: #405979;" for="identificationDoc" class="form-label">Identification Document<span style="color: #EF5350;">*</span></label>
+      <select _="on change set #owner-id-document.textContent to me.options[me.selectedIndex].text" required name="identificationDoc" id="identificationDoc" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+        <option value="Select" th:selected="${data != null ? data['identificationDoc'] == 'Select':''}">Select</option>
+        <option value="BVN" th:selected="${data != null ? data['identificationDoc'] == 'BVN':''}">BVN</option>
+        <option value="license" th:selected="${data != null ? data['identificationDoc'] == 'license':''}">Driver’s license</option>
+        <option value="NIN" th:selected="${data !=null ? data['identificationDoc'] == 'NIN':''}">NIN</option>
+        <option value="vCard" th:selected="${data !=null ? data['identificationDoc'] == 'vCard':''}">Voter’s card</option>
+        <option value="passport" th:selected="${data !=null ? data['identificationDoc'] == 'passport':''}">International passport</option>
       </select>
     </div>
     <div class="mb-3">
       <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="idNumber">Identification Number<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="idNumber" class="form-control" id="idNumber" required >
+      <input _="on input set #owner-id-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="idNumber" class="form-control" id="idNumber" th:value="${data!=null?data['idNumber']:''}" required >
     </div>
     <h1 class="fs-5" style="color: #062C5A;font-size: 1rem;">Home Address</h1>
     <div class="form-check">
@@ -81,8 +82,11 @@
       <li>Letter from a public authority</li>
     </ul>
   </div>
-  <button id="next3" class="mt-2 saveButton" disabled >Save</button>
+  <button id="next3"
+          class="mt-2 saveButton"
+          disabled >Save</button>
 </div>
+
 
 </body>
 </html>

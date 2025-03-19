@@ -11,17 +11,17 @@ spring:
       client:
         provider:
           keycloak:
-            issuer-uri: https://ngcloak.onrender.com/realms/justjavaRealm
+            issuer-uri: ${ISSUER_URI:http://localhost:8081/realms/justjavarealm}
             # user-name-attribute: preferred_username
         registration:
           keycloak-oidc:
             provider: keycloak
             client-name: BluePay
             client-id: bluepay
-            client-secret: 3rXI9p0LcG7jgst5LwrdxAso28j9Dlfj
+            client-secret: ${CLIENT-SECRET:0byg30XpHpWG17FQQydh3n0whNAGRbM8}
             authorization-grant-type: authorization_code
             scope: openid,profile,email
-            #redirect-uri: http://coaching-app-test-alb-222659239.us-east-1.elb.amazonaws.com/
+            #redirect-uri:http://coaching-app-test-alb-222659239.us-east-1.elb.amazonaws.com/
   jpa:
     hibernate:
       ddl-auto: update

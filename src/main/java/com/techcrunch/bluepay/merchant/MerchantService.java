@@ -48,8 +48,10 @@ public class MerchantService {
         }else {
             Map<String,Object> processVariables=processService
                     .getProcessInstanceVariables(activeProcessInstance.getProcessInstanceId());
-/*            System.out.println(" activeProcessInstance.getProcessVariables()=="+
-                    processVariables);*/
+
+//           System.out.println(" activeProcessInstance.getProcessVariables()=="+
+//                    processVariables);
+
             result.put("status",processVariables.get("onboardStatus"));
             result.put("variables",processVariables);
         }

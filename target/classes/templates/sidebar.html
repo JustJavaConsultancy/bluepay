@@ -4,38 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <div class="sidebar" id="sidebar" th:fragment="sidebar">
-    <button class="close-btn" id="closeSidebar"><i class="bi bi-x"></i></button>
-    <div class="logo text-center mb-5">
-      <img src="https://res.cloudinary.com/danmwswcg/image/upload/v1740863120/Logo-v1_xydzee.svg" alt="Logo">
-    </div>
-    <ul class="nav flex-column">
-      <li class="nav-item ativ mb-3">
-        <a class="nav-link text-white d-flex align-items-center" th:href="@{/start-form/userDetails}">
-          <i class="bi bi-house-door-fill me-2"></i> <span class="fs-5">Dashboard</span>
-        </a>
-      </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link text-white d-flex align-items-center"
-           th:href="@{/start-form/acceptBusinessSchema}">
-          <i class="bi bi-grid me-2"></i> <span class="fs-5">Inbox Items</span>
-        </a>
-      </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link text-white d-flex align-items-center" th:href="@{/start-form/businessRegistrationSchema}">
-          <i class="bi bi-bar-chart-line me-2"></i> <span class="fs-5">Merchant Details</span>
-        </a>
-      </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link text-white d-flex align-items-center" th:href="@{/start-form/table}">
-          <i class="bi bi-bar-chart-line me-2"></i> <span class="fs-5">Registered Merchants</span>
-        </a>
-      </li>
-      <li class="nav-item mb-3">
-        <a class="nav-link text-white d-flex align-items-center" th:href="@{/compliance/compliance}">
-          <i class="bi bi-gear-fill me-2"></i> <span class="fs-5">Compliance</span>
-        </a>
-      </li>
-    </ul>
+  <button class="close-btn" id="closeSidebar"><i class="bi bi-x"></i></button>
+  <div class="logo text-center mb-5">
+    <img src="https://res.cloudinary.com/danmwswcg/image/upload/v1740863120/Logo-v1_xydzee.svg" alt="Logo">
+  </div>
+  <ul class="nav flex-column">
+    <li class="nav-item ativ mb-3">
+      <a class="nav-link text-white d-flex align-items-center" th:href="@{/start-form/userDetails}">
+        <i class="bi bi-house-door-fill me-2"></i> <span style="font-size:0.85rem ">Overview</span>
+      </a>
+    </li>
+  </ul>
 </div>
 
 </html>
