@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .hidden {
+      display: none;
+    }
+    .upload-container {
+      width: 100%;
+      text-align: center;
+      padding: 20px;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      position: relative;
+    }
+    .upload-container input {
+      display: none;
+    }
+    .upload-icon {
+      font-size:1.75rem;
+      color: #0C74B1;
+    }
+    .preview-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .file-box {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid #ddd;
+    }
+    .file-box img, .file-box video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .form-switch .form-check-input:checked {
+      background-color: #0C74B1 !important;
+    }
+    .file-box video {
+      pointer-events: none;
+    }
+    .delete-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #F4F8FB;
+      border: none;
+      color: #3D90C1;
+      padding: 5px;
+      border-radius: 60%;
+      font-size:0.85rem;
+      cursor: pointer;
+    }
+    .play-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      padding: 10px;
+      border-radius: 100%;
+      font-size: 20px;
+      cursor: pointer;
+    }
+    .btn-close{
+      position: absolute;
+      right: 0;
+      padding: 1em;
+    }
+    .play-btn:hover {
+      background: black;
+    }
+  </style>
+</head>
+<body>
+<div th:fragment="addProduct">
+  <button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+
+  <form
+          id="addProductForm"
+  >
+    <div style="display: flex; padding: 25px; width: 100%;">
+      <div style="width: 100%;">
+
+        <!-- First Section -->
+        <div id="first">
+          <h3 style="font-size: 1rem; font-weight: 500; color: #333C41;">New Product</h3>
+
+          <label for="productName" class="form-label mt-3" style="font-size: 1rem; color: #333C41; font-weight: 400;">
+            Name <span style="color: #FF3B30;">*</span>
+          </label>
+          <input type="text" class="form-control" name="productName" id="productName" placeholder="Enter product name" required
+                 style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                 _="on input
+                                  if #productName.value is empty or #productPrice.value is empty
+                                      then set #saveproductButton.disabled to true
+                                  else
+                                      set #saveproductButton.disabled to false">
+
+          <label for="productDescription" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+            Description
+          </label>
+          <textarea class="form-control" name="productDescription" id="productDescription" placeholder="Give a concise brief about your product"
+                    style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"></textarea>
+
+          <label for="productPrice" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+            Price <span style="color: #FF3B30;">*</span>
+          </label>
+          <input type="number" class="form-control" name="productPrice" id="productPrice" placeholder="NGN" required
+                 style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                 _="on input
+                                  if #productName.value is empty or #productPrice.value is empty
+                                      then set #saveproductButton.disabled to true
+                                  else
+                                      set #saveproductButton.disabled to false">
+
+          <label for="productQuantity" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+            Quantity <span style="color: #FF3B30;">*</span>
+          </label>
+          <div class="row">
+            <div class="col-6">
+              <select id="productQuantity" name="productQuantity" class="form-select" style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                      onchange="document.getElementById('productQuantityNum').style.display = this.value === 'limited' ? 'block' : 'none'">
+                <option value="unlimited">Unlimited</option>
+                <option value="limited">Limited</option>
+              </select>
+            </div>
+            <div class="col-6">
+              <input type="number" class="form-control" name="productQuantityNum" id="productQuantityNum" placeholder="Enter quantity in stock"
+                     style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8; display: none;">
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 30px;">
+            <h4 class="mt-3" style="font-size: 0.7rem;">This product contains one or more physical goods</h4>
+            <div class="form-check form-switch" style="margin-top: 11px;">
+              <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="physicalProducts">
+            </div>
+          </div>
+
+          <div class="mt-4" style="float: right;">
+            <button data-bs-dismiss="modal" type="button" class="btn" style="border: 0.5px solid #B0B3B5; background-color: white; color: black; font-weight: 500; font-size: 1rem;">Cancel</button>
+            <button type="button" id="saveproductButton" class="btn" style="color: white; background-color: #0C74B1; font-weight: 500; font-size: 1rem;" disabled
+                    _="on click add .hidden to #first remove .hidden from #second">Next</button>
+          </div>
+        </div>
+
+        <!-- Second Section -->
+        <div id="second" class="hidden">
+          <h3 style="font-size: 1rem; font-weight: 500; color: #333C41;">Upload Media</h3>
+          <p class="mt-3" style="font-size: 1rem; font-weight: 400; color: #8A8F92;">Add a minimum of 1 and maximum of 6 high-quality images, gifs, and videos.</p>
+
+          <div class="upload-container" onclick="document.getElementById('fileInput').click()">
+            <input type="file" id="fileInput" name="productImage[]" accept="image/*,video/*" multiple>
+            <i class="bi bi-cloud-upload upload-icon"></i>
+            <p style="font-size: 1rem; font-weight: 400; color: #0C74B1;">Upload new media</p>
+            <p style="color: #8A8F92; font-weight: 400; font-size: 0.85rem;">The system supports a max file size of 5 MB</p>
+          </div>
+
+          <div class="preview-container" id="previewContainer"></div>
+
+          <div class="mt-4" style="float: right;">
+            <button type="button" class="btn" style="border: 0.5px solid #B0B3B5; background-color: white; color: black; font-weight: 500; font-size: 1rem;"
+                    _="on click add .hidden to #second remove .hidden from #first">Back</button>
+            <button type="submit" id="createProduct" class="btn" style="color: white; background-color: #0C74B1; font-weight: 500; font-size: 1rem;" disabled>Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+</body>
+</html>

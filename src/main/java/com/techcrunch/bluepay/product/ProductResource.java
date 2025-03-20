@@ -39,6 +39,7 @@ public class ProductResource {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createProduct(@RequestBody @Valid final ProductDTO productDTO) {
+        System.out.println("Product name="+productDTO.getName());
         final Long createdId = productService.create(productDTO);
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
