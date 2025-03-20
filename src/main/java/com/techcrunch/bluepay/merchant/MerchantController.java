@@ -1,5 +1,6 @@
 package com.techcrunch.bluepay.merchant;
 
+import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.compliance.ComplianceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +21,22 @@ public class MerchantController {
 
     @Autowired
     ComplianceService complianceService;
+    @Autowired
+    AuthenticationManager authenticationManager;
+
 
     @GetMapping("/new")
     public String getCompliance(Model model){
+        String loginUser= (String) authenticationManager.get("sub");
+
+        Map<String,Object> variables = new HashMap<>();
+
+        variables.put("country","NG");
+        variables.put("businessType","Unregistered/Starterbusiness");
+        variables.put("businessName",authenticationManager.get("businessName"));
+
+        System.out.println(" ---The Variables i'm redirecting is====="+variables);
+        model.addAttribute("merchantDetails",variables);
         return "/compliance/compliance";
     }
     @PostMapping("/submit")
