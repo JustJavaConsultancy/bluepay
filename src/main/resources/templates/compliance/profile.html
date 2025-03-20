@@ -17,7 +17,7 @@
               id="country1"
               class="form-select"
               style="font-size: 0.75rem; background-color: #FAFAFA;"
-              th:data-selected="${data != null ? data['country'] : ''}">
+              th:data-selected="${data != null ? data['country'] : ''}" th:disabled="true">
 
         <option value="">Select a country</option>
         <!-- Countries will be populated here -->
@@ -29,7 +29,7 @@
     </div>
     <div class="mb-3">
       <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;">
+      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:disabled="true">
         <option value="Select" th:selected="${data !=null ? data['businessType'] == 'Select':''}">Select business type</option>
         <option value="Unregistered/Starterbusiness"  th:selected="${data !=null ? data['businessType'] == 'Unregistered/Starterbusiness':''}">Unregistered/Starter business</option>
         <option value="Businessnameregistration" th:selected="${data !=null ? data['businessType'] == 'Businessnameregistration':''}">Business name registration</option>
