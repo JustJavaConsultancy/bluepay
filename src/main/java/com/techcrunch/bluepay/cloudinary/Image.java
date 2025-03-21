@@ -20,10 +20,8 @@ public class Image {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-
     @Column(name = "name_image")
     private String name;
-
     @Column(name = "url_image")
     private String url;
 

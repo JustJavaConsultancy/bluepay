@@ -101,3 +101,8 @@ flowable:
   eventregistry:
     enabled: true
     resource-location: "classpath*:/eventregistries/"
+
+cloudinary:
+  api_secret: ${CLOUDINARY_API_SECRET:891217518553315}
+  api_key: ${CLOUDINARY_API_KEY:891217518553315}
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:danmwswcg}
