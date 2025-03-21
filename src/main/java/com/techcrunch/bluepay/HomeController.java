@@ -49,6 +49,8 @@ public class HomeController {
             page="redirect:compliance/complianceOfficer";
             request.getSession(true).setAttribute("chatGroup","compliance");
         }
+        request.getSession(true).setAttribute("status",status.toLowerCase());
+        request.getSession(true).setAttribute("isMerchant",authenticationManager.isMerchant());
         return page;
     }
 @GetMapping("/overview")
