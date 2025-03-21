@@ -5,6 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -49,6 +50,16 @@ public class myProductController {
         response.put("data", data);
 
         return ResponseEntity.ok(response);
+    }
+    @GetMapping("/productDetails")
+    public String productDetails(Model model) {
+        Map<String, Object> product = new HashMap<>();
+        product.put("productName", "Bootify");
+        product.put("productDescription", "A Bootstrap 4 template for modern businesses and corporate websites");
+        product.put("productImages", Arrays.asList("", "image2.jpg", "image3.jpg"));
+
+        model.addAttribute("product", product);
+        return "/product/productDetail";
     }
 
 }
