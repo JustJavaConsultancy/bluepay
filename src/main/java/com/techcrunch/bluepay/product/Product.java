@@ -1,17 +1,13 @@
 package com.techcrunch.bluepay.product;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import java.util.ArrayList;
+import java.util.List;
+
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -22,6 +18,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class Product {
 
     @Id
@@ -44,8 +43,21 @@ public class Product {
     @Column(nullable = false)
     private String name;
 
+    @Column
+    private String description;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal price;
+
+    private Long quantityInStock;
+
+    private Boolean containsPhysicalGoods;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "Product_Media", joinColumns = @JoinColumn(name = "product_id"))
+    private List<String> media = new ArrayList<>();
+
+    private BigDecimal quantitySold;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -54,5 +66,8 @@ public class Product {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
+
+
 
 }

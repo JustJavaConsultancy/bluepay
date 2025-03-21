@@ -50,6 +50,11 @@ public class ProductService {
         productDTO.setCode(product.getCode());
         productDTO.setName(product.getName());
         productDTO.setPrice(product.getPrice());
+        productDTO.setDescription(product.getDescription());
+        productDTO.setContainsPhysicalGoods(product.getContainsPhysicalGoods());
+        productDTO.setQuantityInStock(product.getQuantityInStock());
+        productDTO.setMedia(product.getMedia());
+        product.setDateCreated(product.getDateCreated());
         return productDTO;
     }
 
@@ -57,6 +62,10 @@ public class ProductService {
         product.setCode(productDTO.getCode());
         product.setName(productDTO.getName());
         product.setPrice(productDTO.getPrice());
+        product.setDescription(productDTO.getDescription());
+        product.setContainsPhysicalGoods(productDTO.getContainsPhysicalGoods());
+        product.setQuantityInStock(productDTO.getQuantityInStock());
+        product.setMedia(productDTO.getMedia());
         return product;
     }
 
