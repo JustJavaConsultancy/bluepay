@@ -25,7 +25,7 @@ spring:
             provider: keycloak
             client-name: BluePay
             client-id: bluepay
-            client-secret: ${CLIENT-SECRET:3rXI9p0LcG7jgst5LwrdxAso28j9Dlfj}
+            client-secret: ${CLIENT-SECRET:QLuJCpGrC27ZWNjmj8i9yFv7RZ6A41Mh}
             authorization-grant-type: authorization_code
             scope: openid,profile,email
 
