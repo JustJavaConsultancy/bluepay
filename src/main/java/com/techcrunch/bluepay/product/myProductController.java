@@ -146,4 +146,11 @@ public class myProductController {
                 "value=\"https://bluepayment/buy/'"+ productDTO.getName() + ".com readonly>";
         return response;
     }
+    @GetMapping("/preview/{id}")
+    public String previewProduct(@PathVariable Long id, Model model) {
+        ProductDTO productDTO=productService.get(id);
+        model.addAttribute("product", productDTO);
+        return "/product/productPreview";
+    }
+
 }
