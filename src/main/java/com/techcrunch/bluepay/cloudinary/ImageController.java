@@ -19,6 +19,12 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<Map> upload(Image imageModel) {
         try {
+            Image image = new Image();
+            image.setName("");
+            image.setFile(imageModel.getFile());
+
+            ResponseEntity<Map> response=imageService.uploadImage(image);
+
             return imageService.uploadImage(imageModel);
         } catch (Exception e) {
             e.printStackTrace();

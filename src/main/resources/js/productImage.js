@@ -127,10 +127,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // Append files if any
         let fileNames = [];
         for (let i = 0; i < fileArray.length; i++) {
-            fileNames.push(fileArray[i].name);
-            console.log(fileArray[i].name);
+            formData.append('productImageNames', fileArray[i]);  // Append files directly
         }
-        formData.append('productImageNames', JSON.stringify(fileNames));
 
         let submitBtn = document.getElementById("createProduct");
         submitBtn.disabled = true;

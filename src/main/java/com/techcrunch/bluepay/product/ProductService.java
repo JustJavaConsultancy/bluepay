@@ -54,7 +54,7 @@ public class ProductService {
         productDTO.setContainsPhysicalGoods(product.getContainsPhysicalGoods());
         productDTO.setQuantityInStock(product.getQuantityInStock());
         productDTO.setMedia(product.getMedia());
-        product.setDateCreated(product.getDateCreated());
+        productDTO.setDateCreated(product.getDateCreated());
         return productDTO;
     }
 
