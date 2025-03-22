@@ -13,6 +13,12 @@
         .hidden {
             display: none;
         }
+        .form-switch .form-check-input:checked {
+            background-color: #0C74B1 !important;
+        }
+        .activeTab{
+            border-bottom: 1.5px solid #0C74B1; padding-bottom: 0.5rem; margin-bottom: -1.2px;color: #0C74B1;
+        }
     </style>
 </head>
 <body>
@@ -28,7 +34,7 @@
                     <form
                             th:action="@{/editProductName/{id}(id=${product.id})}" method="post"
                             style="display: flex;gap: 10px;">
-                        <input th:value="${product.name}" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" class="form-control" placeholder="Enter Product Name" required
+                        <input th:value="${product.name} +'00000'" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" class="form-control" placeholder="Enter Product Name" required
                                _="on input
                         if me.value is empty
                             then set #changeName.disabled to true
@@ -45,7 +51,8 @@
         </div>
         <div style="display: flex;gap: 20px;">
             <div>
-                <button class="btn" style="border: 0.5px solid #B0B3B5;font-size: 1rem;">Preview</button>
+                <a th:href="@{'/preview/'+${product.id}}" style="text-decoration: none;"> <button class="btn" style="border: 0.5px solid #B0B3B5;font-size: 1rem;">Preview</button>
+                </a>
             </div>
             <div>
                 <button class="btn" style="border: 0.5px solid #B0B3B5;font-size: 1rem;">Copy Link</button>
@@ -54,10 +61,14 @@
     </div>
     <div style="margin-top: 10px;">
         <div style="display: flex; gap: 3rem; align-items: flex-end;">
-            <h2 style="font-size: 1rem; font-weight: 400; border-bottom: 1.5px solid #0C74B1; padding-bottom: 0.5rem; margin-bottom: -1.2px;color: #0C74B1;">
+            <h2 id="customiseProduct" class="activeTab" style="font-size: 1rem; font-weight: 400;cursor: pointer; "
+                _="on click remove .activeTab from #inventory add .activeTab to #customiseProduct remove .hidden from #customiseProductpage add .hidden to #inventorypage"
+            >
                 Customize Product
             </h2>
-            <h2 style="font-size: 1rem; font-weight: 400;">
+            <h2 id="inventory" style="font-size: 1rem; font-weight: 400;cursor: pointer;"
+                _="on click add .activeTab to #inventory remove .activeTab from #customiseProduct add .hidden to #customiseProductpage remove .hidden from #inventorypage"
+            >
                 Inventory
             </h2>
             <h2 style="font-size: 1rem; font-weight: 400;">
@@ -66,74 +77,9 @@
         </div>
         <hr style="border: none; border-top: 1px solid black; margin: 0; width: 100%;">
     </div>
-    <div class="row" style="margin-top: 25px;">
-        <div class="col-sm-12 col-xxl-6 col-xl-6 col-lg-6 ">
-            <div id="carouselExample" style="width: 100%; height: 100%;" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div th:each="media, iterStat : ${product.media}" class="carousel-item" th:classappend="${iterStat.first} ? 'active'">
-                        <th:block th:if="${media.endsWith('.mp4') or media.endsWith('.webm') or media.endsWith('.ogg')}">
-                            <video class="d-block w-100" controls>
-                                <source th:src="${media}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </th:block>
-                        <th:block th:unless="${media.endsWith('.mp4') or media.endsWith('.webm') or media.endsWith('.ogg')}">
-                            <img th:src="${media}" class="d-block w-100" alt="Product Image">
-                        </th:block>
-                    </div>
-                </div>
-
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-
-
-        </div>
-        <div class="col-sm-12 col-xxl-6 col-xl-6 col-lg-6">
-            <div style="display: flex;gap: 1.4rem;">
-                <h2 style="font-size: 1rem; font-weight: 400; border-bottom: 1.5px solid #0C74B1; padding-bottom: 0.5rem;color: #0C74B1;">
-                    Product Info
-                </h2>
-                <h2 style="font-size: 1rem; font-weight: 400;padding-bottom: 0.5rem;">
-                    Digital Downloads
-                </h2>
-            </div>
-            <div class="mt-3">
-                <label style="font-size: 0.85rem;font-weight: 500;" for="newDescription" class="form-label">Description <i id="pencil" class="bi bi-pencil" style="font-size: 0.85rem;padding-left: 10px;cursor: pointer;" _="on click add .hidden to #originalDescription add .hidden to #pencil remove .hidden from #changeDescription"></i></label>
-                <div id="originalDescription">
-                    <input th:value="${product.description}" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="newDescription" class="form-control" placeholder="Give a brief about your product"  readonly>
-                </div>
-                <div id="changeDescription" class="hidden">
-                    <form action="">
-                    <textarea th:text="${product.description}" style="font-size: 0.85rem;" class="form-control" name="setDescription" id="setDescription" rows="3" spellcheck="true"
-                              _="on input
-                        if me.value is empty
-                            then set #submitNewDescription.disabled to true
-                        else
-                            set #submitNewDescription.disabled to false"
-                    ></textarea>
-                        <div style="margin-top: 10px;display: flex; gap: 10px;justify-content: end;">
-                            <button type="button"  class="btn" style="border: 0.5px solid #B0B3B5;background-color: white;color: black;font-weight: 500;font-size: 0.75rem;" _="on click add .hidden to #changeDescription remove .hidden from #pencil remove .hidden from #originalDescription">Cancel</button>
-                            <button type="submit" id="submitNewDescription" class="btn" style="color: white;background-color: #0C74B1 ;font-weight: 500;font-size: 0.75rem;"  disabled
-                            >Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <label style="font-size: 0.85rem;font-weight: 500;" for="productLink" class="form-label mt-4">Product Link</label>
-            <input style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productLink" class="form-control" th:value="${'https://bluepayment/buy/'+ product.name + '.com'}" readonly>
-            <label style="font-size: 0.85rem;font-weight: 500;"  class="form-check-label mt-4" for="status">Status</label>
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="status">
-            </div>
-        </div>
+    <div>
+        <div th:replace="~{/product/customiseProduct :: customiseProduct(${product}) }" />
+        <div th:replace="~{/product/inventory :: inventory(${product}) }" />
     </div>
 </div>
 

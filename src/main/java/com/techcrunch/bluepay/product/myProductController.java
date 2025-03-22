@@ -139,4 +139,11 @@ public class myProductController {
         }
         return "redirect:/productDetail/" + id;
     }
+    @GetMapping("/preview/{id}")
+    public String previewProduct(@PathVariable Long id, Model model) {
+        ProductDTO productDTO=productService.get(id);
+        model.addAttribute("product", productDTO);
+        return "/product/productPreview";
+    }
+
 }
