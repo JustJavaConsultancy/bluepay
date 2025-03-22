@@ -117,12 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Gather form data
         const formData = new FormData();
-        formData.append('productName', document.getElementById('productName').value);
-        formData.append('productDescription', document.getElementById('productDescription').value);
-        formData.append('productPrice', document.getElementById('productPrice').value);
-        formData.append('productQuantity', document.getElementById('productQuantity').value);
-        formData.append('productQuantityNum', document.getElementById('productQuantityNum').value);
-        formData.append('physicalProducts', document.getElementById('flexSwitchCheckDefault').checked);
+            formData.append('productName', document.getElementById('productName').value);
+            formData.append('productDescription', document.getElementById('productDescription').value);
+            formData.append('productPrice', document.getElementById('productPrice').value);
+            formData.append('productQuantity', document.getElementById('productQuantity').value);
+            formData.append('productQuantityNum', document.getElementById('productQuantityNum').value);
+            formData.append('physicalProducts', document.getElementById('flexSwitchCheckDefault').checked);
 
         // Append files if any
         let fileNames = [];

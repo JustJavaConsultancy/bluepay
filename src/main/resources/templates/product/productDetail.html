@@ -25,20 +25,15 @@
                     <h3 style="font-size: 1.1rem;font-weight: 500"><span th:text="${product.name}">Bootify </span> <i class="bi bi-pencil" style="font-size: 0.85rem;padding-left: 10px;cursor: pointer;" _="on click add .hidden to #defaultName remove .hidden from #setName"></i></h3>
                 </div>
                 <div id="setName" class="hidden" >
-                    <form
-                            th:action="@{/editProductName/{id}(id=${product.id})}" method="post"
-                            style="display: flex;gap: 10px;">
-                        <input th:value="${product.name}" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" class="form-control" placeholder="Enter Product Name" required
-                               _="on input
-                        if me.value is empty
-                            then set #changeName.disabled to true
-                        else
-                            set #changeName.disabled to false"
+
+                        <input th:value="${product.name}"
+                               style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" name="productName" class="form-control" placeholder="Enter Product Name" required
+                               hx-post="/editProductName"
+                               hx-target="#resultDiv"
+                               hx-trigger="input changed delay:500ms"
+                               hx-swap="innerHTML"
+                               hx-indicator="#loadingIndicator"
                         >
-                        <button type="button"  class="btn" style="border: 0.5px solid #B0B3B5;background-color: white;color: black;font-weight: 500;font-size: 0.75rem;" _="on click add .hidden to #setName remove .hidden from #defaultName" >Cancel</button>
-                        <button type="submit" id="changeName" class="btn" style="color: white;background-color: #0C74B1 ;font-weight: 500;font-size: 0.75rem;"  disabled
-                        >Submit</button>
-                    </form>
 
                 </div>
             </div>
@@ -111,8 +106,7 @@
                     <input th:value="${product.description}" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="newDescription" class="form-control" placeholder="Give a brief about your product"  readonly>
                 </div>
                 <div id="changeDescription" class="hidden">
-                    <form action="">
-                    <textarea th:text="${product.description}" style="font-size: 0.85rem;" class="form-control" name="setDescription" id="setDescription" rows="3" spellcheck="true"
+                    <textarea th:text="${product.description}+' 00000'" style="font-size: 0.85rem;" class="form-control" name="setDescription" id="setDescription" rows="3" spellcheck="true"
                               _="on input
                         if me.value is empty
                             then set #submitNewDescription.disabled to true
@@ -124,11 +118,17 @@
                             <button type="submit" id="submitNewDescription" class="btn" style="color: white;background-color: #0C74B1 ;font-weight: 500;font-size: 0.75rem;"  disabled
                             >Submit</button>
                         </div>
-                    </form>
                 </div>
             </div>
-            <label style="font-size: 0.85rem;font-weight: 500;" for="productLink" class="form-label mt-4">Product Link</label>
-            <input style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productLink" class="form-control" th:value="${'https://bluepayment/buy/'+ product.name + '.com'}" readonly>
+
+                <label style="font-size: 0.85rem;font-weight: 500;" for="productLink" class="form-label mt-4">Product Link</label>
+                <div id="resultDiv">
+                    <input style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;"
+                           type="text" id="productLink" class="form-control"
+                           th:value="${'https://bluepayment/buy/'+ product.name + '.com'}" readonly>
+                </div>
+
+
             <label style="font-size: 0.85rem;font-weight: 500;"  class="form-check-label mt-4" for="status">Status</label>
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="status">
