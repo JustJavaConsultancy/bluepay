@@ -51,6 +51,7 @@ public class ProductDTO {
 
     private List<String> media = new ArrayList<>();
     private BigDecimal quantitySold;
+    private String merchantId;
 
     public String getPrimiaryMedia() {
         if (media.isEmpty()) {

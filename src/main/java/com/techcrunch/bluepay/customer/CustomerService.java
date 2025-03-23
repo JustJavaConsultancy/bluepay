@@ -76,7 +76,7 @@ public class CustomerService {
         final ReferencedWarning referencedWarning = new ReferencedWarning();
         final Customer customer = customerRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        final Invoice cusomerInvoice = invoiceRepository.findFirstByCusomer(customer);
+        final Invoice cusomerInvoice = new Invoice();//invoiceRepository.findFirstByCusomer(customer);
         if (cusomerInvoice != null) {
             referencedWarning.setKey("customer.invoice.cusomer.referenced");
             referencedWarning.addParam(cusomerInvoice.getId());

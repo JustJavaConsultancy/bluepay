@@ -13,7 +13,7 @@ import java.util.*;
 @Slf4j
 @Service
 @Transactional
-@RequiredArgsConstructor(onConstructor_ = {@Autowired})
+@RequiredArgsConstructor
 public class ImageService {
 
     private final CloudinaryService cloudinaryService;
