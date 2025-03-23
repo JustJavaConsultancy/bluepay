@@ -304,6 +304,10 @@
 </div>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    let pricetext = document.querySelectorAll('#priceProduct')
+    pricetext.forEach(pricetoget => {
+      pricetoget.textContent = document.getElementById('setPrice').textContent
+    })
     let counter = 1;
     const minCount = 1; // Minimum value
     const maxValueElement = document.getElementById('maxValue');
@@ -321,7 +325,7 @@
       decrementBtn.disabled = counter === minCount;
       incrementBtn.disabled = counter === maxCount;
       let price = counter * parseInt(document.getElementById('setPrice').textContent.replace(/,/g, ""), 10)
-      let pricetext = document.querySelectorAll('#priceProduct')
+       pricetext = document.querySelectorAll('#priceProduct')
       pricetext.forEach(pricetoget => {
         pricetoget.textContent = price.toLocaleString()
       });
