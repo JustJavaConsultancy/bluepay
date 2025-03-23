@@ -34,16 +34,14 @@
 
                         <input th:value="${product.name}"
                                style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" name="productName" class="form-control" placeholder="Enter Product Name" required
-                               hx-post="/editProductName"
+
+                               th:attr="hx-post=@{/editProductName/{id}(id=${product.id})}"
                                hx-target="#resultDiv"
                                hx-trigger="input changed delay:500ms"
                                hx-swap="innerHTML"
                                hx-indicator="#loadingIndicator"
                         >
-                        <button type="button"  class="btn" style="border: 0.5px solid #B0B3B5;background-color: white;color: black;font-weight: 500;font-size: 0.75rem;" _="on click add .hidden to #setName remove .hidden from #defaultName" >Cancel</button>
-                        <button type="submit" id="changeName" class="btn" style="color: white;background-color: #0C74B1 ;font-weight: 500;font-size: 0.75rem;"  disabled
-                        >Submit</button>
-                    </form>
+
 
                 </div>
             </div>
