@@ -1,5 +1,6 @@
 package com.techcrunch.bluepay.product;
 
+import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.util.NotFoundException;
 import java.util.List;
 import org.springframework.data.domain.Sort;
@@ -10,9 +11,11 @@ import org.springframework.stereotype.Service;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final AuthenticationManager authenticationManager;
 
-    public ProductService(final ProductRepository productRepository) {
+    public ProductService(final ProductRepository productRepository, AuthenticationManager authenticationManager) {
         this.productRepository = productRepository;
+        this.authenticationManager = authenticationManager;
     }
 
     public List<ProductDTO> findAll() {
@@ -30,6 +33,7 @@ public class ProductService {
 
     public Long create(final ProductDTO productDTO) {
         final Product product = new Product();
+        product.setMerchantId((String) authenticationManager.get("sub"));
         mapToEntity(productDTO, product);
         return productRepository.save(product).getId();
     }
@@ -55,6 +59,7 @@ public class ProductService {
         productDTO.setQuantityInStock(product.getQuantityInStock());
         productDTO.setMedia(product.getMedia());
         productDTO.setDateCreated(product.getDateCreated());
+        productDTO.setMerchantId(product.getMerchantId());
         return productDTO;
     }
 
@@ -66,6 +71,7 @@ public class ProductService {
         product.setContainsPhysicalGoods(productDTO.getContainsPhysicalGoods());
         product.setQuantityInStock(productDTO.getQuantityInStock());
         product.setMedia(productDTO.getMedia());
+        product.setMerchantId(productDTO.getMerchantId());
         return product;
     }
 

@@ -52,24 +52,28 @@ public class InvoiceService {
 
     private InvoiceDTO mapToDTO(final Invoice invoice, final InvoiceDTO invoiceDTO) {
         invoiceDTO.setId(invoice.getId());
-        invoiceDTO.setNumber(invoice.getNumber());
         invoiceDTO.setIssueDate(invoice.getIssueDate());
         invoiceDTO.setDueDate(invoice.getDueDate());
         invoiceDTO.setAmount(invoice.getAmount());
+        invoiceDTO.setCustomerEmail(invoice.getCustomerEmail());
+        invoiceDTO.setCustomerName(invoice.getCustomerName());
+        invoiceDTO.setCustomerPhoneNumber(invoice.getCustomerPhoneNumber());
+        invoiceDTO.setDescription(invoice.getDescription());
+        invoiceDTO.setMerchantId(invoice.getMerchantId());
         invoiceDTO.setStatus(invoice.getStatus());
-        invoiceDTO.setCusomer(invoice.getCusomer() == null ? null : invoice.getCusomer().getId());
         return invoiceDTO;
     }
 
     private Invoice mapToEntity(final InvoiceDTO invoiceDTO, final Invoice invoice) {
-        invoice.setNumber(invoiceDTO.getNumber());
+        invoice.setCustomerEmail(invoiceDTO.getCustomerEmail());
+        invoice.setCustomerName(invoiceDTO.getCustomerName());
+        invoice.setCustomerPhoneNumber(invoiceDTO.getCustomerPhoneNumber());
+        invoice.setDescription(invoiceDTO.getDescription());
+        invoice.setMerchantId(invoiceDTO.getMerchantId());
         invoice.setIssueDate(invoiceDTO.getIssueDate());
         invoice.setDueDate(invoiceDTO.getDueDate());
         invoice.setAmount(invoiceDTO.getAmount());
         invoice.setStatus(invoiceDTO.getStatus());
-        final Customer cusomer = invoiceDTO.getCusomer() == null ? null : customerRepository.findById(invoiceDTO.getCusomer())
-                .orElseThrow(() -> new NotFoundException("cusomer not found"));
-        invoice.setCusomer(cusomer);
         return invoice;
     }
 

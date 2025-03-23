@@ -45,8 +45,19 @@ public class Invoice {
     )
     private Long id;
 
-    @Column
-    private String number;
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "customerEmail")
+    private String customerEmail;
+
+    @Column(name = "customerName")
+    private String customerName;
+    @Column(name = "merchantId")
+    private String merchantId;
+    @Column(name = "customerPhoneNumber")
+    private String customerPhoneNumber;
+
 
     @Column(nullable = false)
     private LocalDate issueDate;
@@ -60,10 +71,6 @@ public class Invoice {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cusomer_id", nullable = false)
-    private Customer cusomer;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

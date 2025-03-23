@@ -25,7 +25,7 @@ spring:
             provider: keycloak
             client-name: BluePay
             client-id: bluepay
-            client-secret: ${CLIENT-SECRET:QLuJCpGrC27ZWNjmj8i9yFv7RZ6A41Mh}
+            client-secret: ${CLIENT-SECRET:ppFcLfLbwu9xIO6368Ua5hFR0km9kHEt}
             authorization-grant-type: authorization_code
             scope: openid,profile,email
 
@@ -103,6 +103,6 @@ flowable:
     resource-location: "classpath*:/eventregistries/"
 
 cloudinary:
-  api_secret: ${CLOUDINARY_API_SECRET:891217518553315}
-  api_key: ${CLOUDINARY_API_KEY:891217518553315}
-  cloud_name: ${CLOUDINARY_CLOUD_NAME:danmwswcg}
+  api_secret: ${CLOUDINARY_API_SECRET:u7EhKc2DLGowYYnKaic2IddnGJI}
+  api_key: ${CLOUDINARY_API_KEY:287599211485524}
+  cloud_name: ${CLOUDINARY_CLOUD_NAME:dsyqibqxg}

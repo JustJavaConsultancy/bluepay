@@ -128,16 +128,23 @@ public class myProductController {
         return "/product/productDetail";
     }
     @PostMapping("/editProductName/{id}")
-    public String editProductName(@PathVariable Long id, @RequestParam String productName, RedirectAttributes redirectAttributes) {
+    @ResponseBody
+    public String editProductName(@PathVariable Long id,@RequestParam String productName) {
+        System.out.println(" Submitting Here ------------------id===="+id);
         ProductDTO productDTO = productService.get(id);
+
+        System.out.println(" Submitting Here --------------------");
         if (productDTO != null) {
             productDTO.setName(productName);
             productService.update(id, productDTO);
-            redirectAttributes.addFlashAttribute("successMessage", "Product name updated successfully!");
+            //redirectAttributes.addFlashAttribute("successMessage", "Product name updated successfully!");
         } else {
-            redirectAttributes.addFlashAttribute("errorMessage", "Product not found!");
+            //redirectAttributes.addFlashAttribute("errorMessage", "Product not found!");
         }
-        return "redirect:/productDetail/" + id;
+        String response="<input style=\"background-color: #F9F7F7;font-size: 0.85rem;border: " +
+                "1px solid #E8E8E8;\" type=\"text\" id=\"productLink\" class=\"form-control\" " +
+                "value='https://bluepayment/buy/"+productName.replace(" ","_")+".com' readonly>\n";
+        return response;
     }
     @GetMapping("/preview/{id}")
     public String previewProduct(@PathVariable Long id, Model model) {

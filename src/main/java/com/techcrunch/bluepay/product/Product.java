@@ -53,6 +53,8 @@ public class Product {
 
     private Boolean containsPhysicalGoods;
 
+    private String merchantId;
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "Product_Media", joinColumns = @JoinColumn(name = "product_id"))
     private List<String> media = new ArrayList<>();
