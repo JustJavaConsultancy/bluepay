@@ -41,6 +41,7 @@ public class ProductController {
         if (bindingResult.hasErrors()) {
             return "product/add";
         }
+        //https://www.figma.com/design/V5qWvkeZqmjA5Yba6tiCXL/Bluepay-Payment-Gateway?node-id=581-34531&t=XOtCK8uakUorwPd3-0
         productService.create(productDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("product.create.success"));
         return "redirect:/products";
