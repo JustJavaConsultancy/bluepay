@@ -1,0 +1,418 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <style>
+        /* Custom font */
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+        body {
+            font-family: "Inter", "Basis Grotesque Pro", sans-serif;
+            color: #333c41;
+        }
+
+        /* Custom colors to match original design */
+        .btn-primary {
+            background-color: #0c74b1;
+            border-color: #0c74b1;
+        }
+
+        .order-count,
+        .revenue {
+            color: #000b11;
+            font-size: 14px;
+            line-height: 22.4px;
+        }
+
+        .filter-label {
+            color: #333c41;
+            font-size: 16px;
+            line-height: 22.4px;
+        }
+
+        /* Table cell widths to match original design */
+        .id-cell {
+            width: 100px;
+        }
+
+        .customer-cell {
+            width: 146px;
+        }
+
+        .product-cell {
+            width: 128px;
+        }
+
+        .quantity-cell {
+            width: 84px;
+        }
+
+        .amount-cell {
+            width: 150px;
+        }
+
+        .timestamp-cell {
+            width: 178px;
+        }
+
+        .email-cell {
+            width: 195px;
+        }
+
+        .phone-cell {
+            width: 128px;
+        }
+
+        /* Custom styles for date picker */
+        .date-picker-container {
+            position: absolute;
+            background: white;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            padding: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+
+        .date-input {
+            padding: 5px;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+        }
+
+        .date-picker-close {
+            margin-left: 10px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #8a8f92;
+        }
+
+        /* Custom pagination styles to match design */
+        .pagination .page-link {
+            color: #8a8f92;
+            border: none;
+            padding: 0.375rem 0.5rem;
+        }
+
+        .pagination .page-link:hover {
+            background-color: transparent;
+            color: #000b11;
+        }
+
+        .pagination .page-item.active .page-link {
+            background-color: transparent;
+            color: #000b11;
+            font-weight: bold;
+        }
+
+        .pagination .disabled .page-link {
+            color: #8a8f92;
+            opacity: 0.5;
+        }
+
+        /* No data message */
+        .no-data-message {
+            padding: 20px;
+            color: #8a8f92;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        /* Gap utility for flex items */
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-3 {
+            gap: 1rem;
+        }
+
+    </style>
+</head>
+<body>
+<div layout:fragment="content" >
+    <script th:src="@{/js/bundle.js}"></script>
+<section class="container py-4" id="orders-dashboard">
+    <header class="mb-4">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="d-flex flex-wrap gap-3">
+                    <p class="mb-0 order-count">Total Order: 100</p>
+                    <p class="mb-0 revenue">Revenue: NGN 100,000</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-3 mb-lg-0">
+                <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                          d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z"
+                          stroke="#545C60"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                  ></path>
+                  <path
+                          d="M14 14L11.1334 11.1333"
+                          stroke="#545C60"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </span>
+                    <input
+                            type="text"
+                            class="form-control border-start-0 search-input new-search-input"
+                            placeholder="customer name and order ID"
+                    />
+                </div>
+            </div>
+
+            <div class="col-lg-5 col-md-6 mb-3 mb-lg-0">
+                <div class="d-flex align-items-center flex-wrap">
+                    <span class="me-2 fw-medium">Filter By</span>
+                    <div class="d-flex gap-2 flex-grow-1">
+                        <div
+                                class="date-filter start-date d-flex justify-content-between align-items-center form-control"
+                        >
+                            <span>Start Date</span>
+                            <svg
+                                    width="16"
+                                    height="17"
+                                    viewBox="0 0 16 17"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                        d="M5.33337 1.83334V4.50001"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M10.6666 1.83334V4.50001"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M12.6667 3.16666H3.33333C2.59695 3.16666 2 3.76361 2 4.49999V13.8333C2 14.5697 2.59695 15.1667 3.33333 15.1667H12.6667C13.403 15.1667 14 14.5697 14 13.8333V4.49999C14 3.76361 13.403 3.16666 12.6667 3.16666Z"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M2 7.16666H14"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                            </svg>
+                        </div>
+                        <div
+                                class="date-filter end-date d-flex justify-content-between align-items-center form-control"
+                        >
+                            <span>End Date</span>
+                            <svg
+                                    width="16"
+                                    height="17"
+                                    viewBox="0 0 16 17"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                        d="M5.33337 1.83334V4.50001"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M10.6666 1.83334V4.50001"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M12.6667 3.16666H3.33333C2.59695 3.16666 2 3.76361 2 4.49999V13.8333C2 14.5697 2.59695 15.1667 3.33333 15.1667H12.6667C13.403 15.1667 14 14.5697 14 13.8333V4.49999C14 3.76361 13.403 3.16666 12.6667 3.16666Z"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                                <path
+                                        d="M2 7.16666H14"
+                                        stroke="#8A8F92"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                ></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-12">
+                <button class="btn btn-primary w-100 download-button">
+                    Download
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="table-responsive mb-4">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col" class="id-col">ID</th>
+                <th scope="col" class="customer-col">Customer</th>
+                <th scope="col" class="product-col">Product</th>
+                <th scope="col" class="quantity-col">Quantity</th>
+                <th scope="col" class="amount-col">Amount (NGN)</th>
+                <th scope="col" class="timestamp-col">Timestamp</th>
+                <th scope="col" class="email-col">Email Address</th>
+                <th scope="col" class="phone-col">Phone Number</th>
+            </tr>
+            </thead>
+            <tbody id="orders-table-body">
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            <tr>
+                <td>1903072</td>
+                <td>Adedapo Tiamiyu</td>
+                <td>High Fashion</td>
+                <td>5</td>
+                <td>20,000</td>
+                <td>Mar 27, 2025, 6 : 50 PM</td>
+                <td>tiamiyuadedapo@gmail.com</td>
+                <td>08138482251</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <nav aria-label="Orders pagination">
+        <ul class="pagination justify-content-end">
+            <li class="page-item prev-page">
+                <a class="page-link" href="#" aria-label="Previous">
+                    <svg
+                            width="24"
+                            height="26"
+                            viewBox="0 0 24 26"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M15 6.75L9 13L15 19.25"
+                                stroke="#E6E7E7"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        ></path>
+                    </svg>
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item disabled"><span class="page-link">...</span></li>
+            <li class="page-item"><a class="page-link" href="#">10</a></li>
+            <li class="page-item next-page">
+                <a class="page-link" href="#" aria-label="Next">
+                    <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                                d="M9 17.75L15 12L9 6.25"
+                                stroke="#000B11"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                        ></path>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</section>
+</div>
+
+
+
+
+</body>
+</html>
