@@ -3,11 +3,13 @@ package com.techcrunch.bluepay.product;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.util.NotFoundException;
 import java.util.List;
+
+import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Service("productService")
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -44,7 +46,10 @@ public class ProductService {
         mapToEntity(productDTO, product);
         productRepository.save(product);
     }
-
+    public Long updateProduct(DelegateExecution execution) {
+        System.out.println(" Product Updated Here....."+execution);
+        return 1L;
+    }
     public void delete(final Long id) {
         productRepository.deleteById(id);
     }

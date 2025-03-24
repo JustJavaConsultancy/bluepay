@@ -4,11 +4,13 @@ import com.techcrunch.bluepay.customer.Customer;
 import com.techcrunch.bluepay.customer.CustomerRepository;
 import com.techcrunch.bluepay.util.NotFoundException;
 import java.util.List;
+
+import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 
-@Service
+@Service("invoiceService")
 public class InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
@@ -33,6 +35,14 @@ public class InvoiceService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    public Long createInvoice(DelegateExecution execution){
+        System.out.println(" Invoce Created Here.....");
+        return 1L;
+    }
+
+    public void updateStatus(DelegateExecution execution){
+        System.out.println(" Updating status here....");
+    }
     public Long create(final InvoiceDTO invoiceDTO) {
         final Invoice invoice = new Invoice();
         mapToEntity(invoiceDTO, invoice);

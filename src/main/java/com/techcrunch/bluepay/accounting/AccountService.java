@@ -1,8 +1,9 @@
 package com.techcrunch.bluepay.accounting;
 
+import org.flowable.engine.delegate.DelegateExecution;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("accountService")
 public class AccountService {
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
@@ -19,6 +20,12 @@ public class AccountService {
         return accountMapper.toDto(accountRepository.save(accountMapper.toEntity(accountDTO)));
     }
 
+    public AccountDTO getByCode(String code) {
+        return accountMapper.toDto(accountRepository.findByCode(code).orElseThrow());
+    }
+    public void customerPaymentJournalEntry(DelegateExecution execution) {
+        System.out.println(" The execution==="+execution);
+    }
     public AccountDTO update(String id, AccountDTO accountDTO) {
         return accountMapper.toDto(accountRepository.save(accountMapper.partialUpdate(accountDTO, accountRepository.findById(id).orElseThrow())));
     }
