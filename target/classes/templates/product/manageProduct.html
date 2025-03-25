@@ -1,0 +1,259 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+<style>
+  .search-container {
+    position: relative;
+    max-width: 400px;
+  }
+  /* Dropdown container */
+  .customdropdown {
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Dropdown button styling */
+  .customdropdown button {
+    cursor: pointer;
+    font-size: 18px;
+    padding: 5px;
+  }
+
+  /* Dropdown menu (hidden by default) */
+  .customdropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    min-width: 150px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    padding: 5px 0;
+    list-style: none;
+    z-index: 10;
+  }
+
+  /* Dropdown items */
+  .customdropdown-item {
+    display: block;
+    padding: 10px;
+    color: black;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+
+  .customdropdown-item:hover {
+    background-color: #f1f1f1;
+  }
+
+  /* Show dropdown when active */
+  .customdropdown.active .customdropdown-menu {
+    display: block;
+  }
+
+  .form-switch .form-check-input:checked {
+    background-color: #0C74B1 !important;
+  }
+  .table{
+    --bs-table-bg: #FAFAFA !important;
+  }
+  th{
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+  td{
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  .btn-close{
+    position: absolute;
+    right: 0;
+    padding: 1em;
+  }
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    transform: translateY(-50%);
+    color: #545C60;
+    font-size: 1rem;
+  }
+  .hidden {
+    display: none;
+  }
+  .upload-container {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+  }
+  .upload-container input {
+    display: none;
+  }
+  .upload-icon {
+    font-size:1.75rem;
+    color: #0C74B1;
+  }
+  .preview-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .file-box {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid #ddd;
+  }
+  .file-box img, .file-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .file-box video {
+    pointer-events: none;
+  }
+  .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #F4F8FB;
+    border: none;
+    color: #3D90C1;
+    padding: 5px;
+    border-radius: 60%;
+    font-size:0.85rem;
+    cursor: pointer;
+  }
+  .play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 100%;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  .play-btn:hover {
+    background: black;}
+</style>
+</head>
+<body>
+<div style="margin-top: 20px" layout:fragment="content" >
+  <script th:src="@{/js/bundle.js}"></script>
+  <div class="modal fade" id="rejectModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="width: 100%;">
+        <div th:replace="~{/product/addProductModal :: addProduct }" />
+      </div>
+    </div>
+  </div>
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; width: 100%;">
+    <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+      <div>
+        <select class="form-select" style="font-size: 0.85rem; padding: 5px; width: 100%;" name="filter">
+          <option value="">Filter</option>
+          <option value="archived">Archived</option>
+        </select>
+      </div>
+      <div class="search-container" style="display: flex; align-items: center; min-width: 200px; flex-grow: 1;">
+        <i class="bi bi-search search-icon"></i>
+        <input style="font-size: 0.85rem; width: 100%;padding-left: 40px;" type="text" class="form-control" placeholder="Search">
+      </div>
+    </div>
+    <div style="text-align: right;">
+      <button data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn" style="background-color: #0C74B1; font-size: 1rem; color: white; padding: 8px 12px; border-radius: 5px; white-space: nowrap;">
+        <i class="bi bi-plus-lg"></i> Add Product
+      </button>
+    </div>
+  </div>
+
+  <div th:if="${#lists.isEmpty(productList)}" style="display: flex;justify-content: center;align-items: center; margin-top: 4.0rem;text-align: center;flex-direction: column;">
+    <div>
+      <img src="/images/fileIcon.svg" style=" width:5rem;height:4.5rem" alt="">
+    </div>
+    <div>
+      <h2 class="mt-4" style="font-size: 1.25rem;font-weight: 500;">New Product</h2>
+    </div>
+    <div>
+      <p style="color: #545C60;font-size: 0.85rem;font-weight: 400;">Add a product, generate a product link, and manage orders
+        and inventory seamlessly.</p>
+    </div>
+    <div>
+      <button data-bs-toggle="modal" data-bs-target="#rejectModal" class="btn" style="background-color: #0C74B1; font-size: 1rem; color: white; padding: 8px 12px; border-radius: 5px; white-space: nowrap;">
+        <i class="bi bi-plus-lg"></i> Add Product
+      </button>
+    </div>
+  </div>
+  <div th:if="${!#lists.isEmpty(productList)}" style="margin-top: 20px;">
+
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Name</th>
+        <th scope="col">Price(NGN)</th>
+        <th scope="col" style="text-align: center">Quantity InStock</th>
+        <th scope="col">Quantity Sold</th>
+        <th scope="col">Revenue(NGN)</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody class="table-group-divider">
+      <tr th:each="product : ${productList}">
+        <td style="padding-top:20px;" th:text="${product.id}">126343553</td>
+        <td>
+          <div class="d-flex align-items-center gap-2">
+            <img th:src="${product.getPrimiaryMedia()}" alt="Product Image" width="40" height="40">
+
+
+            <div>
+              <span th:text="${product.name}"></span>
+            </div>
+          </div>
+        </td>
+        <td style="padding-top:20px;" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}"></td>
+
+        <td>
+          <div style="display: flex; align-items: center;padding-top: 8px;justify-content: center;text-align: center">
+          <span><i class="bi bi-dot" style="color: #46A14B; font-size: 2rem;"></i></span>
+          <span style="margin-left: 5px;">
+            <span th:text="${product.quantityInStock==0?'Unlimited':product.quantityInStock}"></span> in stock
+          </span>
+          </div>
+        </td>
+        <td style="padding-top:20px;">0</td>
+        <td style="padding-top:20px;">0.00</td>
+        <td style="padding-top:20px;">
+          <div class="customdropdown">
+            <button style="border: none; background: none;">
+              <i class="bi bi-three-dots-vertical"></i>
+            </button>
+            <ul class="customdropdown-menu">
+              <li><a class="customdropdown-item" th:href="@{'/productDetail/'+${product.id}}">View Details</a></li>
+              <li><a class="customdropdown-item" th:href="@{'/archive/'+${product.id}}">Archive</a></li>
+              <li><a class="customdropdown-item" th:href="@{'/delete/'+${product.id}}">Delete</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+.transactions {
+  background-color: #fff;
+  display: flex;
+  padding-bottom: 32px;
+  margin-left: 200px;
+  flex-direction: column;
+  overflow: hidden;
+  align-items: flex-end;
+  font-family:
+    "Basis Grotesque Pro",
+    -apple-system,
+    Roboto,
+    Helvetica,
+    sans-serif;
+}
+
+.transactions-container {
+  width: 100%;
+  max-width: 1168px;
+  font-size: 14px;
+  color: #0c74b1;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.kyc-notice {
+  width: 100%;
+}
+
+.kyc-content {
+  align-items: center;
+  background-color: #f4f8fb;
+  display: flex;
+  width: 100%;
+  padding: 12px;
+  justify-content: center;
+  gap: 6px;
+}
+
+.kyc-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.kyc-message {
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  margin: 0;
+}
+
+.spacer {
+  background-color: #fff;
+  min-height: 771px;
+  width: 100%;
+}
+
+.transactions-content {
+  background-color: #fff;
+  z-index: 10;
+  display: flex;
+  margin-top: -706px;
+  padding: 20px 32px;
+  align-items: center;
+  overflow: hidden;
+  justify-content: center;
+}
+
+.content-wrapper {
+  align-self: stretch;
+  display: flex;
+  min-width: 240px;
+  width: 1104px;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.transactions-main {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.transactions-header {
+  width: 100%;
+}
+
+.total-count {
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  width: 128px;
+  font-size: 14px;
+  color: #000b11;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.count-value {
+  font-weight: 500;
+}
+
+.top-bar {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+  align-items: flex-start;
+  gap: 100px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: flex;
+  min-width: 240px;
+  align-items: center;
+  gap: 27px;
+}
+
+.month-filter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: #333c41;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.month-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  border: 0.2px solid #b0b3b5;
+  padding: 8px;
+  gap: 5px;
+}
+
+.search-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #8a8f92;
+  font-weight: 400;
+  line-height: 1.6;
+  font-family: inherit;
+  background: transparent;
+}
+
+.download-button {
+  font-feature-settings:
+    "liga" off,
+    "clig" off;
+  border-radius: 4px;
+  background-color: #0c74b1;
+  padding: 10px;
+  font-size: 16px;
+  color: #f4f8fb;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.table-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.transactions-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.table-header {
+  border-bottom: 1px solid #b0b3b5;
+  color: #000b11;
+  text-align: left;
+}
+
+.table-header th {
+  padding: 8px;
+  font-weight: 400;
+}
+
+.reference-header {
+  width: 186px;
+}
+.amount-header {
+  width: 200px;
+}
+.customer-header {
+  width: 215px;
+}
+.payment-header {
+  width: 171px;
+}
+.timestamp-header {
+  width: 171px;
+}
+.action-header {
+  width: 147px;
+}
+
+.table-row {
+  border-bottom: 0.2px solid #b0b3b5;
+  color: #333c41;
+}
+
+.table-row td {
+  padding: 8px;
+}
+
+.payment-tag {
+  display: inline-block;
+  border-radius: 100px;
+  border: 1px solid #e6e7e7;
+  background-color: #f9f7f7;
+  padding: 4px 16px;
+}
+
+.view-details-btn {
+  border-radius: 100px;
+  border: 1px solid #e6e7e7;
+  background-color: #0c74b1;
+  color: #fff;
+  padding: 4px 16px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.pagination {
+  display: flex;
+  margin-top: 30px;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  color: #8a8f92;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.prev-page,
+.next-page {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.page-number {
+  border-radius: 2px;
+  padding: 0 4px;
+  min-width: 17px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.page-number.active {
+  background-color: #0c74b1;
+  color: #f4f8fb;
+  padding: 0 8px;
+  width: 22px;
+  height: 23px;
+  line-height: 23px;
+}
+
+.page-dots {
+  font-size: 12px;
+  padding: 0 4px;
+}
+
+@media (max-width: 991px) {
+  .transactions {
+    padding-left: 20px;
+  }
+
+  .transactions-container,
+  .transactions-content,
+  .content-wrapper,
+  .top-bar {
+    max-width: 100%;
+  }
+
+  .transactions-content {
+    margin-top: -200px;
+    padding: 20px;
+  }
+
+  .filters {
+    flex-wrap: wrap;
+  }
+
+  .download-button {
+    white-space: normal;
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+}

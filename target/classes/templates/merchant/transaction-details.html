@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .modal-body{
+        padding: 0;
+    }
+    .btn-close{
+        position: absolute;
+        right: 0;
+        padding: 1em;
+    }
+  </style>
+</head>
+<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<div layout:fragment="content">
+<article class="transaction-view">
+  <div class="transaction-container">
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/71fe1caf82f7be5dc6fe7d9ae933187a4da2fcfb?placeholderIfAbsent=true"
+      alt="Back"
+      class="back-icon"
+    />
+    <div class="transaction-card">
+      <header class="transaction-header">
+        <div class="amount-container">
+          <p class="label">Amount</p>
+          <p class="amount">NGN 50,000.00</p>
+        </div>
+        <p class="status-badge">Succesful</p>
+      </header>
+
+      <section class="transaction-details">
+        <dl class="details-grid">
+          <div class="detail-item">
+            <dt class="detail-label">Reference</dt>
+            <dd class="detail-value reference-value">
+              <span>T123456789234567</span>
+              <img
+                src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/2c4cecf397add5420fc69773dbc00ca9a8d23787?placeholderIfAbsent=true"
+                alt="Copy"
+                class="copy-icon"
+              />
+            </dd>
+          </div>
+
+          <div class="detail-item">
+            <dt class="detail-label">Channel</dt>
+            <dd class="detail-value">
+              <span class="channel-badge">Card</span>
+            </dd>
+          </div>
+
+          <div class="detail-item">
+            <dt class="detail-label">Fees</dt>
+            <dd class="detail-value">NGN 500.00</dd>
+          </div>
+
+          <div class="detail-item">
+            <dt class="detail-label">Timestamp</dt>
+            <dd class="detail-value">
+              <time datetime="2025-03-27T18:50">Mar 27, 2025, 6 : 50 PM</time>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <hr class="divider" />
+
+      <div class="info-sections">
+        <section class="products-section">
+          <h2 class="section-title">Products</h2>
+          <div class="product-list">
+            <div class="product-item">
+              <p class="product-name">High Fashion x 2</p>
+              <p class="product-price">NGN 40,000</p>
+            </div>
+          </div>
+        </section>
+
+        <hr class="divider-vertical" />
+
+        <section class="customer-section">
+          <h2 class="section-title">Customer</h2>
+          <div class="customer-details">
+            <div class="customer-info">
+              <div class="info-row">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/b383c2366dddc884663c3226aa39c316c9bf1d22?placeholderIfAbsent=true"
+                  alt="User"
+                  class="info-icon"
+                />
+                <p class="info-text">Adedapo Tiamiyu</p>
+              </div>
+              <div class="info-row">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/4e661e02c2f1c585819b2f205f7167b9c7c0782f?placeholderIfAbsent=true"
+                  alt="Email"
+                  class="info-icon"
+                />
+                <p class="info-text">tiamiyuadedapo@gmail.com</p>
+              </div>
+              <div class="info-row">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/be9d3212cd511d13d1960cc239347f74ffe5ca81?placeholderIfAbsent=true"
+                  alt="Phone"
+                  class="info-icon"
+                />
+                <p class="info-text">
+                  <span class="phone-code">+234</span>
+                  <span class="phone-number">8138482251</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</article>
+</div>
+</body>
+</html>

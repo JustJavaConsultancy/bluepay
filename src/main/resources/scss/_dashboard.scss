@@ -1,0 +1,308 @@
+/* Base Styles */
+:root {
+  --color-text-primary: #000b11;
+  --color-text-secondary: #545c60;
+  --color-border: #e6e7e7;
+  --color-success: #98ff98;
+  --color-processing: #e6e6fa;
+  --color-customer: #2c66a0;
+  --color-bank: #29c3ff;
+  --color-fraud: #dbdb80;
+  --color-system: #7f4d7f;
+  --color-button: #e8e8e8;
+  --font-family: "Basis Grotesque Pro", sans-serif;
+}
+
+/* Layout */
+.dashboard-header {
+  display: flex;
+  width: 100%;
+  padding: 12px 32px;
+  border-bottom: 1px solid var(--color-border);
+  height: 40px;
+}
+
+.month-selector {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  width: 100%;
+}
+
+.month-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.currency-label {
+  margin-left: auto;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.dashboard-content {
+  display: flex;
+  width: 100%;
+}
+
+/* Revenue Section */
+.revenue-section {
+  flex: 1;
+  padding: 24px;
+}
+
+.revenue-header {
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.metric-label {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.metric-value {
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.chart-container {
+  width: 100%;
+  height: 364px;
+  background-color: white;
+  position: relative;
+  margin-bottom: 70px;
+}
+
+/* Success Rate Section */
+.success-rate-section {
+  margin-top: 24px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 24px;
+}
+
+.section-title {
+  color: var(--color-text-primary);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.54px;
+  margin-bottom: 16px;
+}
+
+.metrics-container {
+  display: flex;
+  gap: 20px;
+}
+
+.transaction-metrics {
+  display: flex;
+  gap: 82px;
+}
+
+.metric-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.metric-title {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  line-height: 140%;
+}
+
+.chart-wrapper {
+  position: relative;
+}
+
+.chart-percentage {
+  position: absolute;
+  left: 31px;
+  top: 34px;
+  color: var(--color-text-primary);
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.6px;
+}
+
+.legend-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-dot.success {
+  background-color: var(--color-success);
+}
+.legend-dot.error {
+  background-color: var(--color-processing);
+}
+
+.legend-label {
+  font-size: 14px;
+  line-height: 22.4px;
+  color: var(--color-text-secondary);
+}
+
+.legend-value {
+  color: var(--color-text-primary);
+}
+
+/* Payment Issues */
+.payment-issues {
+  padding: 16px 32px;
+  border: 1px solid var(--color-border);
+}
+
+.issues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.issue-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.issue-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.issue-dot.customer {
+  background-color: var(--color-customer);
+}
+.issue-dot.bank {
+  background-color: var(--color-bank);
+}
+.issue-dot.fraud {
+  background-color: var(--color-fraud);
+}
+.issue-dot.system {
+  background-color: var(--color-system);
+}
+
+.issue-label {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 160%;
+}
+
+/* Sidebar */
+.dashboard-sidebar {
+  width: 408px;
+  border-left: 1px solid var(--color-border);
+  background-color: #fcfcfc;
+}
+
+.settlement-section,
+.balance-section {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+}
+
+.settlement-content,
+.balance-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.amount {
+  font-size: 18px;
+  color: var(--color-text-primary);
+  font-weight: 500;
+  letter-spacing: -0.54px;
+  text-align: center;
+}
+
+.date,
+.status {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  line-height: 160%;
+}
+
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 0;
+}
+
+.balance-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.secondary-button {
+  width: fit-content;
+  margin: auto;
+  padding: 10px;
+  font-size: 16px;
+  color: #333c41;
+  font-weight: 500;
+  border-radius: 4px;
+  border: 0.5px solid #b0b3b5;
+  background-color: var(--color-button);
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+
+  .dashboard-sidebar {
+    width: 100%;
+  }
+
+  .revenue-section {
+    padding: 16px;
+  }
+
+  .metrics-container {
+    flex-direction: column;
+  }
+
+  .transaction-metrics {
+    flex-direction: column;
+    gap: 32px;
+  }
+}

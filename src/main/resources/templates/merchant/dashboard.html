@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .modal-body{
+        padding: 0;
+    }
+    .btn-close{
+        position: absolute;
+        right: 0;
+        padding: 1em;
+    }
+  </style>
+</head>
+<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<div layout:fragment="content">
+<header class="dashboard-header">
+  <div class="month-selector">
+    <button class="month-button">
+      <span>This Month</span>
+      <svg class="caret-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.98 6.26666C3.07375 6.17303 3.20083 6.12044 3.33333 6.12044C3.46583 6.12044 3.59291 6.17303 3.68666 6.26666L7.92933 10.5093C7.94481 10.5249 7.9632 10.5372 7.98345 10.5456C8.0037 10.554 8.02541 10.5583 8.04733 10.5583C8.06925 10.5583 8.09096 10.554 8.11121 10.5456C8.13146 10.5372 8.14985 10.5249 8.16533 10.5093L12.408 6.26666C12.5028 6.17834 12.6281 6.13026 12.7577 6.13255C12.8872 6.13483 13.0108 6.18731 13.1024 6.27892C13.194 6.37052 13.2465 6.49411 13.2488 6.62365C13.2511 6.75318 13.203 6.87855 13.1147 6.97333L8.872 11.216C8.76366 11.3243 8.63504 11.4103 8.49349 11.4689C8.35193 11.5276 8.20022 11.5577 8.047 11.5577C7.89378 11.5577 7.74206 11.5276 7.60051 11.4689C7.45895 11.4103 7.33033 11.3243 7.222 11.216L2.98 6.97333C2.88636 6.87958 2.83377 6.7525 2.83377 6.62C2.83377 6.4875 2.88636 6.36041 2.98 6.26666Z" fill="#333C41"/>
+      </svg>
+    </button>
+    <span class="currency-label">NGN</span>
+  </div>
+</header>
+
+<main class="dashboard-content">
+  <section class="revenue-section">
+    <header class="revenue-header">
+      <h2 class="metric-label">Revenue (NGN)</h2>
+      <p class="metric-value">50,000.00</p>
+    </header>
+
+    <article class="chart-container">
+      <svg class="revenue-chart" width="688" height="399" viewBox="0 0 688 399" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="676" height="364" transform="translate(12 35)" fill="white"/>
+        <path d="M48.7053 381.1H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 353.799H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 326.5H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 299.201H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 271.9H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 244.6H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 217.299H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 190H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 162.701H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 135.4H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M48.7053 108.1L687.737 108.1" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M598.362 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M508.987 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M419.611 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M326 108V394.65" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M240.861 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M151.486 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <path d="M62.1115 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
+        <rect x="91.2321" y="261.434" width="31.2812" height="119.665" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="268.018" y="343.336" width="31.2812" height="37.765" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="360.339" y="244.6" width="31.2812" height="136.5" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="448.732" y="314.215" width="31.2812" height="66.885" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="538.107" y="284.641" width="31.2812" height="96.46" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="633.375" y="375" width="31.4286" height="6" fill="#D0E8FF" fill-opacity="0.7"/>
+        <rect x="180.607" y="156.33" width="31.2812" height="224.77" fill="#D0E8FF" fill-opacity="0.7"/>
+
+        <!-- Chart Labels -->
+
+
+        <!-- Y-axis labels -->
+        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
+          <tspan x="0.367188" y="114.034">50,000</tspan>
+        </text>
+        <!-- ... Rest of the Y-axis labels ... -->
+        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
+          <tspan x="31.2051" y="384.034">0</tspan>
+        </text>
+
+        <!-- X-axis labels -->
+        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
+          <tspan x="84.4043" y="395.034">March 3</tspan>
+        </text>
+        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
+          <tspan x="177.393" y="395.034">March 4</tspan>
+        </text>
+
+      </svg>
+    </article>
+
+    <section class="success-rate-section">
+      <h2 class="section-title">Success Rate</h2>
+
+      <div class="metrics-container">
+        <article class="transaction-metrics">
+          <div class="metric-group">
+            <h3 class="metric-title">Inflow Transactions</h3>
+            <div class="chart-wrapper">
+              <svg class="donut-chart" width="97" height="97" viewBox="0 0 97 97" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.39233e-05 48.101C8.39233e-05 41.7843 1.24426 35.5294 3.66156 29.6936C6.07886 23.8577 9.62196 18.5551 14.0886 14.0885C18.5551 9.62187 23.8578 6.07878 29.6936 3.66147C35.5295 1.24417 41.7844 -2.76112e-07 48.1011 0L48.1011 9.6202C43.0477 9.6202 38.0438 10.6155 33.3751 12.5494C28.7064 14.4832 24.4643 17.3177 20.8911 20.891C17.3178 24.4643 14.4833 28.7063 12.5495 33.3751C10.6156 38.0438 9.62029 43.0477 9.62029 48.101H8.39233e-05Z" fill="#E6E6FA"/>
+                <path d="M8.39233e-05 48.101C8.39233e-05 57.6145 2.82116 66.9144 8.10657 74.8245C13.392 82.7347 20.9043 88.8999 29.6936 92.5406C38.483 96.1812 48.1545 97.1338 57.4852 95.2778C66.8158 93.4218 75.3866 88.8406 82.1137 82.1136C88.8407 75.3866 93.4219 66.8158 95.2779 57.4851C97.1339 48.1544 96.1813 38.4829 92.5407 29.6936C88.9 20.9042 82.7348 13.3919 74.8246 8.10649C66.9144 2.82108 57.6146 -1.13447e-07 48.1011 0V9.6202C55.7119 9.6202 63.1518 11.8771 69.4799 16.1054C75.8081 20.3337 80.7402 26.3436 83.6528 33.3751C86.5653 40.4065 87.3273 48.1437 85.8425 55.6083C84.3578 63.0728 80.6928 69.9294 75.3112 75.3111C69.9295 80.6927 63.0729 84.3577 55.6084 85.8425C48.1438 87.3273 40.4066 86.5652 33.3751 83.6527C26.3437 80.7402 20.3338 75.808 16.1055 69.4798C11.8772 63.1517 9.62029 55.7118 9.62029 48.101H8.39233e-05Z" fill="#98FF98"/>
+              </svg>
+              <span class="chart-percentage">80%</span>
+            </div>
+            <div class="legend-container">
+              <div class="legend-item">
+                <span class="legend-dot success"></span>
+                <span class="legend-label">Successful: <span class="legend-value">5</span></span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot error"></span>
+                <span class="legend-label">Processing Errors: <span class="legend-value">2</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="metric-group">
+            <h3 class="metric-title">Outflow Transactions</h3>
+            <div class="chart-wrapper">
+              <svg class="donut-chart" width="97" height="97" viewBox="0 0 97 97" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.39233e-05 48.101C8.39233e-05 74.6665 21.5357 96.2021 48.1011 96.2021C74.6666 96.2021 96.2021 74.6665 96.2021 48.101C96.2021 21.5356 74.6666 0 48.1011 0C21.5357 0 8.39233e-05 21.5356 8.39233e-05 48.101ZM86.5819 48.101C86.5819 69.3534 69.3535 86.5819 48.1011 86.5819C26.8487 86.5819 9.62029 69.3534 9.62029 48.101C9.62029 26.8487 26.8487 9.6202 48.1011 9.6202C69.3535 9.6202 86.5819 26.8487 86.5819 48.101Z" fill="#98FF98"/>
+                <text fill="#000B11" font-family="Basis Grotesque Pro" font-size="20" letter-spacing="-0.03em">
+                  <tspan x="21" y="54.89">100%</tspan>
+                </text>
+              </svg>
+            </div>
+            <div class="legend-container">
+              <div class="legend-item">
+                <span class="legend-dot success"></span>
+                <span class="legend-label">Successful: <span class="legend-value">5</span></span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-dot error"></span>
+                <span class="legend-label">Processing Errors: <span class="legend-value">0</span></span>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="payment-issues">
+          <h3 class="section-title">Payment Issues</h3>
+          <div class="issues-list">
+            <div class="issue-item">
+              <span class="issue-dot customer"></span>
+              <span class="issue-label">Customer Error: 3</span>
+            </div>
+            <div class="issue-item">
+              <span class="issue-dot bank"></span>
+              <span class="issue-label">Bank Error: 2</span>
+            </div>
+            <div class="issue-item">
+              <span class="issue-dot fraud"></span>
+              <span class="issue-label">Fraud Block: 0</span>
+            </div>
+            <div class="issue-item">
+              <span class="issue-dot system"></span>
+              <span class="issue-label">System Error: 0</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </section>
+
+  <aside class="dashboard-sidebar">
+    <section class="settlement-section">
+      <div class="settlement-content">
+        <h2 class="sidebar-title">Next Settlement</h2>
+        <p class="amount">50,000.00</p>
+        <p class="date">Due Monday, March 2025</p>
+      </div>
+      <button class="secondary-button">View past settlements</button>
+    </section>
+
+    <hr class="sidebar-divider">
+
+    <section class="balance-section">
+      <div class="balance-content">
+        <h2 class="sidebar-title">Balance</h2>
+        <p class="amount">50,000.00</p>
+        <p class="status">Available</p>
+      </div>
+      <div class="balance-actions">
+        <button class="secondary-button">View history</button>
+        <button class="secondary-button">Topup</button>
+      </div>
+    </section>
+  </aside>
+</main>
+</div>
+</body>
+</html>
