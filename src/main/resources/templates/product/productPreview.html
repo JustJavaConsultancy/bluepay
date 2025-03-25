@@ -207,7 +207,7 @@
             >Buy Now</button>
           </div>
           <!-- form -->
-          <form id="form" class="hidden" >
+          <form hx-post="/payerInfo" id="form" class="hidden" >
             <i class="bi bi-arrow-left" style="cursor: pointer;"
                _="on click remove .hidden from #selectItem add .hidden to #form"
             ></i>
@@ -263,6 +263,7 @@
                 </div>
               </div>
             </div>
+            <input id="priceProduct" type="hidden">
             <button type="button" id="userInfo" class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"
                     _="on click add .hidden to #form remove .hidden from #preview"
                     disabled>Review and Pay</button>

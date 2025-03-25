@@ -101,4 +101,9 @@ public class MerchantController {
         return "merchant/merchantFailed";
     }
 
+    @GetMapping("/orders")
+    public String getOrders(){
+        return "order/viewOrders";
+    }
+
 }
