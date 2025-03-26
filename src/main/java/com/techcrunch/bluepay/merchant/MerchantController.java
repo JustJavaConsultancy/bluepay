@@ -307,7 +307,7 @@ public class MerchantController {
 
         switch  (step) {
             case 1:
-                nextFragment="compliance/contact :: form2(data=null,complianceButton=null})";
+                nextFragment="compliance/contact :: form2(data=${test},complianceButton=${test})";
                 break;
             case 2:
                 nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
