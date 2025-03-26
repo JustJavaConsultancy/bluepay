@@ -1,8 +1,8 @@
 .transactions {
+  max-width: 100% !important;
   background-color: #fff;
   display: flex;
-  padding-bottom: 32px;
-  margin-left: 200px;
+  padding-bottom: 24px;
   flex-direction: column;
   overflow: hidden;
   align-items: flex-end;
@@ -16,7 +16,7 @@
 
 .transactions-container {
   width: 100%;
-  max-width: 1168px;
+//   max-width: 1168px;
   font-size: 14px;
   color: #0c74b1;
   font-weight: 400;

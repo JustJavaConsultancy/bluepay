@@ -15,233 +15,232 @@
     }
   </style>
 </head>
-<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<body>
 <div layout:fragment="content">
-  <main class="balance">
-    <div class="balance__container">
-      <section class="kyc-banner">
-        <div class="kyc-banner__content">
-          <img
-                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/b32a519e89b7c91a24510e0d3154112dc6745468?placeholderIfAbsent=true"
-                  alt="KYC Status"
-                  class="kyc-banner__icon"
-          />
-          <p class="kyc-banner__message">Complete your KYC process to Go Live!</p>
-        </div>
-      </section>
-      <div class="balance__spacer"></div>
+  <header class="kyc-banner">
+    <div class="kyc-notice">
+      <svg
+              class="info-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+                d="M9.99992 18.3333C14.5999 18.3333 18.3333 14.6 18.3333 9.99998C18.3333 5.39998 14.5999 1.66665 9.99992 1.66665C5.39992 1.66665 1.66659 5.39998 1.66659 9.99998C1.66659 14.6 5.39992 18.3333 9.99992 18.3333ZM9.16659 5.83331L10.8333 5.83331L10.8333 10.8333L9.16659 10.8333L9.16659 5.83331ZM9.16659 12.5L10.8333 12.5L10.8333 14.1666L9.16659 14.1666L9.16659 12.5Z"
+                fill="#0C74B1"
+        ></path>
+      </svg>
+      <p class="kyc-text">Complete your KYC process to Go Live!</p>
     </div>
+  </header>
 
-    <section class="dashboard">
-      <div class="dashboard__container">
-        <div class="dashboard__content">
-          <header class="dashboard__header">
-            <div class="balance-info">
-              <p class="balance-info__text">
-                Available Balance:
-                <span class="balance-info__amount">NGN50,000.00</span>
-              </p>
-              <button class="btn btn--primary">Topup</button>
-            </div>
+  <main class="dashboard">
+    <section class="balance-section">
+      <p class="balance-text">Available Balance: NGN50,000.00</p>
+      <button class="topup-button">Topup</button>
+    </section>
 
-            <div class="controls">
-              <div class="controls__group">
-                <div class="search-bar">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/f233acc01d14ad69253d2e92c00cd74932f49392?placeholderIfAbsent=true"
-                          alt="Search"
-                          class="search-bar__icon"
-                  />
-                  <input
-                          type="text"
-                          placeholder="Search by activity"
-                          class="search-bar__input"
-                  />
-                </div>
+    <section class="controls-section">
+      <div class="search-container">
+        <svg
+                class="search-icon"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+                  d="M7.33333 12.6667C10.2789 12.6667 12.6667 10.2789 12.6667 7.33333C12.6667 4.38781 10.2789 2 7.33333 2C4.38781 2 2 4.38781 2 7.33333C2 10.2789 4.38781 12.6667 7.33333 12.6667Z"
+                  stroke="#545C60"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+          ></path>
+          <path
+                  d="M14 14L11.1333 11.1333"
+                  stroke="#545C60"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+          ></path>
+        </svg>
+        <input
+                type="text"
+                placeholder="Search by activity"
+                class="search-input"
+        />
+      </div>
 
-                <div class="filter">
-                  <div class="filter__content">
-                    <h3 class="filter__title">Filter By Date</h3>
-                    <div class="filter__dates">
-                      <div class="date-picker">
-                        <div class="date-picker__group">
-                          <label class="date-picker__label">Start Date</label>
-                          <img
-                                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/c436e453776ab68810ed58de2927307f5aacb07f?placeholderIfAbsent=true"
-                                  alt="Calendar"
-                                  class="date-picker__icon"
-                          />
-                        </div>
-                        <div class="date-picker__group">
-                          <label class="date-picker__label">End Date</label>
-                          <img
-                                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/c436e453776ab68810ed58de2927307f5aacb07f?placeholderIfAbsent=true"
-                                  alt="Calendar"
-                                  class="date-picker__icon"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn btn--secondary">Reset</button>
-                </div>
-              </div>
-              <button class="btn btn--primary">Download</button>
-            </div>
-          </header>
-
-          <div class="transactions">
-            <div class="transactions__header">
-              <div class="transactions__cell">Status</div>
-              <div class="transactions__cell">Timestamp</div>
-              <div class="transactions__cell">Activity</div>
-              <div class="transactions__cell">Change (NGN)</div>
-              <div class="transactions__cell">Running Balance (NGN)</div>
-              <div class="transactions__cell">Action</div>
-            </div>
-
-            <div class="transaction-row">
-              <div class="transaction-row__content">
-                <div class="transaction-row__cell">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
-                          alt="Status"
-                          class="transaction-row__status-icon"
-                  />
-                </div>
-                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
-                <div class="transaction-row__cell">
-                  <span class="badge">Transaction</span>
-                </div>
-                <div class="transaction-row__cell">
-                  <span class="amount">55,000,00</span>
-                </div>
-                <div class="transaction-row__cell transaction-row__actions">
-                  <span class="amount">60,000</span>
-                  <button class="btn btn--link">View Details</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="transaction-row">
-              <div class="transaction-row__content">
-                <div class="transaction-row__cell">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
-                          alt="Status"
-                          class="transaction-row__status-icon"
-                  />
-                </div>
-                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
-                <div class="transaction-row__cell">
-                  <span class="badge">Transaction</span>
-                </div>
-                <div class="transaction-row__cell">
-                  <span class="amount">55,000,00</span>
-                </div>
-                <div class="transaction-row__cell transaction-row__actions">
-                  <span class="amount">60,000</span>
-                  <button class="btn btn--link">View Details</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="transaction-row">
-              <div class="transaction-row__content">
-                <div class="transaction-row__cell">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
-                          alt="Status"
-                          class="transaction-row__status-icon"
-                  />
-                </div>
-                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
-                <div class="transaction-row__cell">
-                  <span class="badge">Transaction</span>
-                </div>
-                <div class="transaction-row__cell">
-                  <span class="amount">55,000,00</span>
-                </div>
-                <div class="transaction-row__cell transaction-row__actions">
-                  <span class="amount">60,000</span>
-                  <button class="btn btn--link">View Details</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="transaction-row">
-              <div class="transaction-row__content">
-                <div class="transaction-row__cell">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
-                          alt="Status"
-                          class="transaction-row__status-icon"
-                  />
-                </div>
-                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
-                <div class="transaction-row__cell">
-                  <span class="badge">Topup</span>
-                </div>
-                <div class="transaction-row__cell">
-                  <span class="amount">55,000,00</span>
-                </div>
-                <div class="transaction-row__cell transaction-row__actions">
-                  <span class="amount">60,000</span>
-                  <button class="btn btn--link">View Details</button>
-                </div>
-              </div>
-            </div>
-
-            <div class="transaction-row">
-              <div class="transaction-row__content">
-                <div class="transaction-row__cell">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/3228a97d6aaf5b8811146d7c061f7f93fe3a7236?placeholderIfAbsent=true"
-                          alt="Status"
-                          class="transaction-row__status-icon"
-                  />
-                </div>
-                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
-                <div class="transaction-row__cell">
-                  <span class="badge">Transfer</span>
-                </div>
-                <div class="transaction-row__cell">
-                  <span class="amount">55,000,00</span>
-                </div>
-                <div class="transaction-row__cell transaction-row__actions">
-                  <span class="amount">60,000</span>
-                  <button class="btn btn--link">View Details</button>
-                </div>
-              </div>
-            </div>
+      <div class="filter-container">
+        <p class="filter-label">Filter By Date</p>
+        <div class="date-inputs">
+          <div class="date-field">
+            <label class="date-label">Start Date</label>
+            <svg
+                    class="calendar-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                      d="M5.33325 1.33337V4.00004"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M10.6667 1.33337V4.00004"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M12.6667 2.66663H3.33333C2.59695 2.66663 2 3.26358 2 3.99996V13.3333C2 14.0697 2.59695 14.6666 3.33333 14.6666H12.6667C13.403 14.6666 14 14.0697 14 13.3333V3.99996C14 3.26358 13.403 2.66663 12.6667 2.66663Z"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M2 6.66663H14"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+            </svg>
+          </div>
+          <div class="date-field">
+            <label class="date-label">End Date</label>
+            <svg
+                    class="calendar-icon"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                      d="M5.33325 1.33337V4.00004"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M10.6667 1.33337V4.00004"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M12.6667 2.66663H3.33333C2.59695 2.66663 2 3.26358 2 3.99996V13.3333C2 14.0697 2.59695 14.6666 3.33333 14.6666H12.6667C13.403 14.6666 14 14.0697 14 13.3333V3.99996C14 3.26358 13.403 2.66663 12.6667 2.66663Z"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M2 6.66663H14"
+                      stroke="#8A8F92"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+            </svg>
           </div>
         </div>
-
-        <nav class="pagination">
-          <button class="pagination__btn">
-            <img
-                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/389121001a80c0b8333fd447cb6a9ef66cad7a9f?placeholderIfAbsent=true"
-                    alt="Previous"
-                    class="pagination__icon"
-            />
-          </button>
-          <div class="pagination__numbers">
-            <span class="pagination__number pagination__number--active">1</span>
-            <span class="pagination__number">2</span>
-            <span class="pagination__number">3</span>
-            <span class="pagination__dots">...</span>
-            <span class="pagination__number">10</span>
-          </div>
-          <button class="pagination__btn">
-            <img
-                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/149c9a67b7b18174be2ea0f958399ae6722fca6a?placeholderIfAbsent=true"
-                    alt="Next"
-                    class="pagination__icon"
-            />
-          </button>
-        </nav>
+        <button class="reset-button">Reset</button>
       </div>
+      <button class="download-button">Download</button>
     </section>
+
+    <section class="transactions-section">
+      <table class="transactions-table">
+        <thead>
+        <tr class="table-header">
+          <th>Status</th>
+          <th>Timestamp</th>
+          <th>Activity</th>
+          <th>Change (NGN)</th>
+          <th>Running Balance (NGN)</th>
+          <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="transaction-row" th:each="balanceItem: ${balanceList}">
+          <td class="status-cell">
+            <svg
+                    class="status-icon"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                      d="M16 18.5L12 22.5L8 18.5"
+                      stroke="#46A14B"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+              <path
+                      d="M12 22.5L12 2.5"
+                      stroke="#46A14B"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+            </svg>
+          </td>
+          <td th:text="${balanceItem['timestamp']}">Mar 27, 2025, 6 : 00 PM</td>
+          <td th:text="${balanceItem['activity']}"><span class="activity-tag">Transaction</span></td>
+          <td th:text="${balanceItem['change']}">55,000.00</td>
+          <td th:text="${balanceItem['running-balance']}">60,000</td>
+          <td><button class="details-button">View Details</button></td>
+        </tr>
+         </tbody>
+      </table>
+    </section>
+
+    <nav class="pagination">
+      <svg
+              class="prev-icon"
+              width="24"
+              height="25"
+              viewBox="0 0 24 25"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+                d="M15 6.25L9 12.5L15 18.75"
+                stroke="#E6E7E7"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+        ></path>
+      </svg>
+      <div class="page-numbers">
+        <span class="page-number">1</span>
+        <span class="page-number">2</span>
+        <span class="page-number">3</span>
+        <span class="ellipsis">...</span>
+        <span class="page-number">10</span>
+      </div>
+      <svg
+              class="next-icon"
+              width="24"
+              height="23"
+              viewBox="0 0 24 23"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+                d="M9 17.25L15 11.5L9 5.75"
+                stroke="#000B11"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+        ></path>
+      </svg>
+    </nav>
   </main>
 
 </div>

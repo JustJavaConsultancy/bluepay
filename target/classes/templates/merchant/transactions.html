@@ -15,7 +15,7 @@
     }
   </style>
 </head>
-<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<body>
 <div layout:fragment="content">
   <main class="transactions">
     <section class="transactions-container">
@@ -36,7 +36,7 @@
         <div class="transactions-main">
           <div class="transactions-header">
             <div class="total-count">
-              Total: <span class="count-value">100</span>
+              Total: <span class="count-value" th:text="${transactionsCount}"></span>
             </div>
             <div class="top-bar">
               <div class="filters">
@@ -78,110 +78,14 @@
               </tr>
               </thead>
               <tbody>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
+              <tr class="table-row" th:each="transaction: ${transactions}">
+                <td class="reference-cell" th:text="${transaction['reference-cell']}"></td>
+                <td class="amount-cell" th:text="${transaction['amount-cell']}"></td>
+                <td class="customer-cell" th:text="${transaction['customer-cell']}"></td>
                 <td class="payment-cell">
-                  <span class="payment-tag">Bank Transfer</span>
+                  <span class="payment-tag" th:text="${transaction['payment-tag']}"></span>
                 </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Bank Transfer</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Bank Transfer</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
-                <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
-                </td>
-              </tr>
-              <tr class="table-row">
-                <td class="reference-cell">T123456789234567</td>
-                <td class="amount-cell">20,000.00</td>
-                <td class="customer-cell">Adedapo Tiamiyu</td>
-                <td class="payment-cell">
-                  <span class="payment-tag">Crard</span>
-                </td>
-                <td class="timestamp-cell">Mar 27, 2025, 6 : 50 PM</td>
+                <td class="timestamp-cell" th:text="${transaction['timestamp-cell']}"></td>
                 <td class="action-cell">
                   <button class="view-details-btn">View Details</button>
                 </td>
