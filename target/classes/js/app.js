@@ -1,4 +1,4 @@
-import 'bootstrap';
+ import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Ensures Bootstrap JS is fully loaded
 import 'htmx.org';
 import flatpickr from 'flatpickr';
