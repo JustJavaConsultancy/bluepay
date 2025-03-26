@@ -278,6 +278,7 @@ public class MerchantController {
         System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
         System.out.println(" The Fragment Here.."+nextFragment);
+
         return nextFragment;
     }
 }
