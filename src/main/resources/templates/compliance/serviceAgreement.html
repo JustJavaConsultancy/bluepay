@@ -7,7 +7,8 @@
     <title>Title</title>
 </head>
 <body>
-<div id="form5" style="display: none;" th:fragment="form5(data)">
+<div id="form5" style="display: block;" th:fragment="form5(data)">
+    <form id="serviceAgreement">
     <button id="prev4" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
         <i class="bi bi-arrow-left-circle-fill fs-6"></i>
     </button>
@@ -52,7 +53,11 @@
     </div>
     <button id="submitBtn"
             class="mt-2 saveButton"
-            disabled >Save</button>
+            hx-post="/merchant/newMerchant/5"
+            hx-trigger="click"
+            hx-include="#serviceAgreement"
+    >Save</button>
+    </form>
 </div>
 </body>
 </html>
