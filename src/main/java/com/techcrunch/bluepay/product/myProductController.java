@@ -1,8 +1,11 @@
 package com.techcrunch.bluepay.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.cloudinary.Image;
 import com.techcrunch.bluepay.cloudinary.ImageService;
+import com.techcrunch.bluepay.payment.PaymentDTO;
+import com.techcrunch.bluepay.payment.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +29,32 @@ public class myProductController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private PaymentService paymentService;
+
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @GetMapping("/manageProduct")
     public String myProduct( Map<String, Object> model) {
         List<ProductDTO> productDTOS=productService.findAll();
         model.put("productList", productDTOS);
+        PaymentDTO paymentDTO=PaymentDTO.builder()
+                .amount(new BigDecimal(100))
+                .cardCvv("234")
+                .channel("card")
+                .cardExpirationDate("25-03-2025")
+                .cardHolderName("Akinrinde Kazeem")
+                .invoiceId(1L)
+                .cardNumber("4111111111111111")
+                .currency("NIG")
+                .payerEmail("akinrinde@justjava.com.ng")
+                .payerPhoneNumber("07062023181")
+                .build();
+        Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
+        variables.put("productName","Laptop");
+        variables.put("merchantId","24424244242424");
+        paymentService.startPaymentProcess(variables,"92002020020");
         return "/product/manageProduct";
     }
 
@@ -96,7 +121,6 @@ public class myProductController {
             System.out.println("Initializing the products list");
             products = new ArrayList<>();
         }
-
         // Add product data along with image URLs
         Map<String, Object> productData = new HashMap<>(data);
         productData.put("imageUrls", media);

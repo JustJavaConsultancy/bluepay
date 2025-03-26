@@ -24,11 +24,12 @@
                     </button>
                 </h2>
                 <div class="accordion-content border">
+                    <span th:text="${session.country}"> The Country</span>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item"><h1 style="color: #6F768D;font-size: 0.75rem;font-weight: 400;">Country</h1><p id="profile-country" style="color: #405979;font-weight: 500;font-size: 0.75rem;" th:text="${data!=null?data['country']:''}">Nigeria</p></li>
-                            <li class="list-group-item"><h1 style="color: #6F768D;font-size: 0.75rem;font-weight: 400;">Business Name</h1><p id="profile-business-name" style="color: #405979;font-weight: 500;font-size: 0.75rem;" th:text="${data!=null?data['businessName']:''}">Just Java Consultancy</p></li>
+                            <li class="list-group-item"><h1 style="color: #6F768D;font-size: 0.75rem;font-weight: 400;">Country</h1><p id="profile-country" style="color: #405979;font-weight: 500;font-size: 0.75rem;">Nigeria</p></li>
+                            <li class="list-group-item"><h1 style="color: #6F768D;font-size: 0.75rem;font-weight: 400;">Business Name</h1><p id="profile-business-name" style="color: #405979;font-weight: 500;font-size: 0.75rem;" th:text="${session.businessName}">Just Java Consultancy</p></li>
                             <li class="list-group-item"><h1 style="color: #6F768D;font-size: 0.75rem;font-weight: 400;">Business/Registration type</h1><p id="profile-business-type" style="color: #405979;font-weight: 500;font-size: 0.75rem;"
-                                                                                                                                                          th:text="${data!=null?data['businessType']:''}">Unregistered/Starter business</p></li>
+                                                                                                                                                          th:text="${session.businessType}">Unregistered/Starter business</p></li>
                         </ul>
                     </div>
                 </div>
@@ -167,10 +168,7 @@
         </div>
 
 
-    <button
-            type="submit"
-            th:class="@{'mt-2 saveButton '+${hideButton}}"
-    >Submit</button>
+    <button  type="submit"   th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
     </div>
 </div>
 

@@ -75,16 +75,21 @@
                         </li>
                     </ul>
                 </div>
-                <form hx-post="/merchant/submit"
+<!--                <form hx-post="/merchant/submit"  hx-target="this" hx-swap="innerHTML"
                       onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';"
-                      style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">
-                    <div th:replace="~{/compliance/profile :: form1(${merchantDetails},'saveCompliance')}" />
-                    <div th:replace="~{/compliance/contact :: form2(null,null)}" />
+                      style="margin-top: 2%;margin-left: 20px;margin-right: 20px;">-->
+
+                    <!-- Form container that HTMX will update -->
+                    <div id="form-container" hx-target="this" hx-swap="innerHTML">
+                        <!-- Initial content - first step -->
+                        <div th:replace="~{/compliance/profile :: form1(${merchantDetails},'saveCompliance')}">
+                        </div>
+                        <!--                    <div th:replace="~{/compliance/contact :: form2(null,null)}" />
                     <div th:replace="~{/compliance/businessOwner :: form3(null,null)}" />
                     <div th:replace="~{/compliance/bankAccount :: form4(null,null)}" />
                     <div th:replace="~{/compliance/serviceAgreement :: form5(null)}" />
-                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',null)}" />
-                </form>
+                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',null)}" />-->
+<!--                </form>-->
             </div>
         </div>
 

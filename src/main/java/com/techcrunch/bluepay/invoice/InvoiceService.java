@@ -35,9 +35,21 @@ public class InvoiceService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Long createInvoice(DelegateExecution execution){
-        System.out.println(" Invoce Created Here.....");
-        return 1L;
+    public InvoiceDTO createInvoice(DelegateExecution execution){
+        InvoiceDTO invoiceDTO=InvoiceDTO.builder()
+                .amount(new java.math.BigDecimal(execution.getVariable("amount").toString()))
+                .customerEmail(execution.getVariable("payerEmail").toString())
+                .customerName(execution.getVariable("cardHolderName").toString())
+                .customerPhoneNumber(execution.getVariable("payerPhoneNumber").toString())
+                .description("Payment for product "+execution.getVariable("productName").toString())
+                .merchantId(execution.getVariable("merchantId").toString())
+                .issueDate(java.time.LocalDate.now())
+                .status(Status.NEW)
+                .dueDate(java.time.LocalDate.now())
+                .build();
+        create(invoiceDTO);
+        System.out.println(" Invoice Created Here....."+execution.getVariables());
+        return new InvoiceDTO();
     }
 
     public void updateStatus(DelegateExecution execution){

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:design="http://flowable.org/design" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/test" design:palette="flowable-work-process-palette">
+  <message id="processPayment" name="processPayment"></message>
   <process id="paymentGatewayProcess" name="Payment Gateway Process" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
     <extensionElements>
       <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
       <design:creationdate><![CDATA[2025-02-25T09:13:59.794Z]]></design:creationdate>
-      <design:modificationdate><![CDATA[2025-03-24T15:56:47.845Z]]></design:modificationdate>
+      <design:modificationdate><![CDATA[2025-03-25T16:41:07.694Z]]></design:modificationdate>
     </extensionElements>
     <serviceTask id="ServiceTask_59" name="Update merchant account" flowable:expression="${accountingService.customerPaymentJournalEntry}">
       <extensionElements>
@@ -12,7 +13,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_9" name="Fraud Detection" flowable:expression="${paymentService.checkFraud}">
+    <serviceTask id="ServiceTask_9" name="Fraud Detection" flowable:expression="#{paymentService.checkFraud(execution)}" flowable:resultVariableName="fraudResponse">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -24,7 +25,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_17" name="Payment Authorization" flowable:expression="${paymentService.authorize}">
+    <serviceTask id="ServiceTask_17" name="Payment Authorization" flowable:expression="${paymentService.authorize(execution)}" flowable:resultVariableName="authorizationResponse">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -48,7 +49,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_38" name="KYC/AML Verification" flowable:expression="${paymentService.checkAml}">
+    <serviceTask id="ServiceTask_38" name="KYC/AML Verification" flowable:expression="${paymentService.checkAml(execution)}" flowable:resultVariableName="fraudResponse">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -67,7 +68,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </userTask>
-    <serviceTask id="ServiceTask_46" name="Create Invoice" flowable:expression="${invoiceService.createInvoice}">
+    <serviceTask id="ServiceTask_46" name="Create Invoice" flowable:expression="${invoiceService.createInvoice(execution)}" flowable:resultVariableName="invoice">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -151,11 +152,12 @@
         <design:display_ref_in_diagram><![CDATA[true]]></design:display_ref_in_diagram>
       </extensionElements>
     </exclusiveGateway>
-    <startEvent id="startnoneevent1" flowable:initiator="initiator" flowable:formFieldValidation="false">
+    <startEvent id="startnoneevent1" flowable:initiator="initiator" isInterrupting="true">
       <extensionElements>
         <flowable:work-form-field-validation><![CDATA[false]]></flowable:work-form-field-validation>
-        <design:stencilid><![CDATA[StartNoneEvent]]></design:stencilid>
+        <design:stencilid><![CDATA[StartMessageEvent]]></design:stencilid>
       </extensionElements>
+      <messageEventDefinition messageRef="processPayment"></messageEventDefinition>
     </startEvent>
     <endEvent id="EndNoneEvent_27">
       <extensionElements>
@@ -441,7 +443,7 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="startnoneevent1" id="BPMNShape_startnoneevent1">
-        <omgdc:Bounds height="30.0" width="30.0" x="35.0" y="145.0"></omgdc:Bounds>
+        <omgdc:Bounds height="30.0" width="30.0" x="36.0" y="145.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="EndNoneEvent_27" id="BPMNShape_EndNoneEvent_27">
         <omgdc:Bounds height="28.0" width="28.0" x="3507.0" y="146.0"></omgdc:Bounds>
@@ -568,7 +570,7 @@
         <omgdi:waypoint x="2514.0" y="160.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_33" id="BPMNEdge_SequenceFlow_33" flowable:sourceDockerX="15.0" flowable:sourceDockerY="15.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="65.0" y="160.0"></omgdi:waypoint>
+        <omgdi:waypoint x="66.0" y="160.0"></omgdi:waypoint>
         <omgdi:waypoint x="161.0" y="160.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_56" id="BPMNEdge_SequenceFlow_56" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">

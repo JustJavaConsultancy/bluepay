@@ -2,6 +2,7 @@ package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.compliance.ComplianceService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -219,4 +220,39 @@ public class MerchantController {
         return "order/viewOrders";
     }
 
+    @PostMapping("/newMerchant/{step}")
+    //@ResponseBody
+    public String saveNewMerchant(@PathVariable Integer step, HttpServletRequest request, @RequestParam Map<String, Object> formData,
+                                  Model model){
+        Map<String,Object> merchantDetails= (Map<String, Object>)
+                request.getSession(true).getAttribute("merchantDetails");
+        if(merchantDetails==null){
+            merchantDetails = new HashMap<>();
+        }
+        String nextFragment=null;
+        System.out.println(" The switching here=="+step);
+
+        switch  (step) {
+            case 1:
+                nextFragment="compliance/contact :: form2(data=null,complianceButton=null})";
+                break;
+            case 2:
+                nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
+                break;
+            case 3:
+                nextFragment="compliance/bankAccount :: form4(data=${test},complianceButton=${test})";
+                break;
+            case 4:
+                nextFragment="compliance/serviceAgreement :: form5(data=${test})";
+                break;
+            case 5:
+                nextFragment="compliance/summary :: form6(showclass='',backButton='null',hideButton='null',data=null)";
+        }
+        merchantDetails.putAll(formData);
+        request.getSession(true).setAttribute("merchantDetails",merchantDetails);
+        System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
+
+        System.out.println(" The Fragment Here.."+nextFragment);
+        return nextFragment;
+    }
 }

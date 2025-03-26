@@ -48,9 +48,15 @@ public class CustomProcessService {
         return runtimeService.getVariables(processInstanceId);
     }
 
-    public ProcessInstance starSimpletProcess(String procesKey){
+    public ProcessInstance starSimpleProcess(String procesKey){
         return runtimeService.createProcessInstanceBuilder()
                 .processDefinitionKey(procesKey)
                 .start();
+    }
+    public ProcessInstance startProcessByMessageStartEvent(String businessKey,
+                                                           String messageName,
+                                                           Map<String,Object> variables){
+        return runtimeService
+                .startProcessInstanceByMessage(messageName,businessKey,variables);
     }
 }

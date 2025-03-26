@@ -14,7 +14,7 @@ import java.time.OffsetDateTime;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,

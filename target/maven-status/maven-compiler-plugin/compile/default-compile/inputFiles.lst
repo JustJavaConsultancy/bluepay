@@ -51,10 +51,6 @@ C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\merchant\OrderMapper.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\merchant\OrderRepository.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\merchant\OrderService.java
-C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\payment\AuthorizationResponse.java
-C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\payment\FraudResponse.java
-C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\payment\PaymentDTO.java
-C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\payment\PaymentService.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\processes\CustomProcessService.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\processes\ProcessController.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\product\myProductController.java
@@ -91,7 +87,6 @@ C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\transaction\TransactionSourceAccountUnique.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\CustomCollectors.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\CustomMap.java
-C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\EmailService.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\NotFoundException.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\PdfController.java
 C:\Users\ogunt\Documents\springboot\bluepay\src\main\java\com\techcrunch\bluepay\util\ReferencedException.java
