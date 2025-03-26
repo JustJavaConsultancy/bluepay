@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Revenue Chart</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+      }
+
+      .revenue-container {
+        font-family:
+          system-ui,
+          -apple-system,
+          sans-serif;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .revenue-title {
+        font-size: 16px;
+        color: #666;
+        margin-bottom: 5px;
+      }
+
+      .revenue-amount {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 30px;
+      }
+
+      .chart-container {
+        position: relative;
+        height: 300px;
+        margin-top: 40px;
+      }
+
+      .chart-bars {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        height: 100%;
+        position: relative;
+        z-index: 2;
+      }
+
+      .bar {
+        width: 60px;
+        background-color: #e6f0ff;
+        position: relative;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+
+      .bar:hover {
+        background-color: #b3d1ff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .bar-date {
+        position: absolute;
+        bottom: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: #666;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .bar-value {
+        position: absolute;
+        bottom: calc(100% + 5px);
+        left: 50%;
+        transform: translateX(-50%);
+        color: #666;
+        font-size: 12px;
+      }
+
+      .chart-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 100%;
+        z-index: 1;
+      }
+
+      .grid-line {
+        border-bottom: 1px solid #eee;
+        height: calc(100% / 6);
+        width: 100%;
+      }
+
+      /* Specific bar heights */
+      .bar-march3 {
+        height: 14%;
+      }
+
+      .bar-march4 {
+        height: 64%;
+      }
+
+      .bar-march10 {
+        height: 5%;
+      }
+
+      .bar-march15 {
+        height: 20%;
+      }
+
+      .bar-march16 {
+        height: 7%;
+      }
+
+      .bar-march17 {
+        height: 9%;
+      }
+
+      .bar-march18 {
+        height: 2%;
+      }
+
+      /* Tooltip styles */
+      .tooltip {
+        position: absolute;
+        background-color: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+        font-size: 12px;
+        pointer-events: none;
+        opacity: 0;
+        transition: opacity 0.3s;
+        z-index: 10;
+        white-space: nowrap;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        transform: translateX(-50%);
+        bottom: 100%;
+        margin-bottom: 15px;
+      }
+
+      .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+      }
+
+      /* Media Queries */
+      @media (max-width: 991px) {
+        .revenue-container {
+          padding: 15px;
+        }
+
+        .bar {
+          width: 40px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .revenue-container {
+          padding: 10px;
+        }
+
+        .revenue-title {
+          font-size: 14px;
+        }
+
+        .revenue-amount {
+          font-size: 20px;
+        }
+
+        .bar {
+          width: 30px;
+        }
+
+        .bar-date,
+        .bar-value {
+          font-size: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Tooltip element that will be positioned by JavaScript -->
+    <div id="tooltip" class="tooltip"></div>
+    <section class="revenue-container">
+      <header>
+        <h2 class="revenue-title">Revenue (NGN)</h2>
+        <p class="revenue-amount">50,000.00</p>
+      </header>
+
+      <div class="chart-container">
+        <div class="chart-bars">
+          <div class="bar bar-march3">
+            <span class="bar-date">March 3</span>
+            <span class="bar-value">7,000</span>
+          </div>
+          <div class="bar bar-march4">
+            <span class="bar-date">March 4</span>
+            <span class="bar-value">32,000</span>
+          </div>
+          <div class="bar bar-march10">
+            <span class="bar-date">March 10</span>
+            <span class="bar-value">2,500</span>
+          </div>
+          <div class="bar bar-march15">
+            <span class="bar-date">March 15</span>
+            <span class="bar-value">10,000</span>
+          </div>
+          <div class="bar bar-march16">
+            <span class="bar-date">March 16</span>
+            <span class="bar-value">3,500</span>
+          </div>
+          <div class="bar bar-march17">
+            <span class="bar-date">March 17</span>
+            <span class="bar-value">4,500</span>
+          </div>
+          <div class="bar bar-march18">
+            <span class="bar-date">March 18</span>
+            <span class="bar-value">1,000</span>
+          </div>
+        </div>
+
+        <div class="chart-grid">
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+          <div class="grid-line"></div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Get all bar elements and the tooltip
+      const bars = document.querySelectorAll(".bar");
+      const tooltip = document.getElementById("tooltip");
+
+      // Add event listeners to each bar
+      bars.forEach((bar) => {
+        bar.addEventListener("mouseenter", showTooltip);
+        bar.addEventListener("mouseleave", hideTooltip);
+        bar.addEventListener("mousemove", moveTooltip);
+
+        // Add focus events for accessibility
+        bar.addEventListener("focus", showTooltip);
+        bar.addEventListener("blur", hideTooltip);
+
+        // Make bars focusable for keyboard navigation
+        bar.setAttribute("tabindex", "0");
+
+        // Add ARIA attributes for accessibility
+        bar.setAttribute("role", "button");
+        bar.setAttribute(
+          "aria-label",
+          `Revenue for ${bar.querySelector(".bar-date").textContent}: ${bar.querySelector(".bar-value").textContent}`,
+        );
+      });
+
+      function showTooltip(e) {
+        const bar = e.currentTarget;
+        const date = bar.querySelector(".bar-date").textContent;
+        const value = bar.querySelector(".bar-value").textContent;
+
+        // Set tooltip content with more detailed information
+        tooltip.innerHTML = `
+          <strong>${date}</strong><br>
+          Revenue: NGN ${value}<br>
+          ${getAdditionalInfo(date)}
+        `;
+
+        // Position the tooltip
+        const barRect = bar.getBoundingClientRect();
+        tooltip.style.left = `${barRect.left + barRect.width / 2}px`;
+        tooltip.style.bottom = `${window.innerHeight - barRect.top + 10}px`;
+
+        // Show the tooltip
+        tooltip.style.opacity = "1";
+      }
+
+      function hideTooltip() {
+        tooltip.style.opacity = "0";
+      }
+
+      function moveTooltip(e) {
+        // Optional: Update tooltip position on mouse move if needed
+      }
+
+      // Function to provide additional context information based on the date
+      function getAdditionalInfo(date) {
+        // This could be expanded with real data or fetched from an API
+        const additionalInfo = {
+          "March 3": "Weekend sales",
+          "March 4": "Promotion day",
+          "March 10": "Regular day",
+          "March 15": "Payday sales",
+          "March 16": "Day after payday",
+          "March 17": "Weekend preparation",
+          "March 18": "Slow day",
+        };
+
+        return additionalInfo[date] || "";
+      }
+    </script>
+  </body>
+</html>
