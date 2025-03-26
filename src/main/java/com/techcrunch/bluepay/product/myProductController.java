@@ -176,5 +176,23 @@ public class myProductController {
         model.addAttribute("product", productDTO);
         return "/product/productPreview";
     }
+    @PostMapping("/pay")
+    public String processPayment(@RequestBody Map<String, String> paymentRequest) {
+
+        System.out.println("Received payment details: " + paymentRequest);
+
+
+        return "Payment processed successfully";
+    }
+    @PostMapping("/payerInfo")
+    public String payerInfo(@RequestBody Map<String, String> paymentRequest) {
+
+        System.out.println("Received payment details: " + paymentRequest);
+
+
+        return "Payment user successfully submitted";
+    }
+
+
 
 }

@@ -1,0 +1,166 @@
+{
+  "components": [
+    {
+      "label": "**Business Name**",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_0wheth5",
+        "columns": null
+      },
+      "id": "Field_03flvs1",
+      "key": "textfield_7lvtv",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "**Phone Number**",
+      "type": "number",
+      "layout": {
+        "row": "Row_0wheth5",
+        "columns": null
+      },
+      "id": "Field_1w3fuoh",
+      "key": "number_617ay",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "**Address**",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_105be3b",
+        "columns": null
+      },
+      "id": "Field_1wjm5c4",
+      "key": "textfield_ns3u35",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "**Business Website(optional)**",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_105be3b",
+        "columns": null
+      },
+      "id": "Field_0l2n4mn",
+      "key": "textfield_t25w8g"
+    },
+    {
+      "label": "**Integration Webhook**",
+      "type": "textfield",
+      "layout": {
+        "row": "Row_132zj1g",
+        "columns": null
+      },
+      "id": "Field_031y3gf",
+      "key": "textfield_qhk0e",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "**Business Logo**",
+      "type": "filepicker",
+      "layout": {
+        "row": "Row_132zj1g",
+        "columns": null
+      },
+      "id": "Field_0ld7otv",
+      "key": "filepicker_vywdgn",
+      "validate": {
+        "required": true
+      }
+    },
+    {
+      "label": "",
+      "components": [
+        {
+          "label": "**Bank Name**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0llxd2k",
+            "columns": null
+          },
+          "id": "Field_0ob2v5e",
+          "key": "textfield_7uabom",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Account Number**",
+          "type": "number",
+          "layout": {
+            "row": "Row_0llxd2k",
+            "columns": null
+          },
+          "id": "Field_034s8s4",
+          "key": "number_heksa",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**Account Name**",
+          "type": "textfield",
+          "layout": {
+            "row": "Row_0xagfsy",
+            "columns": null
+          },
+          "id": "Field_18ws62p",
+          "key": "textfield_nhf24b",
+          "validate": {
+            "required": true
+          }
+        },
+        {
+          "label": "**BVN**",
+          "type": "number",
+          "layout": {
+            "row": "Row_0xagfsy",
+            "columns": null
+          },
+          "id": "Field_05irbk3",
+          "key": "number_2gnpu",
+          "validate": {
+            "required": true
+          }
+        }
+      ],
+      "showOutline": true,
+      "isRepeating": true,
+      "allowAddRemove": true,
+      "defaultRepetitions": 1,
+      "type": "dynamiclist",
+      "layout": {
+        "row": "Row_1j10wgg",
+        "columns": null
+      },
+      "id": "Field_159z5yz",
+      "path": "dynamiclist_kly89f"
+    },
+    {
+      "label": "Submit",
+      "action": "submit",
+      "type": "button",
+      "layout": {
+        "row": "Row_1hzi8t3",
+        "columns": null
+      },
+      "id": "Field_1gr9zcz"
+    }
+  ],
+  "type": "default",
+  "id": "Start_merchantOnboardingProcess",
+  "exporter": {
+    "name": "Camunda Modeler",
+    "version": "5.32.0"
+  },
+  "executionPlatform": "Camunda Platform",
+  "executionPlatformVersion": "7.22.0",
+  "schemaVersion": 18
+}

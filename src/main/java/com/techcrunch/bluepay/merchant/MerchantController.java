@@ -39,6 +39,24 @@ public class MerchantController {
         model.addAttribute("merchantDetails",variables);
         return "/compliance/compliance";
     }
+
+    @GetMapping("/dashboard")
+    public String getDashboard(){
+        String loginUser= (String) authenticationManager.get("sub");
+
+        return "merchant/dashboard";
+    }
+
+    @GetMapping("/transactions")
+    public String getTransaction(){
+        return "merchant/transactions";
+    }
+
+    @GetMapping("/balance")
+    public String getBalance(){
+        return "merchant/balance";
+    }
+
     @PostMapping("/submit")
     public ResponseEntity<Void> submitDetails(@RequestParam Map<String,Object> formData){
         merchantService.submitMyDetail(formData);

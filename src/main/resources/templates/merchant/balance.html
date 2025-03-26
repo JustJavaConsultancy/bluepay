@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    .modal-body{
+        padding: 0;
+    }
+    .btn-close{
+        position: absolute;
+        right: 0;
+        padding: 1em;
+    }
+  </style>
+</head>
+<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<div layout:fragment="content">
+  <main class="balance">
+    <div class="balance__container">
+      <section class="kyc-banner">
+        <div class="kyc-banner__content">
+          <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/b32a519e89b7c91a24510e0d3154112dc6745468?placeholderIfAbsent=true"
+                  alt="KYC Status"
+                  class="kyc-banner__icon"
+          />
+          <p class="kyc-banner__message">Complete your KYC process to Go Live!</p>
+        </div>
+      </section>
+      <div class="balance__spacer"></div>
+    </div>
+
+    <section class="dashboard">
+      <div class="dashboard__container">
+        <div class="dashboard__content">
+          <header class="dashboard__header">
+            <div class="balance-info">
+              <p class="balance-info__text">
+                Available Balance:
+                <span class="balance-info__amount">NGN50,000.00</span>
+              </p>
+              <button class="btn btn--primary">Topup</button>
+            </div>
+
+            <div class="controls">
+              <div class="controls__group">
+                <div class="search-bar">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/f233acc01d14ad69253d2e92c00cd74932f49392?placeholderIfAbsent=true"
+                          alt="Search"
+                          class="search-bar__icon"
+                  />
+                  <input
+                          type="text"
+                          placeholder="Search by activity"
+                          class="search-bar__input"
+                  />
+                </div>
+
+                <div class="filter">
+                  <div class="filter__content">
+                    <h3 class="filter__title">Filter By Date</h3>
+                    <div class="filter__dates">
+                      <div class="date-picker">
+                        <div class="date-picker__group">
+                          <label class="date-picker__label">Start Date</label>
+                          <img
+                                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/c436e453776ab68810ed58de2927307f5aacb07f?placeholderIfAbsent=true"
+                                  alt="Calendar"
+                                  class="date-picker__icon"
+                          />
+                        </div>
+                        <div class="date-picker__group">
+                          <label class="date-picker__label">End Date</label>
+                          <img
+                                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/c436e453776ab68810ed58de2927307f5aacb07f?placeholderIfAbsent=true"
+                                  alt="Calendar"
+                                  class="date-picker__icon"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <button class="btn btn--secondary">Reset</button>
+                </div>
+              </div>
+              <button class="btn btn--primary">Download</button>
+            </div>
+          </header>
+
+          <div class="transactions">
+            <div class="transactions__header">
+              <div class="transactions__cell">Status</div>
+              <div class="transactions__cell">Timestamp</div>
+              <div class="transactions__cell">Activity</div>
+              <div class="transactions__cell">Change (NGN)</div>
+              <div class="transactions__cell">Running Balance (NGN)</div>
+              <div class="transactions__cell">Action</div>
+            </div>
+
+            <div class="transaction-row">
+              <div class="transaction-row__content">
+                <div class="transaction-row__cell">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
+                          alt="Status"
+                          class="transaction-row__status-icon"
+                  />
+                </div>
+                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
+                <div class="transaction-row__cell">
+                  <span class="badge">Transaction</span>
+                </div>
+                <div class="transaction-row__cell">
+                  <span class="amount">55,000,00</span>
+                </div>
+                <div class="transaction-row__cell transaction-row__actions">
+                  <span class="amount">60,000</span>
+                  <button class="btn btn--link">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="transaction-row">
+              <div class="transaction-row__content">
+                <div class="transaction-row__cell">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
+                          alt="Status"
+                          class="transaction-row__status-icon"
+                  />
+                </div>
+                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
+                <div class="transaction-row__cell">
+                  <span class="badge">Transaction</span>
+                </div>
+                <div class="transaction-row__cell">
+                  <span class="amount">55,000,00</span>
+                </div>
+                <div class="transaction-row__cell transaction-row__actions">
+                  <span class="amount">60,000</span>
+                  <button class="btn btn--link">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="transaction-row">
+              <div class="transaction-row__content">
+                <div class="transaction-row__cell">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
+                          alt="Status"
+                          class="transaction-row__status-icon"
+                  />
+                </div>
+                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
+                <div class="transaction-row__cell">
+                  <span class="badge">Transaction</span>
+                </div>
+                <div class="transaction-row__cell">
+                  <span class="amount">55,000,00</span>
+                </div>
+                <div class="transaction-row__cell transaction-row__actions">
+                  <span class="amount">60,000</span>
+                  <button class="btn btn--link">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="transaction-row">
+              <div class="transaction-row__content">
+                <div class="transaction-row__cell">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/25298f13da6317bc77820a1e598eceef58db169e?placeholderIfAbsent=true"
+                          alt="Status"
+                          class="transaction-row__status-icon"
+                  />
+                </div>
+                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
+                <div class="transaction-row__cell">
+                  <span class="badge">Topup</span>
+                </div>
+                <div class="transaction-row__cell">
+                  <span class="amount">55,000,00</span>
+                </div>
+                <div class="transaction-row__cell transaction-row__actions">
+                  <span class="amount">60,000</span>
+                  <button class="btn btn--link">View Details</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="transaction-row">
+              <div class="transaction-row__content">
+                <div class="transaction-row__cell">
+                  <img
+                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/3228a97d6aaf5b8811146d7c061f7f93fe3a7236?placeholderIfAbsent=true"
+                          alt="Status"
+                          class="transaction-row__status-icon"
+                  />
+                </div>
+                <div class="transaction-row__cell">Mar 27, 2025, 6 : 00 PM</div>
+                <div class="transaction-row__cell">
+                  <span class="badge">Transfer</span>
+                </div>
+                <div class="transaction-row__cell">
+                  <span class="amount">55,000,00</span>
+                </div>
+                <div class="transaction-row__cell transaction-row__actions">
+                  <span class="amount">60,000</span>
+                  <button class="btn btn--link">View Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <nav class="pagination">
+          <button class="pagination__btn">
+            <img
+                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/389121001a80c0b8333fd447cb6a9ef66cad7a9f?placeholderIfAbsent=true"
+                    alt="Previous"
+                    class="pagination__icon"
+            />
+          </button>
+          <div class="pagination__numbers">
+            <span class="pagination__number pagination__number--active">1</span>
+            <span class="pagination__number">2</span>
+            <span class="pagination__number">3</span>
+            <span class="pagination__dots">...</span>
+            <span class="pagination__number">10</span>
+          </div>
+          <button class="pagination__btn">
+            <img
+                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/149c9a67b7b18174be2ea0f958399ae6722fca6a?placeholderIfAbsent=true"
+                    alt="Next"
+                    class="pagination__icon"
+            />
+          </button>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+</div>
+</body>
+</html>

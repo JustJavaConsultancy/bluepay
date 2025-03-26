@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preview page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+  <style>
+    body {
+      background-color: #f0f0f0;
+    }
+    .row {
+      --bs-gutter-x: 1.5rem;
+      --bs-gutter-y: 1.5rem;
+
+    }
+
+    @media (max-width: 1200px) {
+      html {
+        font-size: 15px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      html {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      html {
+        font-size: 13px;
+      }
+    }
+
+
+
+    @media (max-width: 576px) {
+      html {
+        font-size: 12px;
+      }
+    }
+
+    input::placeholder{
+      color: #B0B3B5;
+    }
+    .hidden {
+      display: none;
+    }
+    .modal-body {
+      padding: 0;
+    }
+    .custom-modal {
+      border-radius: 0 !important;
+      padding-top:0;
+    }
+
+    /* Position the close button above the modal */
+    .outside-close {
+      position: absolute;
+      top: -4px; /* Move it higher above the modal */
+      right: -37px;
+      background: white;
+      border-radius: 50%;
+      padding: 8px; /* Increase padding for better appearance */
+      border: none;
+      width: 1.5rem; /* Ensure equal width and height */
+      height: 1.5rem;
+      display: flex;
+      color:#0C74B1;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
+    }
+    .list-group {
+      --bs-list-group-bg:#F9F7F7 !important;
+    }
+    .activePayment{
+      background-color: #F4F8FB;color: #0C74B1;width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="customModalLabel" aria-hidden="true">
+  <div class="modal-dialog  mt-5 modal-md">
+    <div class="modal-content custom-modal">
+      <!-- Close Button Outside -->
+      <button type="button" class="outside-close" data-bs-dismiss="modal" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+      <div class="modal-body">
+        <div style="display: flex; flex-wrap: nowrap;">
+          <div style="padding-left: 0.68rem; padding-top: 1rem; white-space: nowrap;">
+            <h3 style="font-size: 1rem; font-weight: 500; margin: 0; white-space: nowrap;">Pay With</h3>
+            <ul class="nav flex-column mt-3">
+              <li id="forCard" class="activePayment mb-1" style="font-size: 0.85rem; font-weight: 500; padding: 8px; cursor: pointer;"
+                  _="on click remove .hidden from #cardPayment
+                                        add .hidden to #transferPayment
+                                        add .activePayment to #forCard
+                                        remove .activePayment from #forTransfer">
+                <i class="bi bi-credit-card me-2"></i> Card
+              </li>
+              <li id="forTransfer" class="mb-1" style="font-size: 0.85rem; font-weight: 500; padding: 8px; cursor: pointer;"
+                  _="on click add .hidden to #cardPayment
+                                        remove .hidden from #transferPayment
+                                        add .activePayment to #forTransfer
+                                        remove .activePayment from #forCard">
+                <i class="bi bi-bank2 me-2"></i> Bank Transfer
+              </li>
+            </ul>
+
+          </div>
+          <div style="background-color: #F4F8FB; width: 100%;padding: 18px;">
+            <div style="display: flex;justify-content: space-between;">
+              <div><img src="/images/realBluelogo.svg" style="width:4.4rem ;height: 1.5rem;" alt=""></div>
+              <div>
+                <h4 id="payuserEmail" style="font-size: 0.85rem;font-weight: 400;color: #545C60,">tiamiyuadedapo@gmail.com</h4>
+              </div>
+            </div>
+            <h4 style="font-size: 0.85rem;font-weight: 400;color: #545C60;float: right;">Pay <span style="color: #0C74B1;">N<span id="priceProduct"></span></span></h4>
+            <hr style="margin-top: 10px; width: 100%;border: 0.5px solid #B0B3B5;">
+            <div style="display: flex;justify-content: center;">
+              <div style="background-color: #FFE6E5;color: #FF3B30;padding: 4px 21px 4px 21px;font-weight: 500;font-size: 0.85rem;border-radius: 4px;margin-top: -16px;">Test</div>
+            </div>
+            <!-- cardPayment -->
+            <div th:replace="~{/product/cardPayment :: cardPayment }"/>
+
+            <!-- transferMothod -->
+
+           <div th:replace="~{/product/transferPayment :: transferPayment }"/>
+
+            <div class="mt-4" style="text-align: center;">
+              <p style="font-size: 0.85rem;font-weight: 400;color:#B0B3B5"><i class="bi bi-lock me-1"></i> Secured by Bluepay</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div style="background-color: #FFF1F0;padding: 5px 5px 10px 10px;text-align: center;font-size: 0.75rem;color: #FF3B30;"><i class="bi bi-info-circle-fill" style="padding-left: 10px;"></i> This is a test page where you can see how your Product Link works. Do not share with your customers. </div>
+
+<div class="container" style="margin-top: 1rem;margin-bottom: 1rem;">
+  <div style="margin-bottom: 1rem;">
+    <img src="/images/smallLogo.svg" alt="">
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-xxl-6 col-xl-6 col-lg-6 " >
+      <div id="carouselExample" style="width: 100%; height: 100%;" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div th:each="media, iterStat : ${product.media}" class="carousel-item" th:classappend="${iterStat.first} ? 'active'">
+            <th:block th:if="${media.endsWith('.mp4') or media.endsWith('.webm') or media.endsWith('.ogg')}">
+              <video class="d-block w-100" controls>
+                <source th:src="${media}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            </th:block>
+            <th:block th:unless="${media.endsWith('.mp4') or media.endsWith('.webm') or media.endsWith('.ogg')}">
+              <img th:src="${media}" class="d-block w-100" alt="Product Image">
+            </th:block>
+          </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+    <div class="col-sm-12 col-xxl-6 col-xl-6 col-lg-6 ">
+      <div class="card">
+        <div class="card-body">
+          <div id="selectItem">
+            <h3 style="font-size: 1rem;font-weight: 600;" th:text="${product.name}">High Fashion Shirt</h3>
+            <p style="font-size: 0.85rem;font-weight: 400;color: #545C60;">By Boxify</p>
+            <h3 class="mt-4" style="font-size: 0.85rem;font-weight: 500;" th:text="${product.description}">This is a luxury, suitable for male and female</h3>
+            <h3 class="mt-4" style="font-size: 0.75rem;font-weight: 400;color: #545C60;">Price</h3>
+            <p style="font-size: 0.85rem;font-weight: 500;">NGN <span id="setPrice" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">20,000</span></p>
+            <h3 class="mt-4" style="font-size: 0.75rem;font-weight: 400;color: #545C60;">Quantity In Stock</h3>
+            <p style="font-size: 0.85rem; font-weight: 500;">
+              <span id="maxValue" th:text="${product.quantityInStock == 0 ? 'Unlimited' : product.quantityInStock}"></span> items left
+            </p>
+
+            <h3 class="mt-4" style="font-size: 0.75rem;font-weight: 400;color: #545C60;">How Many?</h3>
+            <div style="padding: 8px;border: 0.5px solid #B0B3B5;display: flex;border-radius: 4px;width: fit-content;gap: 10px;">
+              <button id="decrement" class="btn" style="width: 1.5rem;height: 1.5rem;border-radius: 1.71px;background-color: #545C60;color: #F4F8FB;display: flex;justify-content: center;align-items: center;" disabled><i class="bi bi-dash-lg"></i></button>
+              <span id="counter-value">1</span>
+              <button id="increment" class="btn" style="width: 1.5rem;height: 1.5rem;border-radius: 1.71px;background-color: #545C60;color: #F4F8FB;display: flex;justify-content: center;align-items: center;"><i class="bi bi-plus-lg"></i></button>
+            </div>
+            <h2 class="mt-3" style="color: #357F7B;font-size: 0.75rem;font-weight: 700;">That’s NGN<span id="priceProduct" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">20,000</span></h2>
+            <button  class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"
+                     _="on click add .hidden to #selectItem remove .hidden from #form"
+            >Buy Now</button>
+          </div>
+          <!-- form -->
+          <form id="form" class="hidden" >
+            <i class="bi bi-arrow-left" style="cursor: pointer;"
+               _="on click remove .hidden from #selectItem add .hidden to #form"
+            ></i>
+            <h3 class="mt-3" style="font-size: 1rem;font-weight: 600;"> <span th:text="${product.name}"> High Fashion </span></h3>
+            <p style="font-size: 0.85rem;font-weight: 400;color: #545C60;">Please fill the form below</p>
+            <div class="row">
+              <div class="col">
+                <label class="form-label" for="firstname" style="font-size: 0.85rem;font-weight: 400;">First Name</label>
+                <input
+                        style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;"
+                        class="form-control" type="text" id="firstname" name="firstname"
+                        _="on input set #userFirstname.textContent to me.value"
+                >
+              </div>
+              <div class="col">
+                <label class="form-label" for="lastname" style="font-size: 0.85rem;font-weight: 400;">Last Name</label>
+                <input
+                        style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;"
+                        class="form-control" type="text" id="lastname" name="lastname"
+                        _="on input set #userLastname.textContent to me.value"
+                >
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label" for="email" style="font-size: 0.85rem;font-weight: 400;">Email</label>
+                <input
+                        style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;"
+                        class="form-control" type="email" id="email" name="email"
+                        _="on input set #userEmail.textContent to me.value set #payuserEmail.textContent to me.value"
+                >
+              </div>
+            </div>
+            <label class="form-label mt-3" for="phoneNumber" style="font-size: 0.85rem;font-weight: 400;">Phone Number</label>
+            <div class="row">
+              <div class="col-5">
+                <select id="countryCode" class="form-select" style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" >
+                  <option value="+234">+234(Nigeria)</option>
+                </select>
+              </div>
+              <div class="col-7">
+                <input style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" class="form-control" type="tel" id="phoneNumber" name="phoneNumber"
+                       oninput="document.getElementById('userPhonenumber').textContent = this.value.startsWith('0') ? this.value.substring(1) : this.value;">
+
+
+              </div>
+              <div style="display: flex;justify-content: space-between;">
+                <div>
+                  <h4 style="font-size: 0.85rem;font-weight: 500;"> <span th:text="${product.name}"> High Fashion </span> x <span id="selectedQuantity">1</span></h4>
+                </div>
+                <div>
+                  <h4 style="font-size: 0.85rem;font-weight: 500;">NGN <span id="selectedPrice" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">20,000</span></h4>
+                </div>
+              </div>
+            </div>
+            <button type="button" id="userInfo" class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"
+                    _="on click add .hidden to #form remove .hidden from #preview"
+                    disabled>Review and Pay</button>
+          </form>
+
+          <!-- preview -->
+          <div class="hidden" id="preview">
+            <i class="bi bi-arrow-left" style="cursor: pointer;"
+               _="on click remove .hidden from #form add .hidden to #preview"
+            ></i>
+            <h3 class="mt-3" style="font-size: 1rem;font-weight: 600;"> <span th:text="${product.name}"> High Fashion </span></h3>
+            <p style="font-size: 0.85rem;font-weight: 400;color: #545C60;">By Boxify</p>
+            <h4 style="font-size: 0.85rem;font-weight: 400;"><i class="bi bi-person-circle" style="padding-right: 6px;"></i><span id="userFirstname"> Adedapo</span> <span id="userLastname"> Tiamiyu</span></h4>
+            <h4 class="mt-4" style="font-size: 0.85rem;font-weight: 400;"><i class="bi bi-envelope" style="padding-right: 6px;"></i><span id="userEmail"> tiamiyuadedapo@gmail.com</span></h4>
+            <h4 class="mt-4" style="font-size: 0.85rem;font-weight: 400;"><i class="bi bi-telephone"></i> +234 <span id="userPhonenumber"> 8138482251</span></h4>
+            <div class="mt-5" style="display: flex;justify-content: space-between;">
+              <div>
+                <h4 style="font-size: 0.85rem;font-weight: 500;"> <span th:text="${product.name}"> High Fashion </span> x <span id="payedselectedQuantity">1</span></h4>
+              </div>
+              <div>
+                <h4 style="font-size: 0.85rem;font-weight: 500;">NGN <span id="payselectedPrice" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">20,000</span></h4>
+              </div>
+            </div>
+            <div class="mt-2" style="display: flex;justify-content: space-between;">
+              <div>
+                <h4 style="font-size: 0.85rem;font-weight: 500;">TOTAL</h4>
+              </div>
+              <div>
+                <h4 style="font-size: 0.85rem;font-weight: 500;">NGN <span id="finalselectedPrice" th:text="${#numbers.formatInteger(product.price, 0, 'COMMA')}">20,000</span></h4>
+              </div>
+            </div>
+            <button type="button"  data-bs-toggle="modal" data-bs-target="#customModal"  class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;">Pay</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    let pricetext = document.querySelectorAll('#priceProduct')
+    pricetext.forEach(pricetoget => {
+      pricetoget.textContent = document.getElementById('setPrice').textContent
+    })
+    let counter = 1;
+    const minCount = 1; // Minimum value
+    const maxValueElement = document.getElementById('maxValue');
+    const maxCount = maxValueElement && maxValueElement.textContent.trim() === "Unlimited"
+            ? 10000000000000000000000000000000000000000000000000000000000
+            : parseInt(maxValueElement.textContent, 10) || 0;
+
+    const counterValue = document.getElementById("counter-value");
+    const decrementBtn = document.getElementById("decrement");
+    const incrementBtn = document.getElementById("increment");
+
+    function updateCounter() {
+      console.log(maxCount)
+      counterValue.textContent = counter;
+      decrementBtn.disabled = counter === minCount;
+      incrementBtn.disabled = counter === maxCount;
+      let price = counter * parseInt(document.getElementById('setPrice').textContent.replace(/,/g, ""), 10)
+       pricetext = document.querySelectorAll('#priceProduct')
+      pricetext.forEach(pricetoget => {
+        pricetoget.textContent = price.toLocaleString()
+      });
+      document.getElementById("payselectedPrice").textContent = price.toLocaleString()
+      document.getElementById("finalselectedPrice").textContent = price.toLocaleString()
+      document.getElementById("selectedPrice").textContent = price.toLocaleString()
+      document.getElementById("selectedQuantity").textContent = counter.toString()
+      document.getElementById("payedselectedQuantity").textContent = counter.toString()
+      console.log(price)
+    }
+
+    incrementBtn.addEventListener("click", function() {
+      if (counter < maxCount) {
+        counter++;
+        updateCounter();
+      }
+    });
+
+    decrementBtn.addEventListener("click", function() {
+      if (counter > minCount) {
+        counter--;
+        updateCounter();
+      }
+    });
+
+    const form = document.getElementById("form");
+    const inputs = form.querySelectorAll("input");
+    const submitButton = document.getElementById("userInfo");
+
+    function checkInputs() {
+      let allFilled = true;
+      inputs.forEach(input => {
+        if (input.value.trim() === "") {
+          allFilled = false;
+        }
+      });
+      submitButton.disabled = !allFilled;
+    }
+
+    inputs.forEach(input => {
+      input.addEventListener("input", checkInputs);
+    });
+
+    checkInputs(); // Initial check in case fields are pre-filled
+
+    const detailInput = document.querySelectorAll(".detail");
+    const submitdetail = document.getElementById("toPin");
+
+    function checkdetailInputs() {
+      let allFilled = true;
+      detailInput.forEach(input => {
+        if (input.value.trim() === "") {
+          allFilled = false;
+        }
+      });
+
+      submitdetail.disabled = !allFilled;
+    }
+
+    detailInput.forEach(input => {
+      input.addEventListener("input", checkdetailInputs);
+    });
+
+    checkdetailInputs(); // Run on page load to handle pre-filled fields
+
+  });
+
+  function moveNext(current, nextId) {
+    if (current.value.length === 1) {
+      document.getElementById(nextId)?.focus();
+    }
+  }
+
+  function movePrev(event, current, prevId) {
+    if (event.key === "Backspace" && current.value === "") {
+      document.getElementById(prevId)?.focus();
+    }
+  }
+  function checkInputs() {
+    const inputs = document.querySelectorAll('.pin');
+    const button = document.getElementById('pay');
+
+    // Check if all inputs have a value
+    const allFilled = Array.from(inputs).every(input => input.value.length === 1);
+
+    // Enable or disable the button based on input status
+    button.disabled = !allFilled;
+  }
+
+  // Attach event listeners to all input fields
+  document.querySelectorAll('.pin').forEach(input => {
+    input.addEventListener('input', checkInputs);
+    input.addEventListener('keyup', checkInputs);
+  });
+
+
+</script>
+</body>
+</html>

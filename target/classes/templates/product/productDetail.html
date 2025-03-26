@@ -1,0 +1,84 @@
+<!DOCTYPE>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .row {
+            --bs-gutter-x: 1.5rem;
+            --bs-gutter-y: 2.5rem;
+
+        }
+        .hidden {
+            display: none;
+        }
+        .form-switch .form-check-input:checked {
+            background-color: #0C74B1 !important;
+        }
+        .activeTab{
+            border-bottom: 1.5px solid #0C74B1; padding-bottom: 0.5rem; margin-bottom: -1.2px;color: #0C74B1;
+        }
+    </style>
+</head>
+<body>
+<div style="margin-top: 20px" layout:fragment="content" >
+    <script th:src="@{/js/bundle.js}"></script>
+    <div style="display: flex;justify-content: space-between;margin-top: 20px;margin-bottom: 20px;">
+        <div>
+            <div>
+                <div id="defaultName">
+                    <h3 style="font-size: 1.1rem;font-weight: 500"><span th:text="${product.name}">Bootify </span> <i class="bi bi-pencil" style="font-size: 0.85rem;padding-left: 10px;cursor: pointer;" _="on click add .hidden to #defaultName remove .hidden from #setName"></i></h3>
+                </div>
+                <div id="setName" class="hidden" >
+
+                        <input th:value="${product.name}"
+                               style="background-color: #F9F7F7;font-size: 0.85rem;border: 1px solid #E8E8E8;" type="text" id="productName" name="productName" class="form-control" placeholder="Enter Product Name" required
+
+                               th:attr="hx-post=@{/editProductName/{id}(id=${product.id})}"
+                               hx-target="#resultDiv"
+                               hx-trigger="input changed delay:500ms"
+                               hx-swap="innerHTML"
+                               hx-indicator="#loadingIndicator"
+                        >
+
+
+                </div>
+            </div>
+        </div>
+        <div style="display: flex;gap: 20px;">
+            <div>
+                <a th:href="@{'/preview/'+${product.id}}" style="text-decoration: none;"> <button class="btn" style="border: 0.5px solid #B0B3B5;font-size: 1rem;">Preview</button>
+                </a>
+            </div>
+            <div>
+                <button class="btn" style="border: 0.5px solid #B0B3B5;font-size: 1rem;">Copy Link</button>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 10px;">
+        <div style="display: flex; gap: 3rem; align-items: flex-end;">
+            <h2 id="customiseProduct" class="activeTab" style="font-size: 1rem; font-weight: 400;cursor: pointer; "
+                _="on click remove .activeTab from #inventory add .activeTab to #customiseProduct remove .hidden from #customiseProductpage add .hidden to #inventorypage"
+            >
+                Customize Product
+            </h2>
+            <h2 id="inventory" style="font-size: 1rem; font-weight: 400;cursor: pointer;"
+                _="on click add .activeTab to #inventory remove .activeTab from #customiseProduct add .hidden to #customiseProductpage remove .hidden from #inventorypage"
+            >
+                Inventory
+            </h2>
+            <h2 style="font-size: 1rem; font-weight: 400;">
+                Others
+            </h2>
+        </div>
+        <hr style="border: none; border-top: 1px solid black; margin: 0; width: 100%;">
+    </div>
+    <div>
+        <div th:replace="~{/product/customiseProduct :: customiseProduct(${product}) }" />
+        <div th:replace="~{/product/inventory :: inventory(${product}) }" />
+    </div>
+</div>
+
+</body>
+</html>
