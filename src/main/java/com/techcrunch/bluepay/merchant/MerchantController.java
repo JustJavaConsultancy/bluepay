@@ -42,8 +42,56 @@ public class MerchantController {
     }
 
     @GetMapping("/dashboard")
-    public String getDashboard(){
+    public String getDashboard(Model model){
         String loginUser= (String) authenticationManager.get("sub");
+
+        Map<String, Object> coordinate1 = Map.ofEntries(
+                Map.entry("class_", "bar-march3"),
+                Map.entry("x", "March 3"),
+                Map.entry("y", 7000)
+        );
+        Map<String, Object> coordinate2 = Map.ofEntries(
+                Map.entry("class_", "bar-march4"),
+                Map.entry("x", "March 4"),
+                Map.entry("y", 32000)
+        );
+        Map<String, Object> coordinate3 = Map.ofEntries(
+                Map.entry("class_", "bar-march10"),
+                Map.entry("x", "March 10"),
+                Map.entry("y", 2500)
+        );
+        Map<String, Object> coordinate4 = Map.ofEntries(
+                Map.entry("class_", "bar-march15"),
+                Map.entry("x", "March 15"),
+                Map.entry("y", 10000)
+        );
+        Map<String, Object> coordinate5 = Map.ofEntries(
+                Map.entry("class_", "bar-march16"),
+                Map.entry("x", "March 16"),
+                Map.entry("y", 3500)
+        );
+        Map<String, Object> coordinate6 = Map.ofEntries(
+                Map.entry("class_", "bar-march17"),
+                Map.entry("x", "March 17"),
+                Map.entry("y", 4500)
+        );
+        Map<String, Object> coordinate7 = Map.ofEntries(
+                Map.entry("class_", "bar-march18"),
+                Map.entry("x", "March 18"),
+                Map.entry("y", 1000)
+        );
+
+        List<Map<String, Object>> revenueList = List.of(
+                coordinate1,
+                coordinate2,
+                coordinate3,
+                coordinate4,
+                coordinate5,
+                coordinate6,
+                coordinate7
+        );
+
+        model.addAttribute("revenueList", revenueList);
 
         return "merchant/dashboard";
     }
