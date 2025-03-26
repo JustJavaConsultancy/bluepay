@@ -13,7 +13,7 @@ import java.time.OffsetDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-
+@Builder
 public class InvoiceDTO implements Serializable {
 
     private Long id;

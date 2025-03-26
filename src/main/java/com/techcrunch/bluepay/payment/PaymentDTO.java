@@ -18,6 +18,10 @@ public class PaymentDTO {
     private String cardCvv;
     private BigDecimal amount;
     private String currency;
+    private String channel;
+    private Long invoiceId;
+    private String payerPhoneNumber;
+    private String payerEmail;
 
 
 
