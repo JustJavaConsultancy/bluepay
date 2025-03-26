@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-26T15:53:14+0100",
+    date = "2025-03-26T16:19:14+0100",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
@@ -110,22 +110,22 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        InvoiceDTO invoiceDTO = new InvoiceDTO();
+        InvoiceDTO.InvoiceDTOBuilder invoiceDTO = InvoiceDTO.builder();
 
-        invoiceDTO.setId( invoice.getId() );
-        invoiceDTO.setDescription( invoice.getDescription() );
-        invoiceDTO.setCustomerEmail( invoice.getCustomerEmail() );
-        invoiceDTO.setCustomerName( invoice.getCustomerName() );
-        invoiceDTO.setMerchantId( invoice.getMerchantId() );
-        invoiceDTO.setCustomerPhoneNumber( invoice.getCustomerPhoneNumber() );
-        invoiceDTO.setIssueDate( invoice.getIssueDate() );
-        invoiceDTO.setDueDate( invoice.getDueDate() );
-        invoiceDTO.setAmount( invoice.getAmount() );
-        invoiceDTO.setStatus( invoice.getStatus() );
-        invoiceDTO.setDateCreated( invoice.getDateCreated() );
-        invoiceDTO.setLastUpdated( invoice.getLastUpdated() );
+        invoiceDTO.id( invoice.getId() );
+        invoiceDTO.description( invoice.getDescription() );
+        invoiceDTO.customerEmail( invoice.getCustomerEmail() );
+        invoiceDTO.customerName( invoice.getCustomerName() );
+        invoiceDTO.merchantId( invoice.getMerchantId() );
+        invoiceDTO.customerPhoneNumber( invoice.getCustomerPhoneNumber() );
+        invoiceDTO.issueDate( invoice.getIssueDate() );
+        invoiceDTO.dueDate( invoice.getDueDate() );
+        invoiceDTO.amount( invoice.getAmount() );
+        invoiceDTO.status( invoice.getStatus() );
+        invoiceDTO.dateCreated( invoice.getDateCreated() );
+        invoiceDTO.lastUpdated( invoice.getLastUpdated() );
 
-        return invoiceDTO;
+        return invoiceDTO.build();
     }
 
     protected void invoiceDTOToInvoice1(InvoiceDTO invoiceDTO, Invoice mappingTarget) {

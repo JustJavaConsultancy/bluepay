@@ -90,23 +90,48 @@ public class MerchantController {
         return "merchant/transactions";
     }
 
+    @GetMapping("/transactions/{id}")
+    public String getTransactionDetails(Model model){
+        System.out.println("\n\n\n transactions detail controller is working");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        Map<String, Object> transactionItem = Map.ofEntries(
+                Map.entry("status", "Successful"),
+                Map.entry("amount", df.format(50000.00)),
+                Map.entry("reference", "T123456789234567"),
+                Map.entry("channel", "card"),
+                Map.entry("fees", df.format(500.00)),
+                Map.entry("timestamp", "Mar 27, 2025, 6 : 50 PM"),
+                Map.entry("products", df.format(40000.00)),
+                Map.entry("customer-name", "Adeyanju Timothy"),
+                Map.entry("customer-email", "tiamiyuadedapo@gmail.com"),
+                Map.entry("customer-phone-code", "+234"),
+                Map.entry("customer-phone-number", "8138482251")
+        );
+
+        model.addAttribute("transactionItem", transactionItem);
+        return "merchant/transaction-details";
+    }
+
     @GetMapping("/balance")
     public String getBalance(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         Map<String, Object> balanceOne = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939386"),
                 Map.entry("timestamp", "Mar 27, 2025, 6 : 00 PM"),
                 Map.entry("activity", "Transfer"),
                 Map.entry("change", df.format(55000.00)),
                 Map.entry("running-balance", df.format(66000.00))
         );
         Map<String, Object> balanceTwo = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939393"),
                 Map.entry("timestamp", "Mar 28, 2025, 6 : 00 PM"),
                 Map.entry("activity", "Transaction"),
                 Map.entry("change", df.format(13000.00)),
                 Map.entry("running-balance", df.format(25000.00))
         );
         Map<String, Object> balanceThree = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939354"),
                 Map.entry("timestamp", "Mar 25, 2025, 6 : 00 PM"),
                 Map.entry("activity", "Transfer"),
                 Map.entry("change", df.format(40000.00)),

@@ -7,7 +7,8 @@
   <title>Title</title>
 </head>
 <body>
-<div id="form3" style="display: none;" th:fragment="form3(data,complianceButton)">
+<div id="form3" style="display: block;" th:fragment="form3(data,complianceButton)">
+  <form id="businessOwner">
   <button id="prev2" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
     <i class="bi bi-arrow-left-circle-fill fs-6"></i>
   </button>
@@ -84,7 +85,11 @@
   </div>
   <button id="next3"
           class="mt-2 saveButton"
-          disabled >Save</button>
+          hx-post="/merchant/newMerchant/3"
+          hx-trigger="click"
+          hx-include="#businessOwner"
+           >Save</button>
+  </form>
 </div>
 
 

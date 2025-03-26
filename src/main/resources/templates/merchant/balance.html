@@ -196,7 +196,7 @@
           <td th:text="${balanceItem['activity']}"><span class="activity-tag">Transaction</span></td>
           <td th:text="${balanceItem['change']}">55,000.00</td>
           <td th:text="${balanceItem['running-balance']}">60,000</td>
-          <td><button class="details-button">View Details</button></td>
+          <td><a class="details-button" th:href="@{./transactions/{id}(id=${balanceItem['transactionId']})}">View Details</a></td>
         </tr>
          </tbody>
       </table>

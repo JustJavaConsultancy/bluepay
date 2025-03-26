@@ -87,7 +87,8 @@
                 </td>
                 <td class="timestamp-cell" th:text="${transaction['timestamp-cell']}"></td>
                 <td class="action-cell">
-                  <button class="view-details-btn">View Details</button>
+                  <a class="view-details-btn" th:href="@{./transactions/{id}(id=${transaction['reference-cell']})}">View Details</a>
+<!--                  <a class="view-details-btn" th:href="@{/transactions/1}">View Details</a>-->
                 </td>
               </tr>
               </tbody>

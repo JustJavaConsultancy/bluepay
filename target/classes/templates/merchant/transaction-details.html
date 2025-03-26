@@ -15,7 +15,7 @@
     }
   </style>
 </head>
-<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<body>
 <div layout:fragment="content">
 <article class="transaction-view">
   <div class="transaction-container">
@@ -28,9 +28,9 @@
       <header class="transaction-header">
         <div class="amount-container">
           <p class="label">Amount</p>
-          <p class="amount">NGN 50,000.00</p>
+          <p class="amount" th:text="${transactionItem['amount']}"></p>
         </div>
-        <p class="status-badge">Succesful</p>
+        <p class="status-badge" th:text="${transactionItem['status']}"></p>
       </header>
 
       <section class="transaction-details">
@@ -38,7 +38,7 @@
           <div class="detail-item">
             <dt class="detail-label">Reference</dt>
             <dd class="detail-value reference-value">
-              <span>T123456789234567</span>
+              <span th:text="${transactionItem['reference']}"></span>
               <img
                 src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/2c4cecf397add5420fc69773dbc00ca9a8d23787?placeholderIfAbsent=true"
                 alt="Copy"
@@ -50,19 +50,19 @@
           <div class="detail-item">
             <dt class="detail-label">Channel</dt>
             <dd class="detail-value">
-              <span class="channel-badge">Card</span>
+              <span class="channel-badge" th:text="${transactionItem['channel']}"></span>
             </dd>
           </div>
 
           <div class="detail-item">
             <dt class="detail-label">Fees</dt>
-            <dd class="detail-value">NGN 500.00</dd>
+            <dd class="detail-value" th:text="${transactionItem['fees']}"></dd>
           </div>
 
           <div class="detail-item">
             <dt class="detail-label">Timestamp</dt>
             <dd class="detail-value">
-              <time datetime="2025-03-27T18:50">Mar 27, 2025, 6 : 50 PM</time>
+              <time datetime="2025-03-27T18:50" th:text="${transactionItem['timestamp']}"></time>
             </dd>
           </div>
         </dl>
@@ -76,7 +76,7 @@
           <div class="product-list">
             <div class="product-item">
               <p class="product-name">High Fashion x 2</p>
-              <p class="product-price">NGN 40,000</p>
+              <p class="product-price" th:text="${transactionItem['products']}"></p>
             </div>
           </div>
         </section>
@@ -93,7 +93,7 @@
                   alt="User"
                   class="info-icon"
                 />
-                <p class="info-text">Adedapo Tiamiyu</p>
+                <p class="info-text" th:text="${transactionItem['customer-name']}"></p>
               </div>
               <div class="info-row">
                 <img
@@ -101,7 +101,7 @@
                   alt="Email"
                   class="info-icon"
                 />
-                <p class="info-text">tiamiyuadedapo@gmail.com</p>
+                <p class="info-text" th:text="${transactionItem['customer-email']}"></p>
               </div>
               <div class="info-row">
                 <img
@@ -110,8 +110,8 @@
                   class="info-icon"
                 />
                 <p class="info-text">
-                  <span class="phone-code">+234</span>
-                  <span class="phone-number">8138482251</span>
+                  <span class="phone-code" th:text="${transactionItem['customer-phone-code']}">+234</span>
+                  <span class="phone-number" th:text="${transactionItem['customer-phone-number']}">8138482251</span>
                 </p>
               </div>
             </div>
