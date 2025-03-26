@@ -139,14 +139,14 @@
 </head>
 <body>
 <div layout:fragment="content" >
-    <script th:src="@{/js/bundle.js}"></script>
+<!--    <script th:src="@{/js/bundle.js}"></script>-->
 <section class="container py-4" id="orders-dashboard">
     <header class="mb-4">
         <div class="row mb-4">
             <div class="col-md-12">
                 <div class="d-flex flex-wrap gap-3">
-                    <p class="mb-0 order-count">Total Order: 100</p>
-                    <p class="mb-0 revenue">Revenue: NGN 100,000</p>
+                    <p class="mb-0 order-count" th:text="'Total Order: ' + ${orderCount}"></p>
+                    <p class="mb-0 revenue" th:text="'Revenue: NGN' + ${totalAmount}"></p>
                 </div>
             </div>
         </div>
@@ -289,76 +289,17 @@
             </tr>
             </thead>
             <tbody id="orders-table-body">
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order['id-col']}"></td>
+                <td th:text="${order['customer-col']}"></td>
+                <td th:text="${order['product-col']}"></td>
+                <td th:text="${order['quantity-col']}"></td>
+                <td th:text="${order['amount-col']}"></td>
+                <td th:text="${order['timestamp-col']}"></td>
+                <td th:text="${order['email-col']}"></td>
+                <td th:text="${order['phone-col']}"></td>
             </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
-            <tr>
-                <td>1903072</td>
-                <td>Adedapo Tiamiyu</td>
-                <td>High Fashion</td>
-                <td>5</td>
-                <td>20,000</td>
-                <td>Mar 27, 2025, 6 : 50 PM</td>
-                <td>tiamiyuadedapo@gmail.com</td>
-                <td>08138482251</td>
-            </tr>
+
             </tbody>
         </table>
     </div>

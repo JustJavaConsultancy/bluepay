@@ -15,7 +15,7 @@
     }
   </style>
 </head>
-<body onload="const modal = new bootstrap.Modal(document.getElementById('cleanModal')); modal.show();">
+<body >
 <div layout:fragment="content">
 <header class="dashboard-header">
   <div class="month-selector">
@@ -31,74 +31,7 @@
 
 <main class="dashboard-content">
   <section class="revenue-section">
-    <header class="revenue-header">
-      <h2 class="metric-label">Revenue (NGN)</h2>
-      <p class="metric-value">50,000.00</p>
-    </header>
-
-    <article class="chart-container">
-      <svg class="revenue-chart" width="688" height="399" viewBox="0 0 688 399" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="676" height="364" transform="translate(12 35)" fill="white"/>
-        <path d="M48.7053 381.1H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 353.799H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 326.5H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 299.201H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 271.9H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 244.6H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 217.299H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 190H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 162.701H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 135.4H687.737" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M48.7053 108.1L687.737 108.1" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M598.362 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M508.987 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M419.611 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M326 108V394.65" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M240.861 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M151.486 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <path d="M62.1115 108.1V394.75" stroke="#B0B0B0" stroke-width="0.455"/>
-        <rect x="91.2321" y="261.434" width="31.2812" height="119.665" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="268.018" y="343.336" width="31.2812" height="37.765" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="360.339" y="244.6" width="31.2812" height="136.5" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="448.732" y="314.215" width="31.2812" height="66.885" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="538.107" y="284.641" width="31.2812" height="96.46" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="633.375" y="375" width="31.4286" height="6" fill="#D0E8FF" fill-opacity="0.7"/>
-        <rect x="180.607" y="156.33" width="31.2812" height="224.77" fill="#D0E8FF" fill-opacity="0.7"/>
-
-        <!-- Chart Labels -->
-
-
-        <!-- Y-axis labels -->
-        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-          <tspan x="0.367188" y="114.034">50,000</tspan>
-        </text>
-        <!-- ... Rest of the Y-axis labels ... -->
-        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-          <tspan x="31.2051" y="384.034">0</tspan>
-        </text>
-
-        <!-- X-axis labels -->
-        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-          <tspan x="84.4043" y="395.034">March 3</tspan>
-        </text>
-        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-          <tspan x="177.393" y="395.034">March 4</tspan>
-        </text>
-
-        <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-          <tspan x="177.393" y="395.034">March 10</tspan>
-        </text> <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-        <tspan x="177.393" y="395.034">March 15</tspan>
-      </text> <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-        <tspan x="177.393" y="395.034">March 16</tspan>
-      </text> <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-        <tspan x="177.393" y="395.034">March 17</tspan>
-      </text> <text fill="#545C60" font-family="Basis Grotesque Pro" font-size="12">
-        <tspan x="177.393" y="395.034">March 18</tspan>
-      </text>
-
-      </svg>
-    </article>
+    <section th:replace="/merchant/merchantDashboard :: merchantChart"></section>
 
     <section class="success-rate-section">
       <h2 class="section-title">Success Rate</h2>

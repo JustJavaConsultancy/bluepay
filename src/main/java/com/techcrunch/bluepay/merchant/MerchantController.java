@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.text.DecimalFormat;
 
 @Controller
 @RequestMapping("/merchant")
@@ -42,19 +42,158 @@ public class MerchantController {
     }
 
     @GetMapping("/dashboard")
-    public String getDashboard(){
+    public String getDashboard(Model model){
         String loginUser= (String) authenticationManager.get("sub");
+
+        Map<String, Object> coordinate1 = Map.ofEntries(
+                Map.entry("class_", "bar-march3"),
+                Map.entry("x", "March 3"),
+                Map.entry("y", 7000)
+        );
+        Map<String, Object> coordinate2 = Map.ofEntries(
+                Map.entry("class_", "bar-march4"),
+                Map.entry("x", "March 4"),
+                Map.entry("y", 32000)
+        );
+        Map<String, Object> coordinate3 = Map.ofEntries(
+                Map.entry("class_", "bar-march10"),
+                Map.entry("x", "March 10"),
+                Map.entry("y", 2500)
+        );
+        Map<String, Object> coordinate4 = Map.ofEntries(
+                Map.entry("class_", "bar-march15"),
+                Map.entry("x", "March 15"),
+                Map.entry("y", 10000)
+        );
+        Map<String, Object> coordinate5 = Map.ofEntries(
+                Map.entry("class_", "bar-march16"),
+                Map.entry("x", "March 16"),
+                Map.entry("y", 3500)
+        );
+        Map<String, Object> coordinate6 = Map.ofEntries(
+                Map.entry("class_", "bar-march17"),
+                Map.entry("x", "March 17"),
+                Map.entry("y", 4500)
+        );
+        Map<String, Object> coordinate7 = Map.ofEntries(
+                Map.entry("class_", "bar-march18"),
+                Map.entry("x", "March 18"),
+                Map.entry("y", 1000)
+        );
+
+        List<Map<String, Object>> revenueList = List.of(
+                coordinate1,
+                coordinate2,
+                coordinate3,
+                coordinate4,
+                coordinate5,
+                coordinate6,
+                coordinate7
+        );
+
+        model.addAttribute("revenueList", revenueList);
 
         return "merchant/dashboard";
     }
 
     @GetMapping("/transactions")
-    public String getTransaction(){
+    public String getTransaction(Model model){
+
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+
+        Map<String, Object> transactionOne = Map.ofEntries(
+                Map.entry("reference-cell", "T123456789234455"),
+                Map.entry("amount-cell", df.format(20000.00)),
+                Map.entry("customer-cell", "Adedapo Tiamiyu"),
+                Map.entry("payment-tag", "Bank Transfer"),
+                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
+        );
+
+        Map<String, Object> transactionTwo = Map.ofEntries(
+                Map.entry("reference-cell", "T123456789234567"),
+                Map.entry("amount-cell", df.format(40000.00)),
+                Map.entry("customer-cell", "Isiah Thomas"),
+                Map.entry("payment-tag", "Bank Transfer"),
+                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
+        );
+
+        Map<String, Object> transactionThree = Map.ofEntries(
+                Map.entry("reference-cell", "T123456789237892"),
+                Map.entry("amount-cell", df.format(70000.00)),
+                Map.entry("customer-cell", "Jide Adeyanju"),
+                Map.entry("payment-tag", "Bank Transfer"),
+                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
+        );
+
+        List<Map<String, Object>> transactions = List.of(
+                transactionOne,
+                transactionTwo,
+                transactionThree
+        );
+
+
+        model.addAttribute("transactions", transactions);
+        model.addAttribute("transactionsCount", transactions.size());
+
         return "merchant/transactions";
     }
 
+    @GetMapping("/transactions/{id}")
+    public String getTransactionDetails(Model model){
+        System.out.println("\n\n\n transactions detail controller is working");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+        Map<String, Object> transactionItem = Map.ofEntries(
+                Map.entry("status", "Successful"),
+                Map.entry("amount", df.format(50000.00)),
+                Map.entry("reference", "T123456789234567"),
+                Map.entry("channel", "card"),
+                Map.entry("fees", df.format(500.00)),
+                Map.entry("timestamp", "Mar 27, 2025, 6 : 50 PM"),
+                Map.entry("products", df.format(40000.00)),
+                Map.entry("customer-name", "Adeyanju Timothy"),
+                Map.entry("customer-email", "tiamiyuadedapo@gmail.com"),
+                Map.entry("customer-phone-code", "+234"),
+                Map.entry("customer-phone-number", "8138482251")
+        );
+
+        model.addAttribute("transactionItem", transactionItem);
+        return "merchant/transaction-details";
+    }
+
     @GetMapping("/balance")
-    public String getBalance(){
+    public String getBalance(Model model){
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+
+        Map<String, Object> balanceOne = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939386"),
+                Map.entry("timestamp", "Mar 27, 2025, 6 : 00 PM"),
+                Map.entry("activity", "Transfer"),
+                Map.entry("change", df.format(55000.00)),
+                Map.entry("running-balance", df.format(66000.00))
+        );
+        Map<String, Object> balanceTwo = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939393"),
+                Map.entry("timestamp", "Mar 28, 2025, 6 : 00 PM"),
+                Map.entry("activity", "Transaction"),
+                Map.entry("change", df.format(13000.00)),
+                Map.entry("running-balance", df.format(25000.00))
+        );
+        Map<String, Object> balanceThree = Map.ofEntries(
+                Map.entry("transactionId", "T2343393939354"),
+                Map.entry("timestamp", "Mar 25, 2025, 6 : 00 PM"),
+                Map.entry("activity", "Transfer"),
+                Map.entry("change", df.format(40000.00)),
+                Map.entry("running-balance", df.format(60000.00))
+        );
+
+        List<Map<String, Object>> balanceList = List.of(
+                balanceOne,
+                balanceTwo,
+                balanceThree
+        );
+
+        model.addAttribute("balanceList", balanceList);
+
         return "merchant/balance";
     }
 
@@ -68,9 +207,6 @@ public class MerchantController {
     }
     @PostMapping("/resubmit")
     public ResponseEntity<Void> reSubmitDetails(@RequestParam Map<String,Object> formData){
-
-        System.out.println(" The variable I'm throwing in here===\n\n\n\n\n\n\n\n\n\n" +
-                "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"+formData);
         merchantService.completeDocumentResubmittion(formData);
 
         HttpHeaders headers = new HttpHeaders();
@@ -103,7 +239,57 @@ public class MerchantController {
     }
 
     @GetMapping("/orders")
-    public String getOrders(){
+    public String getOrders(Model model){
+        DecimalFormat df = new DecimalFormat("#,##0.00");
+
+        Map<String, Object> orderOne = Map.ofEntries(
+                Map.entry("id-col", 1903072),
+                Map.entry("customer-col", "Adedapo Tiamiyu"),
+                Map.entry("product-col", "High Fashion"),
+                Map.entry("quantity-col", 5),
+                Map.entry("amount-col", df.format(20000.00)),
+                Map.entry("timestamp-col", "Mar 27, 2025, 6 : 50 PM"),
+                Map.entry("email-col", "tiamiyuadedapo@gmail.com"),
+                Map.entry("phone-col", "08138482251")
+        );
+
+        Map<String, Object> orderTwo = Map.ofEntries(
+                Map.entry("id-col", 1903502),
+                Map.entry("customer-col", "Oluwaseun Tiamiyu"),
+                Map.entry("product-col", "High Design"),
+                Map.entry("quantity-col", 10),
+                Map.entry("amount-col", df.format(50000.00)),
+                Map.entry("timestamp-col", "Mar 29, 2025, 6 : 50 PM"),
+                Map.entry("email-col", "tiamiyuseun@gmail.com"),
+                Map.entry("phone-col", "08138482731")
+        );
+
+        Map<String, Object> orderThree = Map.ofEntries(
+                Map.entry("id-col", 1903204),
+                Map.entry("customer-col", "Hammed Joshua"),
+                Map.entry("product-col", "Luxury Wears"),
+                Map.entry("quantity-col", 40),
+                Map.entry("amount-col", df.format(60000.00)),
+                Map.entry("timestamp-col", "Mar 28, 2025, 6 : 50 PM"),
+                Map.entry("email-col", "hammedjoshua@gmail.com"),
+                Map.entry("phone-col", "0812282731")
+        );
+
+        List<Map<String, Object>> orders = List.of(
+                orderOne,
+                orderTwo,
+                orderThree
+        );
+
+//        double totalAmount = orders.stream()
+//                .mapToDouble(map -> ((Number) map.get("amount-col")).doubleValue())
+//                .sum();
+
+        double totalAmount = 1000.00;
+        model.addAttribute("totalAmount", df.format(totalAmount));
+        model.addAttribute("orderCount", orders.size());
+        model.addAttribute("orders", orders);
+
         return "order/viewOrders";
     }
 
@@ -121,7 +307,7 @@ public class MerchantController {
 
         switch  (step) {
             case 1:
-                nextFragment="compliance/contact :: form2(data=null,complianceButton=null})";
+                nextFragment="compliance/contact :: form2(data=${test},complianceButton=${test})";
                 break;
             case 2:
                 nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
@@ -140,6 +326,7 @@ public class MerchantController {
         System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
         System.out.println(" The Fragment Here.."+nextFragment);
+
         return nextFragment;
     }
 }

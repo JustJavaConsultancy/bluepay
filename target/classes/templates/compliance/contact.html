@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div id="form2" style="display: none; margin-bottom: 20px;" th:fragment="form2(data,complianceButton)">
+<div id="form2" style="display: flex; margin-bottom: 20px;"
+     th:fragment="form2(data,complianceButton)">
+    <form id="myContact">
+
     <button id="prev1" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
         <i class="bi bi-arrow-left-circle-fill fs-6"></i>
     </button>
@@ -97,7 +91,9 @@
     </div>
     <button id="next2"
             th:class="@{'mt-2 saveButton '+${complianceButton}}"
-            disabled >Save</button>
+            hx-post="/merchant/newMerchant/2"
+            hx-trigger="click"
+            hx-include="#myContact"
+            >Save</button>
+    </form>
 </div>
-</body>
-</html>

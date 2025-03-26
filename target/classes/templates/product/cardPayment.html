@@ -8,7 +8,7 @@
 </head>
 <body>
 <div id="cardPayment" th:fragment="cardPayment">
-    <form action="">
+    <form hx-post="/pay">
         <div id="cardDetail">
             <label for="card-number" class="form-label" style="font-size: 0.85rem;font-weight: 400;color: #333C41;">Card Number</label>
             <input class="form-control detail" style="border: 1px solid #E8E8E8;background-color: #F9F7F7;font-size: 0.85rem;" type="text" id="card-number" name="card-number" maxlength="19" placeholder="0000 0000 0000 0000"
@@ -34,10 +34,10 @@
             <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
                 <h3 class="mt-3" style="font-size: 1.12rem; font-weight: 500;">Enter card pin</h3>
                 <div style="display: flex; gap: 10px;margin-top: 10px;">
-                    <input type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin1" maxlength="1" oninput="moveNext(this, 'pin2')" onkeydown="movePrev(event, this, 'pin1')">
-                    <input type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin2" maxlength="1" oninput="moveNext(this, 'pin3')" onkeydown="movePrev(event, this, 'pin1')">
-                    <input type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin3" maxlength="1" oninput="moveNext(this, 'pin4')" onkeydown="movePrev(event, this, 'pin2')">
-                    <input type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin4" maxlength="1" onkeydown="movePrev(event, this, 'pin3')">
+                    <input name="pin1" type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin1" maxlength="1" oninput="moveNext(this, 'pin2')" onkeydown="movePrev(event, this, 'pin1')">
+                    <input name="pin2" type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin2" maxlength="1" oninput="moveNext(this, 'pin3')" onkeydown="movePrev(event, this, 'pin1')">
+                    <input name="pin3" type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin3" maxlength="1" oninput="moveNext(this, 'pin4')" onkeydown="movePrev(event, this, 'pin2')">
+                    <input name="pin4" type="password" class="form-control pin" style="border-radius: 4px; width: 50px; text-align: center; border: 1px solid #E8E8E8;background-color: #F9F7F7;color: #B0B3B5;font-size: 1.5rem;" id="pin4" maxlength="1" onkeydown="movePrev(event, this, 'pin3')">
                 </div>
             </div>
             <button type="submit" id="pay" class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"

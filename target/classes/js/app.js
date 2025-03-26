@@ -1,7 +1,8 @@
-import 'bootstrap';
+ import 'bootstrap';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Ensures Bootstrap JS is fully loaded
 import 'htmx.org';
 import flatpickr from 'flatpickr';
+import './orderViewing';
 import 'scss/app.scss';
 import './task-form';
 import './chat';
@@ -13,6 +14,7 @@ import './logOut';
 import './complianceButton';
 import './productImage';
 import './dropdrown';
+
 
 // Function to initialize datepickers
 function initDatepicker() {
