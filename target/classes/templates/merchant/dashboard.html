@@ -45,16 +45,16 @@
                 <path d="M8.39233e-05 48.101C8.39233e-05 41.7843 1.24426 35.5294 3.66156 29.6936C6.07886 23.8577 9.62196 18.5551 14.0886 14.0885C18.5551 9.62187 23.8578 6.07878 29.6936 3.66147C35.5295 1.24417 41.7844 -2.76112e-07 48.1011 0L48.1011 9.6202C43.0477 9.6202 38.0438 10.6155 33.3751 12.5494C28.7064 14.4832 24.4643 17.3177 20.8911 20.891C17.3178 24.4643 14.4833 28.7063 12.5495 33.3751C10.6156 38.0438 9.62029 43.0477 9.62029 48.101H8.39233e-05Z" fill="#E6E6FA"/>
                 <path d="M8.39233e-05 48.101C8.39233e-05 57.6145 2.82116 66.9144 8.10657 74.8245C13.392 82.7347 20.9043 88.8999 29.6936 92.5406C38.483 96.1812 48.1545 97.1338 57.4852 95.2778C66.8158 93.4218 75.3866 88.8406 82.1137 82.1136C88.8407 75.3866 93.4219 66.8158 95.2779 57.4851C97.1339 48.1544 96.1813 38.4829 92.5407 29.6936C88.9 20.9042 82.7348 13.3919 74.8246 8.10649C66.9144 2.82108 57.6146 -1.13447e-07 48.1011 0V9.6202C55.7119 9.6202 63.1518 11.8771 69.4799 16.1054C75.8081 20.3337 80.7402 26.3436 83.6528 33.3751C86.5653 40.4065 87.3273 48.1437 85.8425 55.6083C84.3578 63.0728 80.6928 69.9294 75.3112 75.3111C69.9295 80.6927 63.0729 84.3577 55.6084 85.8425C48.1438 87.3273 40.4066 86.5652 33.3751 83.6527C26.3437 80.7402 20.3338 75.808 16.1055 69.4798C11.8772 63.1517 9.62029 55.7118 9.62029 48.101H8.39233e-05Z" fill="#98FF98"/>
               </svg>
-              <span class="chart-percentage">80%</span>
+              <span class="chart-percentage" th:text="${inflowTransactions['chartPercentage']} + '%'"></span>
             </div>
             <div class="legend-container">
               <div class="legend-item">
                 <span class="legend-dot success"></span>
-                <span class="legend-label">Successful: <span class="legend-value">5</span></span>
+                <span class="legend-label">Successful: <span class="legend-value" th:text="${inflowTransactions['successTransactions']}"></span></span>
               </div>
               <div class="legend-item">
                 <span class="legend-dot error"></span>
-                <span class="legend-label">Processing Errors: <span class="legend-value">2</span></span>
+                <span class="legend-label">Processing Errors: <span class="legend-value" th:text="${inflowTransactions['errorTransactions']}"></span></span>
               </div>
             </div>
           </div>
@@ -65,18 +65,18 @@
               <svg class="donut-chart" width="97" height="97" viewBox="0 0 97 97" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.39233e-05 48.101C8.39233e-05 74.6665 21.5357 96.2021 48.1011 96.2021C74.6666 96.2021 96.2021 74.6665 96.2021 48.101C96.2021 21.5356 74.6666 0 48.1011 0C21.5357 0 8.39233e-05 21.5356 8.39233e-05 48.101ZM86.5819 48.101C86.5819 69.3534 69.3535 86.5819 48.1011 86.5819C26.8487 86.5819 9.62029 69.3534 9.62029 48.101C9.62029 26.8487 26.8487 9.6202 48.1011 9.6202C69.3535 9.6202 86.5819 26.8487 86.5819 48.101Z" fill="#98FF98"/>
                 <text fill="#000B11" font-family="Basis Grotesque Pro" font-size="20" letter-spacing="-0.03em">
-                  <tspan x="21" y="54.89">100%</tspan>
+                  <tspan x="30" y="54.89" th:text="${outflowTransactions['chartPercentage']} + '%'"></tspan>
                 </text>
               </svg>
             </div>
             <div class="legend-container">
               <div class="legend-item">
                 <span class="legend-dot success"></span>
-                <span class="legend-label">Successful: <span class="legend-value">5</span></span>
+                <span class="legend-label">Successful: <span class="legend-value" th:text="${outflowTransactions['successTransactions']}"></span></span>
               </div>
               <div class="legend-item">
                 <span class="legend-dot error"></span>
-                <span class="legend-label">Processing Errors: <span class="legend-value">0</span></span>
+                <span class="legend-label">Processing Errors: <span class="legend-value" th:text="${outflowTransactions['errorTransactions']}"></span></span>
               </div>
             </div>
           </div>
@@ -87,19 +87,19 @@
           <div class="issues-list">
             <div class="issue-item">
               <span class="issue-dot customer"></span>
-              <span class="issue-label">Customer Error: 3</span>
+              <span class="issue-label" th:text="'Customer Error: ' + ${paymentIssues['customerError']}"></span>
             </div>
             <div class="issue-item">
               <span class="issue-dot bank"></span>
-              <span class="issue-label">Bank Error: 2</span>
+              <span class="issue-label" th:text="'Bank Error: ' + ${paymentIssues['bankError']}"></span>
             </div>
             <div class="issue-item">
               <span class="issue-dot fraud"></span>
-              <span class="issue-label">Fraud Block: 0</span>
+              <span class="issue-label" th:text="'Fraud Block: ' + ${paymentIssues['fraudBlock']}"></span>
             </div>
             <div class="issue-item">
               <span class="issue-dot system"></span>
-              <span class="issue-label">System Error: 0</span>
+              <span class="issue-label" th:text="'System Error: ' + ${paymentIssues['systemError']}"></span>
             </div>
           </div>
         </article>
@@ -111,8 +111,8 @@
     <section class="settlement-section">
       <div class="settlement-content">
         <h2 class="sidebar-title">Next Settlement</h2>
-        <p class="amount">50,000.00</p>
-        <p class="date">Due Monday, March 2025</p>
+        <p class="amount" th:text="${nextSettlement['amount']}"></p>
+        <p class="date" th:text="${nextSettlement['date']}">Due Monday, March 2025</p>
       </div>
       <button class="secondary-button">View past settlements</button>
     </section>
@@ -122,8 +122,8 @@
     <section class="balance-section">
       <div class="balance-content">
         <h2 class="sidebar-title">Balance</h2>
-        <p class="amount">50,000.00</p>
-        <p class="status">Available</p>
+        <p class="amount" th:text="${balance['amount']}"></p>
+        <p class="status" th:text="${balance['status']}"></p>
       </div>
       <div class="balance-actions">
         <button class="secondary-button">View history</button>

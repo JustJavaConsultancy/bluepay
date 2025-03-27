@@ -44,6 +44,7 @@ public class MerchantController {
     @GetMapping("/dashboard")
     public String getDashboard(Model model){
         String loginUser= (String) authenticationManager.get("sub");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
 
         Map<String, Object> coordinate1 = Map.ofEntries(
                 Map.entry("class_", "bar-march3"),
@@ -91,7 +92,42 @@ public class MerchantController {
                 coordinate7
         );
 
+        String totalRevenue = df.format(50000.00);
+
+        Map<String, Object> inflowTransactions = Map.ofEntries(
+                Map.entry("chartPercentage", 80),
+                Map.entry("successTransactions", 5),
+                Map.entry("errorTransactions", 2)
+        );
+
+        Map<String, Object> outflowTransactions = Map.ofEntries(
+                Map.entry("chartPercentage", 50),
+                Map.entry("successTransactions", 8),
+                Map.entry("errorTransactions", 0)
+        );
+
+        Map<String, Object> paymentIssues = Map.ofEntries(
+                Map.entry("customerError", 3),
+                Map.entry("bankError", 2),
+                Map.entry("fraudBlock", 4),
+                Map.entry("systemError", 3)
+        );
+        Map<String, Object> nextSettlement = Map.ofEntries(
+                Map.entry("amount",df.format(40000.00)),
+                Map.entry("date", "Due Monday, March 2025")
+        );
+        Map<String, Object> balance = Map.ofEntries(
+                Map.entry("amount", df.format(30000.00)),
+                Map.entry("status", "Available")
+        );
+
         model.addAttribute("revenueList", revenueList);
+        model.addAttribute("totalRevenue", totalRevenue);
+        model.addAttribute("inflowTransactions", inflowTransactions);
+        model.addAttribute("outflowTransactions", outflowTransactions);
+        model.addAttribute("paymentIssues", paymentIssues);
+        model.addAttribute("nextSettlement", nextSettlement);
+        model.addAttribute("balance", balance);
 
         return "merchant/dashboard";
     }
@@ -311,7 +347,7 @@ public class MerchantController {
                 nextFragment = "compliance/contact :: form2(data=${test}, complianceButton=${test})";
                 break;
             case 2:
-                nextFragment = "compliance/businessOwner :: form3(data=${test}, complianceButton=${test})";
+                nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
                 break;
             case 3:
                 nextFragment = "compliance/bankAccount :: form4(data=${test}, complianceButton=${test})";
@@ -324,6 +360,9 @@ public class MerchantController {
                 nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails})";
                 break;
         }
+        merchantDetails.putAll(formData);
+        request.getSession(true).setAttribute("merchantDetails",merchantDetails);
+        System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
         System.out.println("Data saved so far: " + merchantDetails);
         System.out.println("Rendering Fragment: " + nextFragment);
