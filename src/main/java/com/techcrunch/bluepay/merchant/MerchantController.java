@@ -360,7 +360,7 @@ public class MerchantController {
                 break;
             case 5:
                 model.addAttribute("merchantDetails", merchantDetails); // Pass collected data
-                nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails})";
+                nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails},someCondition= true)";
                 break;
         }
         merchantDetails.putAll(formData);
