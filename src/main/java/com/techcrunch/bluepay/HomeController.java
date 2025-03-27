@@ -18,13 +18,10 @@ import java.util.Map;
 
 @Controller
 public class HomeController {
-
     @Autowired
     AuthenticationManager authenticationManager;
-
     @Autowired
     CustomProcessService processService;
-
     @Autowired
     MerchantService merchantService;
 
@@ -37,10 +34,11 @@ public class HomeController {
         Map<String,Object> variables = (Map<String, Object>)
                 merchantService.getMerchantStatus(loginUser).get("variables");
 
+        variables.put("status",status);
 
 /*        System.out.println("the status now=="+status+
-                " ---The Variables i'm redirecting is====="+variables);*/
-        redirectAttributes.addFlashAttribute("merchantDetails",variables);
+                " ---The Variables i'm redirecting is====="+variables);
+        redirectAttributes.addFlashAttribute("merchantDetails",variables);*/
         if(authenticationManager.isMerchant()){
             page="redirect:merchant/"+status.toLowerCase();
             request.getSession(true).setAttribute("chatGroup",loginUser);
