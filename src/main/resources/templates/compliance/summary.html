@@ -166,8 +166,12 @@
             </div>
         </div>
 
-
-        <button  type="submit"   th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
+<form hx-post="/merchant/submit"
+      hx-trigger="click" type="submit"
+      onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';">
+    <button
+            th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
+</form>
     </div>
 <!--working-->
     <script>

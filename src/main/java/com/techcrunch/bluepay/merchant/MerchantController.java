@@ -241,7 +241,7 @@ public class MerchantController {
         merchantService.submitMyDetail(formData);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("HX-Redirect", "/overview");
+        headers.add("HX-Redirect", "/merchant/dashboard");
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @PostMapping("/resubmit")
