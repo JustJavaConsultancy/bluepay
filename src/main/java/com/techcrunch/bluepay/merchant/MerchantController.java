@@ -294,39 +294,44 @@ public class MerchantController {
     }
 
     @PostMapping("/newMerchant/{step}")
-    //@ResponseBody
-    public String saveNewMerchant(@PathVariable Integer step, HttpServletRequest request, @RequestParam Map<String, Object> formData,
-                                  Model model){
-        Map<String,Object> merchantDetails= (Map<String, Object>)
+    public String saveNewMerchant(@PathVariable Integer step, HttpServletRequest request,
+                                  @RequestParam Map<String, Object> formData, Model model) {
+        Map<String, Object> merchantDetails = (Map<String, Object>)
                 request.getSession(true).getAttribute("merchantDetails");
-        if(merchantDetails==null){
+        if (merchantDetails == null) {
             merchantDetails = new HashMap<>();
         }
-        String nextFragment=null;
-        System.out.println(" The switching here=="+step);
 
-        switch  (step) {
+        merchantDetails.putAll(formData);
+        request.getSession(true).setAttribute("merchantDetails", merchantDetails);
+
+        String nextFragment = null;
+        switch (step) {
             case 1:
-                nextFragment="compliance/contact :: form2(data=${test},complianceButton=${test})";
+                nextFragment = "compliance/contact :: form2(data=${test}, complianceButton=${test})";
                 break;
-            case 2:/**/
+            case 2:
                 nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
                 break;
             case 3:
-                nextFragment="compliance/bankAccount :: form4(data=${test},complianceButton=${test})";
+                nextFragment = "compliance/bankAccount :: form4(data=${test}, complianceButton=${test})";
                 break;
             case 4:
-                nextFragment="compliance/serviceAgreement :: form5(data=${test})";
+                nextFragment = "compliance/serviceAgreement :: form5(data=${test})";
                 break;
             case 5:
-                nextFragment="compliance/summary :: form6(showclass='',backButton='null',hideButton='null',data=null)";
+                model.addAttribute("merchantDetails", merchantDetails); // Pass collected data
+                nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails})";
+                break;
         }
         merchantDetails.putAll(formData);
         request.getSession(true).setAttribute("merchantDetails",merchantDetails);
         System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
-        System.out.println(" The Fragment Here.."+nextFragment);
+        System.out.println("Data saved so far: " + merchantDetails);
+        System.out.println("Rendering Fragment: " + nextFragment);
 
         return nextFragment;
     }
+
 }

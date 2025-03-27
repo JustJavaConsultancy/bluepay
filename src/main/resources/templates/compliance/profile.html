@@ -8,65 +8,86 @@
 </head>
 <body>
 <div id="form1" th:fragment="form1(data,complianceButton)">
+
   <form id="myProfile">
-  <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
+    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
 
-    <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
-    <div class="mb-3 mt-4">
+      <h1 style="color: #062C5A;font-size: 1rem;">Registration information</h1>
+      <div class="mb-3 mt-4">
 
-      <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
-      <select
-              name="country"
-              id="country1"
-              class="form-select"
-              style="font-size: 0.75rem; background-color: #FAFAFA;"
-              th:data-selected="${data != null ? data['country'] : ''}" >
+        <label style="font-size: 0.75rem;color: #405979;" for="country1" class="form-label">Country<span style="color: #EF5350;">*</span></label>
+        <select
+                name="country"
+                id="country1"
+                class="form-select"
+                style="font-size: 0.75rem; background-color: #FAFAFA;"
+                th:data-selected="${data != null ? data['country'] : ''}" >
 
-        <option value="">Select a country</option>
-        <!-- Countries will be populated here -->
-      </select>
+          <option value="">Select a country</option>
+          <!-- Countries will be populated here -->
+        </select>
+      </div>
+      <div class="mb-3">
+        <label style="font-size: 0.75rem;color: #405979;" for="businessName" class="form-label">Business Name<span style="color: #EF5350;">*</span></label>
+        <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" th:value="${data!=null?data['businessName']:''}" >
+      </div>
+      <div class="mb-3">
+        <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
+        <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;">
+          <option value="Select" th:selected="${data !=null ? data['businessType'] == 'Select':''}">Select business type</option>
+          <option value="Unregistered/Starterbusiness"  th:selected="${data !=null ? data['businessType'] == 'Unregistered/Starterbusiness':''}">Unregistered/Starter business</option>
+          <option value="Businessnameregistration" th:selected="${data !=null ? data['businessType'] == 'Businessnameregistration':''}">Business name registration</option>
+          <option value="Partnership" th:selected="${data !=null ? data['businessType'] == 'Partnership':''}">Partnership</option>
+          <option value="Privatelimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Privatelimitedliabilitycompany':''}">Private limited liability company</option>
+          <option value="Publiclimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Publiclimitedliabilitycompany':''}">Public limited liability company</option>
+          <option value="ngo" th:selected="${data != null ? data['businessType'] == 'ngo':''}">Non-governmental organization (NGO)</option>
+          <option value="Co-operativesociety" th:selected="${data != null ? data['businessType'] == 'Co-operativesociety':''}">Co-operative society</option>
+        </select>
+      </div>
     </div>
-    <div class="mb-3">
-      <label style="font-size: 0.75rem;color: #405979;" for="businessName" class="form-label">Business Name<span style="color: #EF5350;">*</span></label>
-      <input   _="on input set #profile-business-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" class="form-control" name="businessName" id="businessName" th:value="${data!=null?data['businessName']:''}" >
-    </div>
-    <div class="mb-3">
-      <label style="font-size: 0.75rem;color: #405979;" for="businessType" class="form-label">Business/Registration type<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #profile-business-type.textContent to me.options[me.selectedIndex].text" name="businessType" id="businessType" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;">
-        <option value="Select" th:selected="${data !=null ? data['businessType'] == 'Select':''}">Select business type</option>
-        <option value="Unregistered/Starterbusiness"  th:selected="${data !=null ? data['businessType'] == 'Unregistered/Starterbusiness':''}">Unregistered/Starter business</option>
-        <option value="Businessnameregistration" th:selected="${data !=null ? data['businessType'] == 'Businessnameregistration':''}">Business name registration</option>
-        <option value="Partnership" th:selected="${data !=null ? data['businessType'] == 'Partnership':''}">Partnership</option>
-        <option value="Privatelimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Privatelimitedliabilitycompany':''}">Private limited liability company</option>
-        <option value="Publiclimitedliabilitycompany" th:selected="${data !=null ? data['businessType'] == 'Publiclimitedliabilitycompany':''}">Public limited liability company</option>
-        <option value="ngo" th:selected="${data != null ? data['businessType'] == 'ngo':''}">Non-governmental organization (NGO)</option>
-        <option value="Co-operativesociety" th:selected="${data != null ? data['businessType'] == 'Co-operativesociety':''}">Co-operative society</option>
-      </select>
-    </div>
-  </div>
-  <button id="next1" th:class="@{'mt-2 saveButton '+${complianceButton}}" disabled
-          hx-post="/merchant/newMerchant/1"
-          hx-trigger="click"
-          hx-include="#myProfile"
+    <button id="next1" th:class="@{'mt-2 saveButton'}"
+            hx-post="/merchant/newMerchant/1"
+            hx-trigger="click"
+            hx-include="#myProfile"
 
-  >Save</button>
+    >Save</button>
   </form>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const form = document.getElementById("myProfile");
+      const submitButton = document.getElementById("next1");
+      const inputs = form.querySelectorAll("input, select");
+
+      function checkInputs() {
+        let allFilled = true;
+        inputs.forEach(input => {
+          if (input.value.trim() === "") {
+            allFilled = false;
+          }
+        });
+        submitButton.disabled = !allFilled;
+      }
+
+      inputs.forEach(input => {
+        input.addEventListener("input", checkInputs);
+        input.addEventListener("change", checkInputs);
+      });
+
+    });
+    document.getElementById('next1').addEventListener('click',increaseProgress)
+    function increaseProgress() {
+      const numberElement = document.getElementById("increase");
+      const bar = document.getElementById("progress-bar");
+
+      let currentNumber = parseInt(numberElement.textContent, 10);
+      let newNumber = currentNumber + 20; // Store the updated number
+
+      numberElement.textContent = newNumber;
+      bar.style.width = `${newNumber}%`; // Use the updated number
+      $(".cb1").prop("checked", true);
+    }
+
+  </script>
 </div>
-<script>
-  alert('ggg')
-  const countrySelect = document.getElementById('country');
-  console.log(countrySelect)
-  fetch('https://restcountries.com/v3.1/all')
-          .then(response => response.json())
-          .then(data => {
-            // const countrySelect = document.getElementById('country');
-            data.forEach(country => {
-              const option = document.createElement('option');
-              option.value = country.cca2; // Use country code (e.g., 'US', 'CA')
-              option.textContent = country.name.common; // Use country name
-              countrySelect.appendChild(option);
-            });
-          });
-</script>
 </body>
 </html>
