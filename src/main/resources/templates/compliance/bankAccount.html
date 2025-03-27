@@ -20,9 +20,15 @@
         <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accNumber">Account Number<span style="color: #EF5350;">*</span></label>
         <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;"
                type="number" name="accNumber" class="form-control" id="accNumber"
+               maxlength="10"
                th:value="${data!=null?data['accNumber']:''}"
                required
-               oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10)"
+               oninput="if(this.value.length > 10) { this.value = this.value.slice(0, 10); }
+                if(this.value.length === 10 && !(document.getElementById('bankName').value === 'Select')) {
+                    document.getElementById('next4').disabled = false;
+                } else {
+                    document.getElementById('next4').disabled = true;
+                }"
                _="on input
              set #bank-account-number.textContent to me.value
               if my.value.length >= 10
@@ -36,7 +42,11 @@
       </div>
       <div class="mb-3">
         <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
-        <select _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+        <select
+                onchange="if(document.getElementById('accNumber').value.length > 0 && !(this.value === 'Select'))
+                                {document.getElementById('next4').disabled = false}
+                         else {document.getElementById('next4').disabled = true}"
+                _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
           <option value="Select" th:selected="${data !=null ? data['bankName'] == 'Select':''}">Select</option>
           <option value="UBA" th:selected="${data !=null ? data['bankName'] == 'UBA':''}">UBA</option>
           <option value="firstbank" th:selected="${data !=null ? data['bankName'] == 'firstbank':''}">First Bank</option>
@@ -48,13 +58,15 @@
       </div>
     </div>
     <button id="next4"
-            th:class="@{'mt-2 saveButton '+${complianceButton}}"
+            th:class="@{'mt-2 saveButton '+${complianceButton}}" disabled
             hx-post="/merchant/newMerchant/4"
             hx-trigger="click"
             hx-include="#bankAccount"
     >Save</button>
   </form>
   <script>
+
+
     document.getElementById('next4').addEventListener('click',increaseProgress)
     function increaseProgress() {
       const numberElement = document.getElementById("increase");

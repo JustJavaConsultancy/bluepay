@@ -7,14 +7,14 @@
     <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
       <h1 style="color: #062C5A;font-size: 1rem;">Identification</h1>
       <div class="row">
-        <div class="col-md-6 mb-3">
+        <div class="col-md-12 mb-3">
           <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="firstname">
             First Name <span style="color: #EF5350;">*</span>
           </label>
           <input _="on input set #owner-first-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
                  id="firstname" name="firstname" th:value="${data!=null?data['firstname']:''}" required/>
         </div>
-        <div class="col-md-6 mb-3">
+        <div class="col-md-12 mb-3">
           <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="lastname">
             Last Name <span style="color: #EF5350;">*</span>
           </label>
@@ -133,41 +133,23 @@
       $(".cb3").prop("checked", true);
     }
 
+    function toggle2SubmitButton() {
+      const requiredFields = document.getElementById("businessOwner").querySelectorAll("[required]");
+      let allFilled2 = true;
 
-    function populate2CountrySelect(selectElement, selectedCountry) {
-      fetch("https://restcountries.com/v3.1/all")
-              .then(response => response.json())
-              .then(countries => {
-                countries.sort((a, b) => (a.name?.common || "").localeCompare(b.name?.common || ""));
-                selectElement.innerHTML = '';
+      requiredFields.forEach(field => {
+        if (!field.value.trim() || (field.tagName === "SELECT" && field.value === "Select")) {
+          allFilled2 = false;
+        }
+      });
 
-                if (!selectedCountry) {
-                  const defaultOption = document.createElement("option");
-                  defaultOption.value = "";
-                  defaultOption.textContent = "Select a country";
-                  selectElement.appendChild(defaultOption);
-                }
-
-                countries.forEach(country => {
-                  const option = document.createElement("option");
-                  const countryCode = country.cca2;
-
-                  option.value = countryCode;
-                  option.textContent = country.name?.common || 'Unknown Country';
-
-                  if (countryCode === selectedCountry) {
-                    option.selected = true;
-                  }
-
-                  selectElement.appendChild(option);
-                });
-
-                if (callback) callback(); // Ensure populateCities runs AFTER population
-              })
-              .catch(error => console.error("Error fetching countries:", error));
+      document.getElementById("next3").disabled = !allFilled2;
     }
-    populate2CountrySelect( document.getElementById("country3"),  document.getElementById("country3").getAttribute("data-selected"));
+    document.getElementById("businessOwner").addEventListener("input", toggle2SubmitButton);
+    document.getElementById("businessOwner").addEventListener("change", toggle2SubmitButton);
 
+    // Initial check on page load
+    toggle2SubmitButton();
   </script>
 </div>
 

@@ -44,6 +44,7 @@ public class MerchantController {
     @GetMapping("/dashboard")
     public String getDashboard(Model model){
         String loginUser= (String) authenticationManager.get("sub");
+        DecimalFormat df = new DecimalFormat("#,##0.00");
 
         Map<String, Object> coordinate1 = Map.ofEntries(
                 Map.entry("class_", "bar-march3"),
@@ -91,7 +92,42 @@ public class MerchantController {
                 coordinate7
         );
 
+        String totalRevenue = df.format(50000.00);
+
+        Map<String, Object> inflowTransactions = Map.ofEntries(
+                Map.entry("chartPercentage", 80),
+                Map.entry("successTransactions", 5),
+                Map.entry("errorTransactions", 2)
+        );
+
+        Map<String, Object> outflowTransactions = Map.ofEntries(
+                Map.entry("chartPercentage", 50),
+                Map.entry("successTransactions", 8),
+                Map.entry("errorTransactions", 0)
+        );
+
+        Map<String, Object> paymentIssues = Map.ofEntries(
+                Map.entry("customerError", 3),
+                Map.entry("bankError", 2),
+                Map.entry("fraudBlock", 4),
+                Map.entry("systemError", 3)
+        );
+        Map<String, Object> nextSettlement = Map.ofEntries(
+                Map.entry("amount",df.format(40000.00)),
+                Map.entry("date", "Due Monday, March 2025")
+        );
+        Map<String, Object> balance = Map.ofEntries(
+                Map.entry("amount", df.format(30000.00)),
+                Map.entry("status", "Available")
+        );
+
         model.addAttribute("revenueList", revenueList);
+        model.addAttribute("totalRevenue", totalRevenue);
+        model.addAttribute("inflowTransactions", inflowTransactions);
+        model.addAttribute("outflowTransactions", outflowTransactions);
+        model.addAttribute("paymentIssues", paymentIssues);
+        model.addAttribute("nextSettlement", nextSettlement);
+        model.addAttribute("balance", balance);
 
         return "merchant/dashboard";
     }
