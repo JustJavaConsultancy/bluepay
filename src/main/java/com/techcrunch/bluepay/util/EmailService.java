@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 public class EmailService {
 
     public void sendMail(DelegateExecution execution){
-        System.out.println("" +
-                " Sending mail......"+execution);
+        System.out.println("\n\n" + " Sending mail......"+execution);
     }
 }
