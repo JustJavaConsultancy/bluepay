@@ -10,20 +10,26 @@
 <div id="form4" style="display: block; margin-bottom: 20px;" th:fragment="form4(data,complianceButton)">
   <form id="bankAccount">
     <input  type="hidden" name="step" id="step" value="4" />
-  <button id="prev3" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
-    <i class="bi bi-arrow-left-circle-fill fs-6"></i>
-  </button>
-  <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
-    <h1 style="color: #062C5A;font-size: 1rem;">Personal Bank Account</h1>
-    <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">The bank account name must match the name of the business owner</div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accNumber">Account Number<span style="color: #EF5350;">*</span></label>
-      <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;"
-             type="number" name="accNumber" class="form-control" id="accNumber"
-             th:value="${data!=null?data['accNumber']:''}"
-             required
-             oninput="if(this.value.length > 10) this.value = this.value.slice(0, 10)"
-             _="on input
+    <button id="prev3" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
+      <i class="bi bi-arrow-left-circle-fill fs-6"></i>
+    </button>
+    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
+      <h1 style="color: #062C5A;font-size: 1rem;">Personal Bank Account</h1>
+      <div style="background-color: #B16C0C0F;color: #B16C0C;padding: 10px;border-radius: 4px;font-size: 0.75rem;font-weight: 400;">The bank account name must match the name of the business owner</div>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accNumber">Account Number<span style="color: #EF5350;">*</span></label>
+        <input style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;"
+               type="number" name="accNumber" class="form-control" id="accNumber"
+               maxlength="10"
+               th:value="${data!=null?data['accNumber']:''}"
+               required
+               oninput="if(this.value.length > 10) { this.value = this.value.slice(0, 10); }
+                if(this.value.length === 10 && !(document.getElementById('bankName').value === 'Select')) {
+                    document.getElementById('next4').disabled = false;
+                } else {
+                    document.getElementById('next4').disabled = true;
+                }"
+               _="on input
              set #bank-account-number.textContent to me.value
               if my.value.length >= 10
                remove .invalid from me
@@ -31,29 +37,50 @@
                add .invalid to me
               end">
 
-      <div class="error-message">Please enter at least 10 digits.</div>
+        <div class="error-message">Please enter at least 10 digits.</div>
 
+      </div>
+      <div class="mb-3">
+        <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
+        <select
+                onchange="if(document.getElementById('accNumber').value.length > 0 && !(this.value === 'Select'))
+                                {document.getElementById('next4').disabled = false}
+                         else {document.getElementById('next4').disabled = true}"
+                _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+          <option value="Select" th:selected="${data !=null ? data['bankName'] == 'Select':''}">Select</option>
+          <option value="UBA" th:selected="${data !=null ? data['bankName'] == 'UBA':''}">UBA</option>
+          <option value="firstbank" th:selected="${data !=null ? data['bankName'] == 'firstbank':''}">First Bank</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accName">Name on Account<span style="color: #EF5350;">*</span></label>
+        <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
+      </div>
     </div>
-    <div class="mb-3">
-      <label style="font-size: 0.75rem;color: #405979;" for="bankName" class="form-label">Bank Name<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select" th:selected="${data !=null ? data['bankName'] == 'Select':''}">Select</option>
-        <option value="UBA" th:selected="${data !=null ? data['bankName'] == 'UBA':''}">UBA</option>
-        <option value="firstbank" th:selected="${data !=null ? data['bankName'] == 'firstbank':''}">First Bank</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accName">Name on Account<span style="color: #EF5350;">*</span></label>
-      <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
-    </div>
-  </div>
-  <button id="next4"
-          th:class="@{'mt-2 saveButton '+${complianceButton}}"
-          hx-post="/merchant/newMerchant/4"
-          hx-trigger="click"
-          hx-include="#bankAccount"
-           >Save</button>
+    <button id="next4"
+            th:class="@{'mt-2 saveButton '+${complianceButton}}" disabled
+            hx-post="/merchant/newMerchant/4"
+            hx-trigger="click"
+            hx-include="#bankAccount"
+    >Save</button>
+  </form>
+  <script>
+
+
+    document.getElementById('next4').addEventListener('click',increaseProgress)
+    function increaseProgress() {
+      const numberElement = document.getElementById("increase");
+      const bar = document.getElementById("progress-bar");
+
+      let currentNumber = parseInt(numberElement.textContent, 10);
+      let newNumber = currentNumber + 20; // Store the updated number
+
+      numberElement.textContent = newNumber;
+      bar.style.width = `${newNumber}%`; // Use the updated number
+      $(".cb4").prop("checked", true);
+    }
+
+  </script>
 </div>
-
 </body>
 </html>
