@@ -1,97 +1,174 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+
 <div id="form3" style="display: block;" th:fragment="form3(data,complianceButton)">
   <form id="businessOwner">
-  <button id="prev2" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
-    <i class="bi bi-arrow-left-circle-fill fs-6"></i>
-  </button>
-  <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
-    <h1 style="color: #062C5A;font-size: 1rem;">Identification</h1>
-    <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="firstname">
-          First Name <span style="color: #EF5350;">*</span>
-        </label>
-        <input _="on input set #owner-first-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-               id="firstname" name="firstname" th:value="${data!=null?data['firstname']:''}" required/>
+    <button id="prev2" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
+      <i class="bi bi-arrow-left-circle-fill fs-6"></i>
+    </button>
+    <div style="background-color: #FFFFFF; border: 1px solid #F0F0F0;border-radius: 4px; padding: 28px;max-height: fit-content;">
+      <h1 style="color: #062C5A;font-size: 1rem;">Identification</h1>
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="firstname">
+            First Name <span style="color: #EF5350;">*</span>
+          </label>
+          <input _="on input set #owner-first-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
+                 id="firstname" name="firstname" th:value="${data!=null?data['firstname']:''}" required/>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="lastname">
+            Last Name <span style="color: #EF5350;">*</span>
+          </label>
+          <input _="on input set #owner-last-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
+                 id="lastname" name="lastname" th:value="${data!=null?data['lastname']:''}" required/>
+        </div>
       </div>
-      <div class="col-md-6 mb-3">
-        <label class="form-label" style="font-size: 0.75rem; color: #405979;" for="lastname">
-          Last Name <span style="color: #EF5350;">*</span>
-        </label>
-        <input _="on input set #owner-last-name.textContent to me.value" class="form-control" style="width: 100%; background-color: #FAFAFA; font-size: 0.75rem;"
-               id="lastname" name="lastname" th:value="${data!=null?data['lastname']:''}" required/>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="city">City<span style="color: #EF5350;">*</span></label>
+        <input _="on input set #owner-city.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="ownerCity" class="form-control" id="city" th:value="${data!=null?data['ownerCity']:''}" required >
       </div>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="dob">Date of Birth<span style="color: #EF5350;">*</span></label>
+        <input _="on input set #owner-dob.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="date" name="dob" class="form-control" id="dob" th:value="${data!=null?data['dob']:''}" required >
+      </div>
+      <div>
+        <label style="font-size: 0.75rem;color: #405979;" for="country3" class="form-label">Nationality<span style="color: #EF5350;">*</span></label>
+        <select _="on change set #owner-nationality.textContent to me.options[me.selectedIndex].text" required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['nationality'] : ''}">
+          <option value="Select">Select</option>
+          <option value="Nigeria">Nigeria</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label style="font-size: 0.75rem;color: #405979;" for="identificationDoc" class="form-label">Identification Document<span style="color: #EF5350;">*</span></label>
+        <select _="on change set #owner-id-document.textContent to me.options[me.selectedIndex].text" required name="identificationDoc" id="identificationDoc" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
+          <option value="Select" th:selected="${data != null ? data['identificationDoc'] == 'Select':''}">Select</option>
+          <option value="BVN" th:selected="${data != null ? data['identificationDoc'] == 'BVN':''}">BVN</option>
+          <option value="license" th:selected="${data != null ? data['identificationDoc'] == 'license':''}">Driver’s license</option>
+          <option value="NIN" th:selected="${data !=null ? data['identificationDoc'] == 'NIN':''}">NIN</option>
+          <option value="vCard" th:selected="${data !=null ? data['identificationDoc'] == 'vCard':''}">Voter’s card</option>
+          <option value="passport" th:selected="${data !=null ? data['identificationDoc'] == 'passport':''}">International passport</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="idNumber">Identification Number<span style="color: #EF5350;">*</span></label>
+        <input _="on input set #owner-id-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="idNumber" class="form-control" id="idNumber" th:value="${data!=null?data['idNumber']:''}" required >
+      </div>
+      <h1 class="fs-5" style="color: #062C5A;font-size: 1rem;">Home Address</h1>
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="useBusinessAddress" style="margin-top: 0.4rem;" name="useBusinessAddress">
+        <label style="color: #6F768D;font-size: 0.75rem;" class="form-check-label" for="useBusinessAddress">
+          Use Business Address
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label" style="font-size: 0.75rem;color: #405979;" >Proof of Address<span style="color: #EF5350;">*</span></label>
+        <label for="fileInput" class="upload-area" id="uploadArea">
+          <i class="bi bi-cloud-arrow-up"></i>
+          <p id="uploadText">Drag & Drop an image here or click to upload</p>
+          <input type="file" id="fileInput" name="file" required>
+        </label>
+      </div>
+      <h4 style="color: #828FA3;font-size: 0.75rem;">Proof of Address can be any of these documents, not more than 6 months old:</h4>
+      <ul style="color: #828FA3;font-size: 0.75rem;">
+        <li>Utility bill for services to the address. </li>
+        <li>Bank statement showing current address. </li>
+        <li>Tax assessment. </li>
+        <li>Cable TV bill such as DSTV bill. </li>
+        <li>Letter from a public authority</li>
+      </ul>
     </div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="city">City<span style="color: #EF5350;">*</span></label>
-      <input _="on input set #owner-city.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="ownerCity" class="form-control" id="city" th:value="${data!=null?data['ownerCity']:''}" required >
-    </div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="dob">Date of Birth<span style="color: #EF5350;">*</span></label>
-      <input _="on input set #owner-dob.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="date" name="dob" class="form-control" id="dob" th:value="${data!=null?data['dob']:''}" required >
-    </div>
-    <div>
-      <label style="font-size: 0.75rem;color: #405979;" for="country3" class="form-label">Nationality<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #owner-nationality.textContent to me.options[me.selectedIndex].text" required name="nationality" id="country3" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" th:data-selected="${data != null ? data['nationality'] : ''}">
-        <option value="Select">Select</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label style="font-size: 0.75rem;color: #405979;" for="identificationDoc" class="form-label">Identification Document<span style="color: #EF5350;">*</span></label>
-      <select _="on change set #owner-id-document.textContent to me.options[me.selectedIndex].text" required name="identificationDoc" id="identificationDoc" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
-        <option value="Select" th:selected="${data != null ? data['identificationDoc'] == 'Select':''}">Select</option>
-        <option value="BVN" th:selected="${data != null ? data['identificationDoc'] == 'BVN':''}">BVN</option>
-        <option value="license" th:selected="${data != null ? data['identificationDoc'] == 'license':''}">Driver’s license</option>
-        <option value="NIN" th:selected="${data !=null ? data['identificationDoc'] == 'NIN':''}">NIN</option>
-        <option value="vCard" th:selected="${data !=null ? data['identificationDoc'] == 'vCard':''}">Voter’s card</option>
-        <option value="passport" th:selected="${data !=null ? data['identificationDoc'] == 'passport':''}">International passport</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="idNumber">Identification Number<span style="color: #EF5350;">*</span></label>
-      <input _="on input set #owner-id-number.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="number" name="idNumber" class="form-control" id="idNumber" th:value="${data!=null?data['idNumber']:''}" required >
-    </div>
-    <h1 class="fs-5" style="color: #062C5A;font-size: 1rem;">Home Address</h1>
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="useBusinessAddress" style="margin-top: 0.4rem;" name="useBusinessAddress">
-      <label style="color: #6F768D;font-size: 0.75rem;" class="form-check-label" for="useBusinessAddress">
-        Use Business Address
-      </label>
-    </div>
-    <div class="mb-3">
-      <label class="form-label" style="font-size: 0.75rem;color: #405979;" >Proof of Address<span style="color: #EF5350;">*</span></label>
-      <label for="fileInput" class="upload-area" id="uploadArea">
-        <i class="bi bi-cloud-arrow-up"></i>
-        <p id="uploadText">Drag & Drop an image here or click to upload</p>
-        <input type="file" id="fileInput" name="file" required>
-      </label>
-    </div>
-    <h4 style="color: #828FA3;font-size: 0.75rem;">Proof of Address can be any of these documents, not more than 6 months old:</h4>
-    <ul style="color: #828FA3;font-size: 0.75rem;">
-      <li>Utility bill for services to the address. </li>
-      <li>Bank statement showing current address. </li>
-      <li>Tax assessment. </li>
-      <li>Cable TV bill such as DSTV bill. </li>
-      <li>Letter from a public authority</li>
-    </ul>
-  </div>
-  <button id="next3"
-          class="mt-2 saveButton"
-          hx-post="/merchant/newMerchant/3"
-          hx-trigger="click"
-          hx-include="#businessOwner"
-           >Save</button>
+    <button id="next3"
+            class="mt-2 saveButton"
+            hx-post="/merchant/newMerchant/3"
+            hx-trigger="click"
+            hx-include="#businessOwner"
+    >Save</button>
   </form>
+  <script>
+
+
+    let fileInput = document.getElementById("fileInput");
+    let uploadText = document.getElementById("uploadText");
+    let uploadArea = document.getElementById("uploadArea");
+
+    console.log(uploadArea);
+
+    fileInput.addEventListener("change", function (event) {
+      let file = event.target.files[0];
+      if (file) {
+        uploadText.textContent = `Selected File: ${file.name}`;
+      }
+
+    });
+
+    uploadArea.addEventListener("dragover", function (event) {
+      event.preventDefault();
+      uploadArea.style.backgroundColor = "#e9ecef";
+    });
+
+    uploadArea.addEventListener("dragleave", function () {
+      uploadArea.style.backgroundColor = "#f8f9fa";
+    });
+
+    uploadArea.addEventListener("drop", function (event) {
+      event.preventDefault();
+      uploadArea.style.backgroundColor = "#f8f9fa";
+      let file = event.dataTransfer.files[0];
+      if (file) {
+        uploadText.textContent = `Selected File: ${file.name}`;
+        fileInput.files = event.dataTransfer.files;
+      }
+    });
+
+
+    document.getElementById('next3').addEventListener('click',increaseProgress)
+    function increaseProgress() {
+      const numberElement = document.getElementById("increase");
+      const bar = document.getElementById("progress-bar");
+
+      let currentNumber = parseInt(numberElement.textContent, 10);
+      let newNumber = currentNumber + 20; // Store the updated number
+
+      numberElement.textContent = newNumber;
+      bar.style.width = `${newNumber}%`; // Use the updated number
+      $(".cb3").prop("checked", true);
+    }
+
+
+    function populate2CountrySelect(selectElement, selectedCountry) {
+      fetch("https://restcountries.com/v3.1/all")
+              .then(response => response.json())
+              .then(countries => {
+                countries.sort((a, b) => (a.name?.common || "").localeCompare(b.name?.common || ""));
+                selectElement.innerHTML = '';
+
+                if (!selectedCountry) {
+                  const defaultOption = document.createElement("option");
+                  defaultOption.value = "";
+                  defaultOption.textContent = "Select a country";
+                  selectElement.appendChild(defaultOption);
+                }
+
+                countries.forEach(country => {
+                  const option = document.createElement("option");
+                  const countryCode = country.cca2;
+
+                  option.value = countryCode;
+                  option.textContent = country.name?.common || 'Unknown Country';
+
+                  if (countryCode === selectedCountry) {
+                    option.selected = true;
+                  }
+
+                  selectElement.appendChild(option);
+                });
+
+                if (callback) callback(); // Ensure populateCities runs AFTER population
+              })
+              .catch(error => console.error("Error fetching countries:", error));
+    }
+    populate2CountrySelect( document.getElementById("country3"),  document.getElementById("country3").getAttribute("data-selected"));
+
+  </script>
 </div>
 
 
-</body>
-</html>
