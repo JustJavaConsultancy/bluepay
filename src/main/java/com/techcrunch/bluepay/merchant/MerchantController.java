@@ -309,7 +309,7 @@ public class MerchantController {
             case 1:
                 nextFragment="compliance/contact :: form2(data=${test},complianceButton=${test})";
                 break;
-            case 2:
+            case 2:/**/
                 nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
                 break;
             case 3:

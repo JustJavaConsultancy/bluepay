@@ -7,9 +7,13 @@
     <title>Title</title>
 </head>
 <body>
-<div id="cardPayment" th:fragment="cardPayment">
-    <form hx-post="/pay">
-        <div id="cardDetail">
+<div id="cardPayment" th:fragment="cardPayment" >
+
+    <div hx-ws="connect:/ws">
+
+    </div>
+    <form id="cardForm">
+        <div id="cardDetail" >
             <label for="card-number" class="form-label" style="font-size: 0.85rem;font-weight: 400;color: #333C41;">Card Number</label>
             <input class="form-control detail" style="border: 1px solid #E8E8E8;background-color: #F9F7F7;font-size: 0.85rem;" type="text" id="card-number" name="card-number" maxlength="19" placeholder="0000 0000 0000 0000"
                    oninput="this.value = this.value.replace(/\D/g, '').replace(/(\d{4})/g, '$1 ').trim()">
@@ -41,7 +45,11 @@
                 </div>
             </div>
             <button type="submit" id="pay" class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"
-                    disabled>Pay Now</button>
+                    disabled
+                    hx-post="/pay"
+                    hx-trigger="click"
+                    hx-include="#cardDetail"
+            >Pay Now</button>
         </div>
     </form>
 

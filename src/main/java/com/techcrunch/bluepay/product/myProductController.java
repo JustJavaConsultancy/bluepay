@@ -54,7 +54,7 @@ public class myProductController {
         Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
         variables.put("productName","Laptop");
         variables.put("merchantId","24424244242424");
-        paymentService.startPaymentProcess(variables,"92002020020");
+        //paymentService.startPaymentProcess(variables,"92002020020");
         return "/product/manageProduct";
     }
 
