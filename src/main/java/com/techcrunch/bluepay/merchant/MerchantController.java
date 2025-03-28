@@ -332,11 +332,14 @@ public class MerchantController {
     }
 
     @PostMapping("/submit")
-    public ResponseEntity<Void> submitDetails(@RequestParam Map<String,Object> formData){
+    public ResponseEntity<Void> submitDetails(HttpServletRequest request){
+        Map<String, Object> formData = (Map<String, Object>)request.getSession(true).getAttribute("merchantDetails");
+
+        System.out.println("The Submitted Data === " + formData);
         merchantService.submitMyDetail(formData);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("HX-Redirect", "/overview");
+        headers.add("HX-Redirect", "/merchant/dashboard");
         return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
     @PostMapping("/resubmit")
@@ -445,7 +448,7 @@ public class MerchantController {
                 nextFragment = "compliance/contact :: form2(data=${test}, complianceButton=${test})";
                 break;
             case 2:
-                nextFragment = "compliance/businessOwner :: form3(data=${test}, complianceButton=${test})";
+                nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
                 break;
             case 3:
                 nextFragment = "compliance/bankAccount :: form4(data=${test}, complianceButton=${test})";
@@ -455,12 +458,14 @@ public class MerchantController {
                 break;
             case 5:
                 model.addAttribute("merchantDetails", merchantDetails); // Pass collected data
-                nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails})";
+                nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails},someCondition= true)";
                 break;
         }
+        merchantDetails.putAll(formData);
+        request.getSession(true).setAttribute("merchantDetails",merchantDetails);
+        System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
         System.out.println("Data saved so far: " + merchantDetails);
-        System.out.println("Rendering Fragment: " + nextFragment);
 
         return nextFragment;
     }
