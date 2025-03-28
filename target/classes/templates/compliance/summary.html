@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div id="form6"  th:fragment="form6(showclass,backButton,hideButton,data)">
+<div id="form6"  th:fragment="form6(showclass,backButton,hideButton,data,someCondition)">
     <div th:class="${showclass}">
         <button th:class="${backButton}" id="prev5" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
             <i class="bi bi-arrow-left-circle-fill fs-6"></i>
@@ -166,44 +166,16 @@
             </div>
         </div>
 
-
-        <button  type="submit"   th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
+        <form hx-post="/merchant/submit"
+              hx-trigger="click" type="submit"
+              onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';">
+            <button
+                    th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
+        </form>
     </div>
+    <!--working-->
+    <script th:if="${someCondition}" src="/js/accordion.js"></script>
 
-    <script>
-        const accordionButtons = document.querySelectorAll(".accordion-button");
-
-        accordionButtons.forEach(button => {
-            button.addEventListener("click", function () {
-                const parentItem = this.parentElement.parentElement;
-                const content = parentItem.querySelector(".accordion-content");
-                const allItems = document.querySelectorAll(".accordion-item");
-
-                allItems.forEach(item => {
-                    if (item !== parentItem) {
-                        item.classList.remove("active");
-                        const otherContent = item.querySelector(".accordion-content");
-                        otherContent.style.maxHeight = "0";
-                        otherContent.style.opacity = "0";
-                        otherContent.style.padding = "0 15px";
-                    }
-                });
-
-                if (parentItem.classList.contains("active")) {
-                    content.style.maxHeight = "0";
-                    content.style.opacity = "0";
-                    content.style.padding = "0 15px";
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    content.style.opacity = "1";
-                    content.style.padding = "15px";
-                }
-
-                parentItem.classList.toggle("active");
-            });
-        });
-
-    </script>
 </div>
 
 <!-- Bootstrap JS and dependencies -->

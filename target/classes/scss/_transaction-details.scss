@@ -1,69 +1,44 @@
-.transaction-view {
-  background-color: rgba(251, 251, 251, 1);
-  display: flex;
-//   padding: 98px 80px 205px;
-  flex-direction: column;
-  overflow: hidden;
-  align-items: center;
-  font-family:
-    Basis Grotesque Pro,
-    -apple-system,
-    Roboto,
-    Helvetica,
+/* Base styles */
+:root {
+  --primary-black-50: #e6e7e7;
+  --primary-black-100: #b0b3b5;
+  --color-text-primary: #333c41;
+  --color-text-secondary: #545c60;
+  --color-text-dark: #000b11;
+  --color-blue-500: #0c74b1;
+  --color-success: rgba(70, 161, 75, 1);
+  --font-family: "Basis Grotesque Pro", -apple-system, Roboto, Helvetica,
     sans-serif;
 }
 
-.transaction-container {
-  width: 653px;
-  max-width: 100%;
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+  background-color: rgba(251, 251, 251, 1);
 }
 
-.back-icon {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 24px;
-}
-
-.transaction-card {
-  border-radius: 12px;
-  border: 1px solid var(--Foundation-Primary-Black-primary-black-50, #e6e7e7);
+/* Topbar styles */
+.topbar {
   background-color: #fff;
-  margin-top: 16px;
-  width: 100%;
-  padding: 24px;
+  border-bottom: 0.2px solid var(--primary-black-100);
 }
 
-.transaction-header {
+.topbar__container {
+  padding: 16px 32px;
+}
+
+.topbar__navigation {
   display: flex;
-  width: 100%;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
+  padding: 0 4px;
   gap: 40px 100px;
-  text-align: center;
+  flex-wrap: wrap;
 }
 
-.amount-container {
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 182px;
-}
-
-.label {
-  color: #545c60;
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.4;
-}
-
-.amount {
-  color: #000b11;
+.topbar__title {
+  color: var(--color-text-primary);
   font-feature-settings:
     "liga" off,
     "clig" off;
@@ -71,225 +46,348 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: -0.6px;
-  margin-top: 12px;
+  margin: 0;
+}
+
+.topbar__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 240px;
+}
+
+/* Test mode badge */
+.test-mode-badge {
+  background-color: #ffe6e5;
+  border-radius: 4px;
+  padding: 4px 12px;
+}
+
+.test-mode-badge__text {
+  color: #ff3b30;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Merchant info */
+.merchant-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.merchant-info__content {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.merchant-info__logo {
+  width: 32px;
+  height: 32px;
+}
+
+.merchant-info__details {
+  display: flex;
+  flex-direction: column;
+}
+
+.merchant-info__name {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.merchant-info__id {
+  color: rgba(49, 57, 87, 1);
+  font-size: 12px;
+}
+
+.merchant-info__menu {
+  width: 18px;
+  height: 18px;
+}
+
+/* Transaction details */
+.transaction-details {
+  padding: 32px 80px 190px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.transaction-details__container {
+  width: 100%;
+  max-width: 1102px;
+  margin-right: 32px;
+  display: flex;
+  gap: 20px;
+}
+
+.transaction-details__content {
+  width: 59%;
+}
+
+/* Transaction card */
+.transaction-card {
+  background-color: #fff;
+  border-radius: 12px;
+  border: 1px solid var(--primary-black-50);
+  margin-top: 16px;
+  padding: 24px;
+}
+
+.transaction-card__icon {
+  width: 24px;
+  height: 24px;
+}
+
+.transaction-summary__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.amount-details__label {
+  color: var(--color-text-secondary);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin: 0 0 12px;
+}
+
+.amount-details__value {
+  color: var(--color-text-dark);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.6px;
+  margin: 0;
 }
 
 .status-badge {
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
-  border-radius: 100px;
-  background-color: rgba(70, 161, 75, 1);
   padding: 8px 16px;
+  border-radius: 100px;
   font-size: 16px;
+  line-height: 1.4;
+  font-weight: 400;
+}
+
+.status-badge--success {
+  background-color: var(--color-success);
   color: #fff;
-  font-weight: 400;
-  line-height: 1.4;
 }
 
-.transaction-details {
-  margin-top: 24px;
-  width: 100%;
-}
-
-.details-grid {
-  width: 100%;
+/* Transaction info */
+.transaction-info {
   margin: 0;
-}
-
-.detail-item {
   display: flex;
-  width: 100%;
-  padding: 8px 0;
-  align-items: center;
-  gap: 40px 100px;
-  font-size: 16px;
-  text-align: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.detail-label {
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
-  color: #545c60;
+.transaction-info__group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.transaction-info__label {
+  color: var(--color-text-secondary);
+  font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
 }
 
-.detail-value {
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
-  color: #333c41;
+.transaction-info__value {
+  color: var(--color-text-primary);
+  font-size: 16px;
   font-weight: 500;
   line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
 }
 
-.reference-value {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.copy-icon {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
+.transaction-info__copy-icon {
   width: 16px;
+  height: 16px;
+  cursor: pointer;
 }
 
 .channel-badge {
-  border-radius: 100px;
-  border: 1px solid var(--Foundation-Primary-Black-primary-black-50, #e6e7e7);
   background-color: #f9f7f7;
+  border: 1px solid var(--primary-black-50);
+  border-radius: 100px;
   padding: 4px 16px;
   font-size: 14px;
   line-height: 1.6;
 }
 
-.divider {
-  border: 0;
-  border-top: 1px solid rgba(230, 231, 231, 1);
+.transaction-card__divider {
+  border: none;
+  border-top: 1px solid var(--primary-black-50);
   margin: 32px 0;
-  width: 100%;
 }
 
-.info-sections {
+/* Sections */
+.transaction-details__sections{
   display: flex;
-  width: 100%;
-  align-items: start;
-  gap: 29px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.products-section {
-  display: flex;
-  min-width: 240px;
-  flex-direction: column;
-  flex-grow: 1;
-  flex-shrink: 1;
-  width: 319px;
+  gap: 50px;
 }
 
 .section-title {
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
   font-size: 18px;
-  color: #000b11;
+  color: var(--color-text-dark);
   font-weight: 500;
   letter-spacing: -0.54px;
   line-height: 1;
-  margin: 0;
+  margin: 0 0 16px;
 }
 
-.product-list {
-  margin-top: 16px;
-  width: 100%;
-  font-size: 16px;
-}
-
+/* Products section */
 .product-item {
   display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 40px 99px;
+  flex-direction: column;
+  gap: 6px;
   justify-content: space-between;
+  font-size: 16px;
+  margin-top: 16px;
 }
 
-.product-name {
-  color: #545c60;
+.product-item__name {
+  color: var(--color-text-secondary);
   font-weight: 400;
   line-height: 1.4;
-  margin: 0;
 }
 
-.product-price {
-  color: #333c41;
+.product-item__price {
+  color: var(--color-text-primary);
   font-weight: 500;
   line-height: 1;
-  margin: 0;
 }
 
-.divider-vertical {
-  border: 0;
-  border-left: 1px solid rgba(230, 231, 231, 1);
+.transaction-details__divider {
   width: 0;
   height: 135px;
-  margin: 0;
+  border-left: 1px solid var(--primary-black-50);
 }
 
-.customer-section {
+/* Customer section */
+.customer-info {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  flex-shrink: 1;
-  width: 228px;
+  gap: 16px;
 }
 
-.customer-details {
-  margin-top: 16px;
-  width: 100%;
+.customer-info__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-primary);
   font-size: 16px;
-  color: #333c41;
+  line-height: 1.4;
+}
+
+.customer-info__icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Refunds section */
+.refunds-section {
+  width: 41%;
+  margin-top: 43px;
+}
+
+.refunds-nav {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.refunds-nav__link {
+  color: var(--color-blue-500);
+  text-decoration: none;
+  padding: 8px;
+  border-bottom: 1.5px solid var(--color-blue-500);
   font-weight: 400;
   line-height: 1.4;
 }
 
-.info-row {
-  display: flex;
-  width: 100%;
-  align-items: center;
-  gap: 8px;
+.refunds-nav__line {
+  flex-grow: 1;
+  border-bottom: 0.5px solid var(--primary-black-100);
+  height: 39px;
 }
 
-.info-row + .info-row {
+.refunds-content {
+  border: 0.5px solid var(--primary-black-100);
+  border-radius: 4px;
+  margin-top: 19px;
+  padding: 12px 10px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.refunds-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-bottom: 0.5px solid var(--primary-black-100);
+}
+
+.refunds-header__title {
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.refunds-header__action {
+  color: var(--color-blue-500);
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.refunds-body {
+  display: flex;
+  justify-content: center;
   margin-top: 16px;
 }
 
-.info-icon {
-  aspect-ratio: 1;
-  object-fit: contain;
-  object-position: center;
-  width: 16px;
-  flex-shrink: 0;
-}
-
-.info-text {
+.refunds-body__message {
+  color: var(--color-text-dark);
   margin: 0;
 }
 
-.phone-code,
-.phone-number {
-  font-feature-settings:
-    "liga" off,
-    "clig" off;
-}
-
+/* Responsive styles */
 @media (max-width: 991px) {
-  .transaction-view {
-    padding: 98px 20px 100px;
+  .transaction-details {
+    padding: 32px 20px 100px;
+  }
+
+  .transaction-details__container {
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
+  .transaction-details__content,
+  .refunds-section {
+    width: 100%;
+  }
+
+  .topbar__container {
+    padding: 16px 20px;
   }
 
   .transaction-card {
-    padding: 24px 20px;
-  }
-
-  .status-badge,
-  .detail-label,
-  .section-title {
-    white-space: initial;
-  }
-
-  .detail-value,
-  .info-row {
-    white-space: initial;
+    padding: 20px;
   }
 }

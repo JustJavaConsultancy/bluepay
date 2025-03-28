@@ -17,110 +17,129 @@
 </head>
 <body>
 <div layout:fragment="content">
-<article class="transaction-view">
-  <div class="transaction-container">
-    <img
-      src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/71fe1caf82f7be5dc6fe7d9ae933187a4da2fcfb?placeholderIfAbsent=true"
-      alt="Back"
-      class="back-icon"
-    />
-    <div class="transaction-card">
-      <header class="transaction-header">
-        <div class="amount-container">
-          <p class="label">Amount</p>
-          <p class="amount" th:text="${transactionItem['amount']}"></p>
-        </div>
-        <p class="status-badge" th:text="${transactionItem['status']}"></p>
-      </header>
+  <main class="transaction-details">
+    <div class="transaction-details__container">
+      <div class="transaction-details__content">
+        <article class="transaction-card">
+          <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/71fe1caf82f7be5dc6fe7d9ae933187a4da2fcfb?placeholderIfAbsent=true"
+                  alt="Transaction icon"
+                  class="transaction-card__icon"
+          />
+          <div class="transaction-card__content">
+            <div class="transaction-summary">
+              <div class="transaction-summary__header">
+                <div class="amount-details">
+                  <h2 class="amount-details__label">Amount</h2>
+                  <p class="amount-details__value" th:text="${transactionItem['amount']}"></p>
+                </div>
+                <span class="status-badge status-badge--success" th:text="${transactionItem['status']}"></span>
+              </div>
 
-      <section class="transaction-details">
-        <dl class="details-grid">
-          <div class="detail-item">
-            <dt class="detail-label">Reference</dt>
-            <dd class="detail-value reference-value">
-              <span th:text="${transactionItem['reference']}"></span>
-              <img
-                src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/2c4cecf397add5420fc69773dbc00ca9a8d23787?placeholderIfAbsent=true"
-                alt="Copy"
-                class="copy-icon"
-              />
-            </dd>
-          </div>
+              <dl class="transaction-info">
+                <div class="transaction-info__group">
+                  <dt class="transaction-info__label">Reference</dt>
+                  <dd class="transaction-info__value">
+                    <span th:text="${transactionItem['reference']}"></span>
+                    <img
+                            src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/e455d7d7f827af01475cf57cef3c380f74542f8a?placeholderIfAbsent=true"
+                            alt="Copy"
+                            class="transaction-info__copy-icon"
+                    />
+                  </dd>
+                </div>
 
-          <div class="detail-item">
-            <dt class="detail-label">Channel</dt>
-            <dd class="detail-value">
-              <span class="channel-badge" th:text="${transactionItem['channel']}"></span>
-            </dd>
-          </div>
+                <div class="transaction-info__group">
+                  <dt class="transaction-info__label">Channel</dt>
+                  <dd class="transaction-info__value">
+                    <span class="channel-badge" th:text="${transactionItem['channel']}"></span>
+                  </dd>
+                </div>
 
-          <div class="detail-item">
-            <dt class="detail-label">Fees</dt>
-            <dd class="detail-value" th:text="${transactionItem['fees']}"></dd>
-          </div>
+                <div class="transaction-info__group">
+                  <dt class="transaction-info__label">Fees</dt>
+                  <dd class="transaction-info__value" th:text="${transactionItem['fees']}"></dd>
+                </div>
 
-          <div class="detail-item">
-            <dt class="detail-label">Timestamp</dt>
-            <dd class="detail-value">
-              <time datetime="2025-03-27T18:50" th:text="${transactionItem['timestamp']}"></time>
-            </dd>
-          </div>
-        </dl>
-      </section>
+                <div class="transaction-info__group">
+                  <dt class="transaction-info__label">Timestamp</dt>
+                  <dd class="transaction-info__value" th:text="${transactionItem['timestamp']}"></dd>
+                </div>
+              </dl>
+            </div>
 
-      <hr class="divider" />
+            <hr class="transaction-card__divider" />
 
-      <div class="info-sections">
-        <section class="products-section">
-          <h2 class="section-title">Products</h2>
-          <div class="product-list">
-            <div class="product-item">
-              <p class="product-name">High Fashion x 2</p>
-              <p class="product-price" th:text="${transactionItem['products']}"></p>
+            <div class="transaction-details__sections">
+              <section class="products-section">
+                <h2 class="section-title">Products</h2>
+                <div class="product-list">
+                  <div class="product-item">
+                    <span class="product-item__name">High Fashion x 2</span>
+                    <span class="product-item__price" th:text="'NGN' + ${transactionItem['products']}"></span>
+                  </div>
+                </div>
+              </section>
+
+              <div class="transaction-details__divider"></div>
+
+              <section class="customer-section">
+                <h2 class="section-title">Customer</h2>
+                <div class="customer-info">
+                  <div class="customer-info__item">
+                    <img
+                            src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/c7341b41a09e59183c162d715f3e9ae7d7ff25eb?placeholderIfAbsent=true"
+                            alt="User"
+                            class="customer-info__icon"
+                    />
+                    <span class="customer-info__text" th:text="${transactionItem['customer-name']}"></span>
+                  </div>
+                  <div class="customer-info__item">
+                    <img
+                            src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/d040fe1cd884bbce2a415a2934b907c88c192bd5?placeholderIfAbsent=true"
+                            alt="Email"
+                            class="customer-info__icon"
+                    />
+                    <span class="customer-info__text" th:text="${transactionItem['customer-email']}"></span
+                    >
+                  </div>
+                  <div class="customer-info__item">
+                    <img
+                            src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/5a1e5b2394581ea19c2f757a56b829f63dfcaddc?placeholderIfAbsent=true"
+                            alt="Phone"
+                            class="customer-info__icon"
+                    />
+                    <span class="customer-info__text" th:text="${transactionItem['customer-phone-code']}">+234</span>
+                    <span class="customer-info__text" th:text="${transactionItem['customer-phone-number']}">8138482251</span>
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
-        </section>
-
-        <hr class="divider-vertical" />
-
-        <section class="customer-section">
-          <h2 class="section-title">Customer</h2>
-          <div class="customer-details">
-            <div class="customer-info">
-              <div class="info-row">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/b383c2366dddc884663c3226aa39c316c9bf1d22?placeholderIfAbsent=true"
-                  alt="User"
-                  class="info-icon"
-                />
-                <p class="info-text" th:text="${transactionItem['customer-name']}"></p>
-              </div>
-              <div class="info-row">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/4e661e02c2f1c585819b2f205f7167b9c7c0782f?placeholderIfAbsent=true"
-                  alt="Email"
-                  class="info-icon"
-                />
-                <p class="info-text" th:text="${transactionItem['customer-email']}"></p>
-              </div>
-              <div class="info-row">
-                <img
-                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/be9d3212cd511d13d1960cc239347f74ffe5ca81?placeholderIfAbsent=true"
-                  alt="Phone"
-                  class="info-icon"
-                />
-                <p class="info-text">
-                  <span class="phone-code" th:text="${transactionItem['customer-phone-code']}">+234</span>
-                  <span class="phone-number" th:text="${transactionItem['customer-phone-number']}">8138482251</span>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+        </article>
       </div>
+
+      <aside class="refunds-section">
+        <nav class="refunds-nav">
+          <a href="#" class="refunds-nav__link refunds-nav__link--active"
+          >Refunds</a
+          >
+          <span class="refunds-nav__line"></span>
+        </nav>
+
+        <div class="refunds-content">
+          <div class="refunds-header">
+            <span class="refunds-header__title">Refund Attempt</span>
+            <button class="refunds-header__action">New Refund</button>
+          </div>
+          <div class="refunds-body">
+            <p class="refunds-body__message">No Refund</p>
+          </div>
+        </div>
+      </aside>
     </div>
-  </div>
-</article>
+  </main>
+
 </div>
 </body>
 </html>
