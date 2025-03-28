@@ -177,21 +177,32 @@ public class myProductController {
         return "/product/productPreview";
     }
     @PostMapping("/pay")
-    public String processPayment(@RequestBody Map<String, String> paymentRequest) {
+    public String processPayment(@RequestBody Map<String, String> paymentData) {
+        // Extract individual values from the Map
+        String cardNumber = paymentData.get("card-number");
+        String expiryDate = paymentData.get("expiry-date");
+        String cvv = paymentData.get("cvv");
+        String pin1 = paymentData.get("pin1");
+        String pin2 = paymentData.get("pin2");
+        String pin3 = paymentData.get("pin3");
+        String pin4 = paymentData.get("pin4");
 
-        System.out.println("Received payment details: " + paymentRequest);
+        // Process the payment request here
+        System.out.println("Processing payment for card number: " + cardNumber);
+        System.out.println("Expiry Date: " + expiryDate);
+        System.out.println("CVV: " + cvv);
+        System.out.println("PIN: " + pin1 + pin2 + pin3 + pin4);
 
-
-        return "Payment processed successfully";
+        // After processing payment, return a response
+        return "Payment processed successfully!";
     }
     @PostMapping("/payerInfo")
-    public String payerInfo(@RequestBody Map<String, String> paymentRequest) {
-
+    public String payerInfo(@RequestParam Map<String, String> paymentRequest) {
         System.out.println("Received payment details: " + paymentRequest);
-
-
         return "Payment user successfully submitted";
     }
+
+
 
 
 
