@@ -1,237 +1,24 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Revenue Chart</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family:
-          system-ui,
-          -apple-system,
-          sans-serif;
-      }
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-      .revenue-container {
-        font-family:
-          system-ui,
-          -apple-system,
-          sans-serif;
-        padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
-      }
-
-      .revenue-title {
-        font-size: 16px;
-        color: #666;
-        margin-bottom: 5px;
-      }
-
-      .revenue-amount {
-        font-size: 24px;
-        font-weight: 600;
-        color: #333;
-        margin-bottom: 30px;
-      }
-
-      .chart-container {
-        position: relative;
-        height: 300px;
-        margin-top: 40px;
-      }
-
-      .chart-bars {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-        height: 100%;
-        position: relative;
-        z-index: 2;
-      }
-
-      .bar {
-        width: 60px;
-        background-color: #e6f0ff;
-        position: relative;
-        transition: all 0.3s ease;
-        cursor: pointer;
-      }
-
-      .bar:hover {
-        background-color: #b3d1ff;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      }
-
-      .bar-date {
-        position: absolute;
-        bottom: -25px;
-        left: 50%;
-        transform: translateX(-50%);
-        color: #666;
-        font-size: 12px;
-        white-space: nowrap;
-      }
-
-      .bar-value {
-        position: absolute;
-        bottom: calc(100% + 5px);
-        left: 50%;
-        transform: translateX(-50%);
-        color: #666;
-        font-size: 12px;
-      }
-
-      .chart-grid {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100%;
-        z-index: 1;
-      }
-
-      .grid-line {
-        border-bottom: 1px solid #eee;
-        height: calc(100% / 6);
-        width: 100%;
-      }
-
-      /* Specific bar heights */
-      .bar-march3 {
-        height: 14%;
-      }
-
-      .bar-march4 {
-        height: 64%;
-      }
-
-      .bar-march10 {
-        height: 5%;
-      }
-
-      .bar-march15 {
-        height: 20%;
-      }
-
-      .bar-march16 {
-        height: 7%;
-      }
-
-      .bar-march17 {
-        height: 9%;
-      }
-
-      .bar-march18 {
-        height: 2%;
-      }
-
-      /* Tooltip styles */
-      .tooltip {
-        position: absolute;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: white;
-        padding: 8px 12px;
-        border-radius: 4px;
-        font-size: 12px;
-        pointer-events: none;
-        opacity: 0;
-        transition: opacity 0.3s;
-        z-index: 10;
-        white-space: nowrap;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateX(-50%);
-        bottom: 100%;
-        margin-bottom: 15px;
-      }
-
-      .tooltip::after {
-        content: "";
-        position: absolute;
-        top: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
-      }
-
-      /* Media Queries */
-      @media (max-width: 991px) {
-        .revenue-container {
-          padding: 15px;
-        }
-
-        .bar {
-          width: 40px;
-        }
-      }
-
-      @media (max-width: 640px) {
-        .revenue-container {
-          padding: 10px;
-        }
-
-        .revenue-title {
-          font-size: 14px;
-        }
-
-        .revenue-amount {
-          font-size: 20px;
-        }
-
-        .bar {
-          width: 30px;
-        }
-
-        .bar-date,
-        .bar-value {
-          font-size: 10px;
-        }
-      }
-    </style>
-  </head>
-  <body>
+  <div  th:fragment="merchantChart">
     <!-- Tooltip element that will be positioned by JavaScript -->
     <div id="tooltip" class="tooltip"></div>
     <section class="revenue-container">
       <header>
         <h2 class="revenue-title">Revenue (NGN)</h2>
-        <p class="revenue-amount">50,000.00</p>
+        <p class="revenue-amount" th:text="${totalRevenue}"></p>
       </header>
 
       <div class="chart-container">
-        <div class="chart-bars">
-          <div class="bar bar-march3">
-            <span class="bar-date">March 3</span>
-            <span class="bar-value">7,000</span>
+        <div class="chart-bars" >
+          <div class="bar" th:classappend="${revenueItem['class_']}" th:each="revenueItem: ${revenueList}" >
+            <span class="bar-date" th:text="${revenueItem['x']}">March 3</span>
+            <span class="bar-value" th:text="${revenueItem['y']}">7,000</span>
           </div>
-          <div class="bar bar-march4">
-            <span class="bar-date">March 4</span>
-            <span class="bar-value">32,000</span>
-          </div>
-          <div class="bar bar-march10">
-            <span class="bar-date">March 10</span>
-            <span class="bar-value">2,500</span>
-          </div>
-          <div class="bar bar-march15">
-            <span class="bar-date">March 15</span>
-            <span class="bar-value">10,000</span>
-          </div>
-          <div class="bar bar-march16">
-            <span class="bar-date">March 16</span>
-            <span class="bar-value">3,500</span>
-          </div>
-          <div class="bar bar-march17">
-            <span class="bar-date">March 17</span>
-            <span class="bar-value">4,500</span>
-          </div>
-          <div class="bar bar-march18">
-            <span class="bar-date">March 18</span>
-            <span class="bar-value">1,000</span>
-          </div>
+
         </div>
 
         <div class="chart-grid">
@@ -317,5 +104,5 @@
         return additionalInfo[date] || "";
       }
     </script>
-  </body>
+  </div>
 </html>

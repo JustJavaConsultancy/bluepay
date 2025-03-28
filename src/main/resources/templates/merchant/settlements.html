@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<body>
+<div layout:fragment="content">
+<main class="settlement">
+  <header class="kyc-banner">
+    <div class="kyc-banner__container">
+      <div class="kyc-banner__content">
+        <img
+          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/4c940734929c4a2cce0a43973e68cf104bec5245?placeholderIfAbsent=true"
+          alt="KYC Status Icon"
+          class="kyc-banner__icon"
+        />
+        <p class="kyc-banner__text">Complete your KYC process to Go Live!</p>
+      </div>
+    </div>
+  </header>
+
+<!--  <div class="settlement__spacer"></div>-->
+
+  <div class="settlement__content">
+    <div class="settlement__layout">
+      <section class="transactions">
+        <div class="transactions__container">
+          <div class="transactions__content">
+            <div class="transactions__header">
+              <div class="total-count">
+                Total: <span class="total-count__number" th:text="${totalSettlements['total']}"></span>
+              </div>
+              <div class="toolbar">
+                <div class="toolbar__controls">
+                  <div class="period-selector">
+                    <span class="period-selector__label">This Month</span>
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/491e6ba92276aa422aa3e4eebef5b8134ab03a80?placeholderIfAbsent=true"
+                      alt="Calendar"
+                      class="period-selector__icon"
+                    />
+                  </div>
+                  <div class="search-box">
+                    <img
+                      src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/97460e2701c12f77eb2c9c88becc4f53a37bd6f9?placeholderIfAbsent=true"
+                      alt="Search"
+                      class="search-box__icon"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Search by reference and customer name"
+                      class="search-box__input"
+                    />
+                  </div>
+                </div>
+                <button class="download-button">Download</button>
+              </div>
+            </div>
+
+            <div class="transactions__table">
+              <table class="table">
+                <thead class="table__header">
+                  <tr>
+                    <th class="table__th">Status</th>
+                    <th class="table__th">Settled Amount (NGN)</th>
+                    <th class="table__th">Date</th>
+                    <th class="table__th">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table__row" th:each="settlement : ${settlementList}">
+                    <td>
+                      <span class="status-badge status-badge--success" th:text="${settlement['status']}"></span
+                      >
+                    </td>
+                    <td class="table__amount" th:text="${settlement['settledAmount']}"></td>
+                    <td class="table__date" th:text="${settlement['date']}"></td>
+                    <td>
+                      <button class="view-details-button">View Details</button>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+
+            <nav class="pagination">
+              <button class="pagination__arrow">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/389121001a80c0b8333fd447cb6a9ef66cad7a9f?placeholderIfAbsent=true"
+                  alt="Previous"
+                  class="pagination__arrow-icon"
+                />
+              </button>
+              <div class="pagination__numbers">
+                <button class="pagination__number pagination__number--active">
+                  1
+                </button>
+                <button class="pagination__number">2</button>
+                <button class="pagination__number">3</button>
+                <span class="pagination__ellipsis">...</span>
+                <button class="pagination__number">10</button>
+              </div>
+              <button class="pagination__arrow">
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/149c9a67b7b18174be2ea0f958399ae6722fca6a?placeholderIfAbsent=true"
+                  alt="Next"
+                  class="pagination__arrow-icon"
+                />
+              </button>
+            </nav>
+          </div>
+        </div>
+      </section>
+
+      <aside class="next-settlement">
+        <div class="next-settlement__container">
+          <div class="next-settlement__content">
+            <div class="next-settlement__header">
+              <h2 class="next-settlement__title">Next Settlement</h2>
+              <p class="next-settlement__amount" th:text="${nextSettlement['amount']}"></p>
+            </div>
+            <p class="next-settlement__date" th:text="${nextSettlement['date']}"></p>
+          </div>
+          <div class="next-settlement__currency">NGN</div>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+</div>
+</body>
+</html>

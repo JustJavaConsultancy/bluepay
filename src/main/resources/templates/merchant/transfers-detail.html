@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<body>
+<div layout:fragment="content">
+<header class="transfer">
+
+  <main class="transfer-details">
+    <img
+      src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/71fe1caf82f7be5dc6fe7d9ae933187a4da2fcfb?placeholderIfAbsent=true"
+      alt="Success icon"
+      class="success-icon"
+    />
+    <section class="details-card">
+      <div class="details-content">
+        <div class="details-header">
+          <div class="amount-section">
+            <p class="amount-label">Amount</p>
+            <p class="amount-value" th:text="'NGN ' + ${transferItem['amount']}"></p>
+          </div>
+          <span class="status-badge" th:text="${transferItem['status']}"></span>
+        </div>
+
+        <div class="details-list">
+          <div class="details-grid">
+            <div class="detail-row">
+              <p class="detail-label">Beneficiary Account</p>
+              <p class="detail-value" th:text="${transferItem['accountNumber']} + ' ' + ${transferItem['accountBank']}">
+              </p>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Account Name</p>
+              <p class="detail-value" th:text="${transferItem['accountName']}"></p>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Timestamp</p>
+              <p class="detail-value" th:text="${transferItem['timestamp']}"></p>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Reference</p>
+              <div class="reference-value">
+                <p class="detail-value" th:text="${transferItem['reference']}"></p>
+                <img
+                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/907f7631bc9432bcaeda59a4dad81b7c4fcb2f91?placeholderIfAbsent=true"
+                  alt="Copy"
+                  class="copy-icon"
+                />
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Transfer Fees</p>
+              <p class="detail-value" th:text="'NGN ' + ${transferItem['fees']}"></p>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Transfer From</p>
+              <p class="detail-value">NGN Balance</p>
+            </div>
+
+            <div class="detail-row">
+              <p class="detail-label">Narration</p>
+              <p class="detail-value" th:text="${transferItem['narration']}">Feeding Allowance</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</header>
+</div>
+</body>
+</html>
