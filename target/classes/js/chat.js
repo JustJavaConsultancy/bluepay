@@ -1,10 +1,11 @@
 
-var socket = new SockJS('/ws');
-var stompClient = Stomp.over(socket);
+/*var socket = new SockJS('/ws');
+var stompClient = Stomp.over(socket);*/
 var notification = 0;
 const badge = document.querySelector('.badge');
 badge.innerText = notification;
 
+/*
 stompClient.connect({}, function () {
     stompClient.subscribe('/topic/group/compliance', function (message) {
         var chatMessage = JSON.parse(message.body);
@@ -13,12 +14,13 @@ stompClient.connect({}, function () {
             + chatMessage.sender + ": " + chatMessage.content);
     });
 });
+*/
 
 // Send a message to group 123
-function sendMessage(groupId, sender, content) {
+/*function sendMessage(groupId, sender, content) {
     var message = { groupId: groupId, sender: sender, content: content };
     stompClient.send("/app/chat.sendMessage", {}, JSON.stringify(message));
-}
+}*/
 function pushMail(chatMessage) {
     let badge = document.getElementById("notificationBadge");
     let list = document.getElementById("notificationList");

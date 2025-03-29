@@ -269,6 +269,11 @@
   flex-direction: column;
 }
 
+.view-history, .view-settlement{
+    text-decoration: none;
+    text-align: center;
+ }
+
 .secondary-button {
   width: fit-content;
   margin: auto;

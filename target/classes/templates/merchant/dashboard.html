@@ -41,7 +41,7 @@
             <p class="amount-dashboard" th:text="${nextSettlement['amount']}"></p>
             <p class="date" th:text="${nextSettlement['date']}"></p>
           </div>
-          <button class="action-button">View past settlements</button>
+          <a class="action-button view-settlement" th:href="@{/merchant/settlements}">View past settlements</a>
         </article>
 
         <article class="balance-card">
@@ -54,7 +54,7 @@
 
           </div>
           <div class="balance-actions">
-            <button class="action-button">View history</button>
+            <a class="action-button view-history" th:href="@{/merchant/balance}">View history</a>
             <button class="action-button">Topup</button>
           </div>
         </article>
@@ -81,7 +81,7 @@
 
         <div class="analytics-content">
           <div class="revenue-chart">
-            <section th:replace="/merchant/merchantDashboard :: merchantChart"></section>
+            <section th:replace="~{/merchant/merchantDashboard :: merchantChart}"></section>
           </div>
 
         </div>
