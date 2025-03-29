@@ -9,6 +9,9 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.5.1/dist/sockjs.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
   <script src="https://unpkg.com/htmx.org@2.0.4"></script>
 
   <style>
@@ -87,15 +90,40 @@
   </style>
 </head>
 <body>
+<script>
+  function connectStomp() {
+    const socket = new SockJS('/ws');
+    const stompClient = Stomp.over(socket);
+    stompClient.connect({}, function(frame) {
 
-<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="customModalLabel" aria-hidden="true">
+      stompClient.subscribe('/topic/messages', function(message) {
+        const msg = message.body;
+        const div = document.createElement('div');
+        div.textContent = msg;
+        const messages = document.getElementById('messages');
+        messages.appendChild(div);
+      });
+    });
+    window.stompClient = stompClient; // Expose to global scope
+  }
+
+  function sendMessage() {
+    const message = document.getElementById("messageInput").value;
+    if (window.stompClient) {
+      window.stompClient.send("/app/send", {}, message);
+      document.getElementById("messageInput").value = "";
+    }
+  }
+</script>
+<div class="modal fade" id="customModal" tabindex="-1" aria-labelledby="customModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog  mt-5 modal-md">
     <div class="modal-content custom-modal">
       <!-- Close Button Outside -->
       <button type="button" class="outside-close" data-bs-dismiss="modal" aria-label="Close">
         <i class="bi bi-x-lg"></i>
       </button>
-      <div class="modal-body">
+      <div class="modal-body"  _="on load call connectStomp()" >
         <div style="display: flex; flex-wrap: nowrap;">
           <div style="padding-left: 0.68rem; padding-top: 1rem; white-space: nowrap;">
             <h3 style="font-size: 1rem; font-weight: 500; margin: 0; white-space: nowrap;">Pay With</h3>

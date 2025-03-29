@@ -178,7 +178,7 @@ public class myProductController {
         return "/product/productPreview";
     }
     @PostMapping(value = "/card-pay", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public String handleCardPayment(
+    public String handleCardPayment(HttpServletRequest request,
             @RequestParam Map<String, String> allParams, Model model) {
 
         // Print all the form data to the console
@@ -194,12 +194,36 @@ public class myProductController {
         String pin3 = allParams.get("pin3");
         String pin4 = allParams.get("pin4");
 
+        Map<String,String> payerInfo= (Map<String, String>) request.getSession(true).getAttribute("payerInfo");
+        System.out.println(" The payer info here=="+
+                payerInfo);
+
+
+        PaymentDTO paymentDTO=PaymentDTO.builder()
+                .amount(new BigDecimal(payerInfo.get("price")))
+                .cardCvv(allParams.get("cvv"))
+                .channel("card")
+                .cardExpirationDate(allParams.get("expiryDate"))
+                .cardHolderName(payerInfo.get("firstname") + " " + payerInfo.get("lastname"))
+                .invoiceId(1L)
+                .cardNumber(allParams.get("cardNumber"))
+                .currency("NIG")
+                .payerEmail(payerInfo.get("email"))
+                .payerPhoneNumber(payerInfo.get("phoneNumber"))
+                .build();
+        Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
+        variables.put("productName","Laptop");
+        variables.put("merchantId","24424244242424");
+
+        //paymentService.startPaymentProcess(variables, (String) authenticationManager.get("sub"));
         // You can perform further processing on these parameters if needed
         return "product/sucessfulPayment";
     }
     @PostMapping("/payerInfo")
-    public String payerInfo(@RequestParam Map<String, String> paymentRequest) {
+    @ResponseBody
+    public String payerInfo(HttpServletRequest request, @RequestParam Map<String, String> paymentRequest) {
         System.out.println("Received payment details: " + paymentRequest);
+        request.getSession(true).setAttribute("payerInfo",paymentRequest);
         return "Payment user successfully submitted";
     }
 
