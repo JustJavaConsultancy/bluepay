@@ -9,6 +9,7 @@ import com.techcrunch.bluepay.payment.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -176,25 +177,25 @@ public class myProductController {
         model.addAttribute("product", productDTO);
         return "/product/productPreview";
     }
-    @PostMapping("/pay")
-    public String processPayment(@RequestBody Map<String, String> paymentData) {
-        // Extract individual values from the Map
-        String cardNumber = paymentData.get("card-number");
-        String expiryDate = paymentData.get("expiry-date");
-        String cvv = paymentData.get("cvv");
-        String pin1 = paymentData.get("pin1");
-        String pin2 = paymentData.get("pin2");
-        String pin3 = paymentData.get("pin3");
-        String pin4 = paymentData.get("pin4");
+    @PostMapping(value = "/card-pay", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public String handleCardPayment(
+            @RequestParam Map<String, String> allParams, Model model) {
 
-        // Process the payment request here
-        System.out.println("Processing payment for card number: " + cardNumber);
-        System.out.println("Expiry Date: " + expiryDate);
-        System.out.println("CVV: " + cvv);
-        System.out.println("PIN: " + pin1 + pin2 + pin3 + pin4);
+        // Print all the form data to the console
+        System.out.println("Form Data Submitted:");
+        allParams.forEach((key, value) -> System.out.println(key + ": " + value));
 
-        // After processing payment, return a response
-        return "Payment processed successfully!";
+        // You can extract the individual fields if needed
+        String cardNumber = allParams.get("cardNumber");
+        String expiryDate = allParams.get("expiryDate");
+        String cvv = allParams.get("cvv");
+        String pin1 = allParams.get("pin1");
+        String pin2 = allParams.get("pin2");
+        String pin3 = allParams.get("pin3");
+        String pin4 = allParams.get("pin4");
+
+        // You can perform further processing on these parameters if needed
+        return "product/sucessfulPayment";
     }
     @PostMapping("/payerInfo")
     public String payerInfo(@RequestParam Map<String, String> paymentRequest) {
