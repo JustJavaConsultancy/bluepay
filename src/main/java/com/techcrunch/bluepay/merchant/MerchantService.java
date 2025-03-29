@@ -6,6 +6,7 @@ import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,6 +103,9 @@ public class MerchantService {
     }
     public MerchantDto create(MerchantDto merchantDto) {
         return  merchantMapper.toDto(merchantRepository.save(merchantMapper.toEntity(merchantDto)));
+    }
+    public void createMerchant(DelegateExecution execution) {
+        System.out.println(" The execution at this stage=="+execution.getVariables());
     }
     public MerchantDto update(Long id, MerchantDto merchantDto) {
         Merchant merchant = merchantRepository.findById(id).orElseThrow();
