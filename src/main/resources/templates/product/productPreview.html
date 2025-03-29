@@ -265,6 +265,7 @@
               </div>
             </div>
             <input id="priceProductbox" name="price" type="hidden">
+            <input type="hidden" name="productID" th:value="${product.id}">
             <button
                     hx-post="/payerInfo" hx-trigger="click" hx-include="#form"
                      id="userInfo" class="btn mt-3" style="width: 100%;border-radius: 4px;color: #F4F8FB;background-color: #0C74B1;"
