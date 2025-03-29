@@ -28,6 +28,8 @@ public class HomeController {
     @GetMapping("/")
     public String index(HttpServletRequest request,RedirectAttributes redirectAttributes) {
         String loginUser= (String) authenticationManager.get("sub");
+
+        System.out.println(" The login user here..."+loginUser);
         String page="home/index";
         String status= (String) merchantService
                 .getMerchantStatus(loginUser).get("status");
