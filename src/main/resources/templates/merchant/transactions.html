@@ -5,122 +5,272 @@
   <meta charset="UTF-8">
   <title>Title</title>
   <style>
-    .modal-body{
-        padding: 0;
+
+    /* Custom colors to match the original design */
+    .btn-primary {
+      background-color: #0c74b1;
+      border-color: #0c74b1;
     }
-    .btn-close{
-        position: absolute;
-        right: 0;
-        padding: 1em;
+
+    .btn-primary:hover {
+      background-color: #0a5f91;
+      border-color: #0a5f91;
     }
+
+    /* Payment badge styling */
+    .payment-badge {
+      padding: 0 8px;
+      font-size: 14px;
+      color: #333c41;
+      border-radius: 100px;
+      border: 1px solid #e6e7e7;
+      background-color: #f9f7f7;
+      display: inline-block;
+    }
+
+    /* Table column widths */
+    .reference-col {
+      width: 186px;
+    }
+
+    .amount-col {
+      width: 200px;
+    }
+
+    .customer-col {
+      width: 215px;
+    }
+
+    .payment-col {
+      width: 171px;
+    }
+
+    .timestamp-col {
+      width: 171px;
+    }
+
+    .action-col {
+      width: 147px;
+    }
+
+    /* Custom pagination styling to match design */
+    .pagination .page-link {
+      color: #8a8f92;
+      border-radius: 2px;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #0c74b1;
+      border-color: #0c74b1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .reference-col,
+      .amount-col,
+      .customer-col,
+      .payment-col,
+      .timestamp-col,
+      .action-col {
+        width: auto;
+      }
+    }
+
+    /* Mobile view for table */
+    @media (max-width: 640px) {
+      .table-responsive {
+        border: none;
+      }
+
+      /* Custom mobile table view */
+      .table-responsive table {
+        border: none;
+      }
+
+      .table-responsive thead {
+        display: none;
+      }
+
+      .table-responsive tbody tr {
+        display: block;
+        border: 0.2px solid #b0b3b5;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+      }
+
+      .table-responsive tbody td {
+        display: block;
+        border: none;
+        text-align: left !important;
+        padding: 0.5rem;
+      }
+
+      .table-responsive tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+      }
+
+      .table-responsive .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+
   </style>
 </head>
 <body>
 <div layout:fragment="content">
-  <main class="transactions">
-    <section class="transactions-container">
-      <section class="kyc-notice">
-        <div class="kyc-content">
-          <img
-                  src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/e84726f852fad4ec376ea843475a072d1dd5fc4b?placeholderIfAbsent=true"
-                  alt="KYC Notice Icon"
-                  class="kyc-icon"
-          />
-          <p class="kyc-message">Complete your KYC process to Go Live!</p>
+  <section class="transactions-container container py-4">
+    <div class="transactions-wrapper">
+      <header class="mb-4">
+        <div class="d-flex align-items-center mb-3">
+          <div class="total-count">
+            <span>Total:</span>
+            <span>100</span>
+          </div>
         </div>
-      </section>
-      <div class="spacer"></div>
-    </section>
-    <section class="transactions-content">
-      <div class="content-wrapper">
-        <div class="transactions-main">
-          <div class="transactions-header">
-            <div class="total-count">
-              Total: <span class="count-value" th:text="${transactionsCount}"></span>
-            </div>
-            <div class="top-bar">
-              <div class="filters">
-                <div class="month-filter">
-                  <span class="filter-text">This Month</span>
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/d488c26c420dddbe82d9ee6ff342ef6d2d79080a?placeholderIfAbsent=true"
-                          alt="Month selector"
-                          class="month-icon"
-                  />
-                </div>
-                <div class="search-box">
-                  <img
-                          src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/97460e2701c12f77eb2c9c88becc4f53a37bd6f9?placeholderIfAbsent=true"
-                          alt="Search icon"
-                          class="search-icon"
-                  />
-                  <input
-                          type="text"
-                          placeholder="Search by reference and customer name"
-                          class="search-input"
-                  />
-                </div>
+        <div class="row mb-3">
+          <div class="col-lg-8">
+            <div
+                    class="d-flex flex-column flex-md-row gap-3 align-items-md-center"
+            >
+              <div class="dropdown">
+                <button
+                        class="btn btn-light dropdown-toggle d-flex align-items-center"
+                        type="button"
+                        id="filterDropdown"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
+                >
+                  <span class="me-2">This Month</span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                  <li><a class="dropdown-item" href="#">This Month</a></li>
+                  <li><a class="dropdown-item" href="#">Last Month</a></li>
+                  <li><a class="dropdown-item" href="#">Last 3 Months</a></li>
+                </ul>
               </div>
-              <button class="download-button">Download</button>
+              <div class="input-group">
+                  <span class="input-group-text bg-white border-end-0">
+                    <svg
+                            width="16"
+                            height="17"
+                            viewBox="0 0 16 17"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                              d="M7.33333 13.1667C10.2789 13.1667 12.6667 10.7789 12.6667 7.83333C12.6667 4.88781 10.2789 2.5 7.33333 2.5C4.38781 2.5 2 4.88781 2 7.83333C2 10.7789 4.38781 13.1667 7.33333 13.1667Z"
+                              stroke="#545C60"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                      ></path>
+                      <path
+                              d="M14 14.5L11.1333 11.6333"
+                              stroke="#545C60"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                      ></path>
+                    </svg>
+                  </span>
+                <input
+                        type="text"
+                        class="form-control border-start-0"
+                        placeholder="Search by reference and customer name"
+                />
+              </div>
             </div>
           </div>
-
-          <div class="table-container">
-            <table class="transactions-table">
-              <thead>
-              <tr class="table-header">
-                <th class="reference-header">Reference</th>
-                <th class="amount-header">Amount (NGN)</th>
-                <th class="customer-header">Customer</th>
-                <th class="payment-header">Payment Channel</th>
-                <th class="timestamp-header">Timestamp</th>
-                <th class="action-header">Action</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="table-row" th:each="transaction: ${transactions}">
-                <td class="reference-cell" th:text="${transaction['reference-cell']}"></td>
-                <td class="amount-cell" th:text="${transaction['amount-cell']}"></td>
-                <td class="customer-cell" th:text="${transaction['customer-cell']}"></td>
-                <td class="payment-cell">
-                  <span class="payment-tag" th:text="${transaction['payment-tag']}"></span>
-                </td>
-                <td class="timestamp-cell" th:text="${transaction['timestamp-cell']}"></td>
-                <td class="action-cell">
-                  <a class="view-details-btn" th:href="@{./transactions/{id}(id=${transaction['reference-cell']})}">View Details</a>
-<!--                  <a class="view-details-btn" th:href="@{/transactions/1}">View Details</a>-->
-                </td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="col-lg-4 d-flex justify-content-lg-end mt-3 mt-lg-0">
+            <button class="btn btn-primary">Download</button>
           </div>
         </div>
-        <nav class="pagination">
-          <button class="prev-page">
-            <img
-                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/389121001a80c0b8333fd447cb6a9ef66cad7a9f?placeholderIfAbsent=true"
-                    alt="Previous page"
-                    class="nav-icon"
-            />
-          </button>
-          <div class="page-numbers">
-            <span class="page-number active">1</span>
-            <span class="page-number">2</span>
-            <span class="page-number">3</span>
-            <span class="page-dots">...</span>
-            <span class="page-number">10</span>
-          </div>
-          <button class="next-page">
-            <img
-                    src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/149c9a67b7b18174be2ea0f958399ae6722fca6a?placeholderIfAbsent=true"
-                    alt="Next page"
-                    class="nav-icon"
-            />
-          </button>
-        </nav>
+      </header>
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-header">
+          <tr>
+            <th class="reference-col">Reference</th>
+            <th class="amount-col">Amount (NGN)</th>
+            <th class="customer-col">Customer</th>
+            <th class="payment-col">Payment Channel</th>
+            <th class="timestamp-col">Timestamp</th>
+            <th class="action-col text-center">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="table-row" th:each="transaction: ${transactions}">
+            <td class="reference-cell" th:text="${transaction['reference-cell']}"></td>
+            <td class="amount-cell" th:text="${transaction['amount-cell']}"></td>
+            <td class="customer-cell" th:text="${transaction['customer-cell']}"></td>
+            <td class="payment-cell">
+              <span class="payment-tag" th:text="${transaction['payment-tag']}"></span>
+            </td>
+            <td class="timestamp-cell" th:text="${transaction['timestamp-cell']}"></td>
+            <td class="action-cell">
+              <a class="view-details-btn" th:href="@{./transactions/{id}(id=${transaction['reference-cell']})}">View Details</a>
+              <!--                  <a class="view-details-btn" th:href="@{/transactions/1}">View Details</a>-->
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
-  </main>
+    </div>
+
+    <nav
+            aria-label="Transactions pagination"
+            class="d-flex justify-content-center mt-4"
+    >
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" aria-label="Previous">
+            <svg
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                      d="M15 6.25L9 12.5L15 18.75"
+                      stroke="#E6E7E7"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+            </svg>
+          </a>
+        </li>
+        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+        <li class="page-item"><a class="page-link" href="#">2</a></li>
+        <li class="page-item"><a class="page-link" href="#">3</a></li>
+        <li class="page-item">
+          <span class="page-link border-0 bg-transparent">...</span>
+        </li>
+        <li class="page-item"><a class="page-link" href="#">10</a></li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <svg
+                    width="24"
+                    height="23"
+                    viewBox="0 0 24 23"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                      d="M9 17.25L15 11.5L9 5.75"
+                      stroke="#000B11"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+              ></path>
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </section>
 
 </div>
 </body>

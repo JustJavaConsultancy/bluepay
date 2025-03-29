@@ -181,41 +181,10 @@ public class myProductController {
     public String handleCardPayment(HttpServletRequest request,
             @RequestParam Map<String, String> allParams, Model model) {
 
+        Map<String, Object> payerInfo = (Map<String, Object>)request.getSession(true).getAttribute("payerInfo");
         // Print all the form data to the console
-        System.out.println("Form Data Submitted:");
-        allParams.forEach((key, value) -> System.out.println(key + ": " + value));
 
-        // You can extract the individual fields if needed
-        String cardNumber = allParams.get("cardNumber");
-        String expiryDate = allParams.get("expiryDate");
-        String cvv = allParams.get("cvv");
-        String pin1 = allParams.get("pin1");
-        String pin2 = allParams.get("pin2");
-        String pin3 = allParams.get("pin3");
-        String pin4 = allParams.get("pin4");
-
-        Map<String,String> payerInfo= (Map<String, String>) request.getSession(true).getAttribute("payerInfo");
-        System.out.println(" The payer info here=="+
-                payerInfo);
-
-
-        PaymentDTO paymentDTO=PaymentDTO.builder()
-                .amount(new BigDecimal(payerInfo.get("price")))
-                .cardCvv(allParams.get("cvv"))
-                .channel("card")
-                .cardExpirationDate(allParams.get("expiryDate"))
-                .cardHolderName(payerInfo.get("firstname") + " " + payerInfo.get("lastname"))
-                .invoiceId(1L)
-                .cardNumber(allParams.get("cardNumber"))
-                .currency("NIG")
-                .payerEmail(payerInfo.get("email"))
-                .payerPhoneNumber(payerInfo.get("phoneNumber"))
-                .build();
-        Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
-        variables.put("productName","Laptop");
-        variables.put("merchantId","24424244242424");
-
-        //paymentService.startPaymentProcess(variables, (String) authenticationManager.get("sub"));
+        paymentService.startPurchaseProcessWithCard(allParams,payerInfo);
         // You can perform further processing on these parameters if needed
         return "product/sucessfulPayment";
     }

@@ -1,0 +1,35 @@
+package com.techcrunch.bluepay.accounting;
+
+import com.techcrunch.bluepay.transaction.Transaction;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+
+@Getter
+@Setter
+@Entity
+@Table(name = "journal_line")
+public class JournalLine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", nullable = false)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "account_id")
+    private Account account;
+    private BigDecimal currentBalance;
+    private BigDecimal amount;
+    private String description;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "account_entry_type")
+    private AccountEntryType accountEntryType;
+
+    @ManyToOne
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
+
+}

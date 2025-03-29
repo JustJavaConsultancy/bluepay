@@ -1,17 +1,27 @@
 package com.techcrunch.bluepay.payment;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techcrunch.bluepay.processes.CustomProcessService;
+import com.techcrunch.bluepay.product.ProductDTO;
+import com.techcrunch.bluepay.product.ProductService;
 import org.flowable.engine.delegate.DelegateExecution;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Component("paymentService")
 public class PaymentService {
 
     private final CustomProcessService processService;
+    private final ProductService productService;
 
-    public PaymentService(CustomProcessService processService) {
+    @Autowired
+    private ObjectMapper objectMapper;
+
+    public PaymentService(CustomProcessService processService, ProductService productService) {
         this.processService = processService;
+        this.productService = productService;
     }
 
     public FraudResponse checkFraud(DelegateExecution execution){
@@ -55,5 +65,34 @@ public class PaymentService {
     public void startPaymentProcess(Map<String,Object> variables,String merchantId){
         processService.startProcessByMessageStartEvent(merchantId,
                 "processPayment",variables);
+    }
+    public void startPurchaseProcessWithCard(Map<String, String> cardInfo,
+                                             Map<String,Object> payerInfo){
+
+
+        System.out.println("Inside startPurchaseProcessWithCard==cardInfo=="+
+                cardInfo +" payerInfo=="+payerInfo);
+
+        BigDecimal amount = new BigDecimal(String.valueOf(payerInfo.get("price")).replace(",",""));
+
+        Long productId = Long.parseLong(String.valueOf(payerInfo.get("productID")));
+        PaymentDTO paymentDTO=PaymentDTO.builder()
+                .amount(amount)
+                .cardCvv(cardInfo.get("cvv"))
+                .channel("card")
+                .cardExpirationDate(cardInfo.get("expiryDate"))
+                .cardHolderName(payerInfo.get("firstname") + " " + payerInfo.get("lastname"))
+                .invoiceId(1L)
+                .cardNumber( cardInfo.get("cardNumber"))
+                .currency("NIG")
+                .payerEmail((String) payerInfo.get("email"))
+                .payerPhoneNumber((String) payerInfo.get("phoneNumber"))
+                .build();
+        ProductDTO product = productService.get(productId);
+        Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
+        variables.put("productName",product.getName());
+        variables.put("productId",product.getId());
+        variables.put("merchantId",product.getMerchantId());
+        startPaymentProcess(variables, product.getMerchantId());
     }
 }

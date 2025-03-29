@@ -1,12 +1,12 @@
 package com.techcrunch.bluepay.merchant;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
 import org.flowable.engine.RuntimeService;
+import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,25 @@ public class MerchantService {
     private final RuntimeService runtimeService;
     private final CustomProcessService processService;
     private final TaskRepository taskRepository;
+
+    private final MerchantRepository merchantRepository;
+    private final MerchantMapper merchantMapper;
     @Autowired
     JsonFileReaderService jsonFileReaderService;
 
 
     public MerchantService(AuthenticationManager authenticationManager,
                            RuntimeService runtimeService,
-                           CustomProcessService processService, TaskRepository taskRepository) {
+                           CustomProcessService processService,
+                           TaskRepository taskRepository,
+                           MerchantRepository merchantRepository,
+                           MerchantMapper merchantMapper) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
         this.taskRepository = taskRepository;
+        this.merchantRepository = merchantRepository;
+        this.merchantMapper = merchantMapper;
     }
     public Map<String,Object> getMerchantStatus(String merchantId){
         Map<String,Object> result=new HashMap<String,Object>();
@@ -90,4 +98,20 @@ public class MerchantService {
             taskRepository.completeTask(task.getId(),processVariables);
         }
     }
+    public MerchantDto get(Long id) {
+        return merchantMapper.toDto(merchantRepository.findById(id).orElseThrow());
+    }
+    public MerchantDto create(MerchantDto merchantDto) {
+        return  merchantMapper.toDto(merchantRepository.save(merchantMapper.toEntity(merchantDto)));
+    }
+    public void createMerchant(DelegateExecution execution) {
+        System.out.println(" The execution at this stage=="+execution.getVariables());
+    }
+    public MerchantDto update(Long id, MerchantDto merchantDto) {
+        Merchant merchant = merchantRepository.findById(id).orElseThrow();
+        merchantMapper.partialUpdate(merchantDto, merchant);
+        return merchantMapper.toDto(merchantRepository.save(merchant));
+
+    }
+
 }
