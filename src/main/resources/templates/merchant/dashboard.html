@@ -17,29 +17,83 @@
 </head>
 <body >
 <div layout:fragment="content">
-<header class="dashboard-header">
-  <div class="month-selector">
-    <button class="month-button">
-      <span>This Month</span>
-      <svg class="caret-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M2.98 6.26666C3.07375 6.17303 3.20083 6.12044 3.33333 6.12044C3.46583 6.12044 3.59291 6.17303 3.68666 6.26666L7.92933 10.5093C7.94481 10.5249 7.9632 10.5372 7.98345 10.5456C8.0037 10.554 8.02541 10.5583 8.04733 10.5583C8.06925 10.5583 8.09096 10.554 8.11121 10.5456C8.13146 10.5372 8.14985 10.5249 8.16533 10.5093L12.408 6.26666C12.5028 6.17834 12.6281 6.13026 12.7577 6.13255C12.8872 6.13483 13.0108 6.18731 13.1024 6.27892C13.194 6.37052 13.2465 6.49411 13.2488 6.62365C13.2511 6.75318 13.203 6.87855 13.1147 6.97333L8.872 11.216C8.76366 11.3243 8.63504 11.4103 8.49349 11.4689C8.35193 11.5276 8.20022 11.5577 8.047 11.5577C7.89378 11.5577 7.74206 11.5276 7.60051 11.4689C7.45895 11.4103 7.33033 11.3243 7.222 11.216L2.98 6.97333C2.88636 6.87958 2.83377 6.7525 2.83377 6.62C2.83377 6.4875 2.88636 6.36041 2.98 6.26666Z" fill="#333C41"/>
-      </svg>
-    </button>
-    <span class="currency-label">NGN</span>
+  <div class="notification-banner">
+    <svg
+            width="20"
+            height="21"
+            viewBox="0 0 20 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+              d="M10 18.8333C14.6 18.8333 18.3333 15.0999 18.3333 10.4999C18.3333 5.89992 14.6 2.16659 10 2.16659C5.4 2.16658 1.66666 5.89992 1.66666 10.4999C1.66666 15.0999 5.39999 18.8333 10 18.8333ZM9.16666 6.33325L10.8333 6.33325L10.8333 11.3333L9.16666 11.3333L9.16666 6.33325ZM9.16666 12.9999L10.8333 12.9999L10.8333 14.6666L9.16666 14.6666L9.16666 12.9999Z"
+              fill="#0C74B1"
+      ></path>
+    </svg>
+    <p class="notification-text">Complete your KYC process to Go Live!</p>
   </div>
-</header>
+  <div class="main-section">
+    <main class="dashboard-content">
+      <section class="financial-summary">
+        <article class="settlement-card">
+          <div class="card-content-settlement">
+            <h3 class="card-title">Next Settlement</h3>
+            <p class="amount-dashboard" th:text="${nextSettlement['amount']}"></p>
+            <p class="date" th:text="${nextSettlement['date']}"></p>
+          </div>
+          <button class="action-button">View past settlements</button>
+        </article>
 
-<main class="dashboard-content">
-  <section class="revenue-section">
-    <section th:replace="/merchant/merchantDashboard :: merchantChart"></section>
+        <article class="balance-card">
+          <div class="card-content-balance">
+            <div class="balance-info">
+              <h3 class="card-title">Balance</h3>
+              <p class="amount-dashboard" th:text="${balance['amount']}"></p>
+              <p class="status" th:text="${balance['status']}"></p>
+            </div>
 
-    <section class="success-rate-section">
-      <h2 class="section-title">Success Rate</h2>
+          </div>
+          <div class="balance-actions">
+            <button class="action-button">View history</button>
+            <button class="action-button">Topup</button>
+          </div>
+        </article>
+      </section>
 
-      <div class="metrics-container">
-        <article class="transaction-metrics">
-          <div class="metric-group">
-            <h3 class="metric-title">Inflow Transactions</h3>
+      <section class="analytics-section">
+        <header class="section-header">
+          <h3 class="section-title">This Month</h3>
+          <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M2.98 6.26683C3.07375 6.1732 3.20083 6.12061 3.33333 6.12061C3.46583 6.12061 3.59291 6.1732 3.68666 6.26683L7.92933 10.5095C7.94481 10.525 7.9632 10.5373 7.98345 10.5457C8.0037 10.5541 8.02541 10.5585 8.04733 10.5585C8.06925 10.5585 8.09096 10.5541 8.11121 10.5457C8.13146 10.5373 8.14985 10.525 8.16533 10.5095L12.408 6.26683C12.5028 6.17851 12.6281 6.13043 12.7577 6.13272C12.8872 6.135 13.0108 6.18748 13.1024 6.27908C13.194 6.37069 13.2465 6.49428 13.2488 6.62382C13.2511 6.75335 13.203 6.87872 13.1147 6.9735L8.872 11.2162C8.76366 11.3245 8.63504 11.4105 8.49349 11.4691C8.35193 11.5277 8.20022 11.5579 8.047 11.5579C7.89378 11.5579 7.74206 11.5277 7.60051 11.4691C7.45895 11.4105 7.33033 11.3245 7.222 11.2162L2.98 6.9735C2.88636 6.87975 2.83377 6.75267 2.83377 6.62017C2.83377 6.48767 2.88636 6.36058 2.98 6.26683Z"
+                    fill="#333C41"
+            ></path>
+          </svg>
+        </header>
+
+        <div class="analytics-content">
+          <div class="revenue-chart">
+            <section th:replace="/merchant/merchantDashboard :: merchantChart"></section>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <div class="metrics-sidebar">
+      <div class="success-rate-card">
+        <h4 class="card-title">Success Rate</h4>
+        <div class="rate-content">
+          <div class="transaction-section">
+            <h5 class="transaction-title">Inflow Transactions</h5>
             <div class="chart-wrapper">
               <svg class="donut-chart" width="97" height="97" viewBox="0 0 97 97" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.39233e-05 48.101C8.39233e-05 41.7843 1.24426 35.5294 3.66156 29.6936C6.07886 23.8577 9.62196 18.5551 14.0886 14.0885C18.5551 9.62187 23.8578 6.07878 29.6936 3.66147C35.5295 1.24417 41.7844 -2.76112e-07 48.1011 0L48.1011 9.6202C43.0477 9.6202 38.0438 10.6155 33.3751 12.5494C28.7064 14.4832 24.4643 17.3177 20.8911 20.891C17.3178 24.4643 14.4833 28.7063 12.5495 33.3751C10.6156 38.0438 9.62029 43.0477 9.62029 48.101H8.39233e-05Z" fill="#E6E6FA"/>
@@ -47,20 +101,22 @@
               </svg>
               <span class="chart-percentage" th:text="${inflowTransactions['chartPercentage']} + '%'"></span>
             </div>
-            <div class="legend-container">
-              <div class="legend-item">
-                <span class="legend-dot success"></span>
-                <span class="legend-label">Successful: <span class="legend-value" th:text="${inflowTransactions['successTransactions']}"></span></span>
+            <div class="transaction-stats">
+              <div class="stat-item">
+                <span class="stat-indicator success"></span>
+                <p class="stat-text" >Successful: <span th:text="${inflowTransactions['successTransactions']}"></span></p>
               </div>
-              <div class="legend-item">
-                <span class="legend-dot error"></span>
-                <span class="legend-label">Processing Errors: <span class="legend-value" th:text="${inflowTransactions['errorTransactions']}"></span></span>
+              <div class="stat-item">
+                <span class="stat-indicator error"></span>
+                <p class="stat-text">Processing Errors: <span th:text="${inflowTransactions['errorTransactions']}"></span></p>
               </div>
             </div>
           </div>
 
-          <div class="metric-group">
-            <h3 class="metric-title">Outflow Transactions</h3>
+          <hr class="divider" />
+
+          <div class="transaction-section">
+            <h5 class="transaction-title">Outflow Transactions</h5>
             <div class="chart-wrapper">
               <svg class="donut-chart" width="97" height="97" viewBox="0 0 97 97" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.39233e-05 48.101C8.39233e-05 74.6665 21.5357 96.2021 48.1011 96.2021C74.6666 96.2021 96.2021 74.6665 96.2021 48.101C96.2021 21.5356 74.6666 0 48.1011 0C21.5357 0 8.39233e-05 21.5356 8.39233e-05 48.101ZM86.5819 48.101C86.5819 69.3534 69.3535 86.5819 48.1011 86.5819C26.8487 86.5819 9.62029 69.3534 9.62029 48.101C9.62029 26.8487 26.8487 9.6202 48.1011 9.6202C69.3535 9.6202 86.5819 26.8487 86.5819 48.101Z" fill="#98FF98"/>
@@ -69,69 +125,43 @@
                 </text>
               </svg>
             </div>
-            <div class="legend-container">
-              <div class="legend-item">
-                <span class="legend-dot success"></span>
-                <span class="legend-label">Successful: <span class="legend-value" th:text="${outflowTransactions['successTransactions']}"></span></span>
+            <div class="transaction-stats">
+              <div class="stat-item">
+                <span class="stat-indicator success"></span>
+                <p class="stat-text">Successful: <span th:text="${outflowTransactions['successTransactions']}"></span></p>
               </div>
-              <div class="legend-item">
-                <span class="legend-dot error"></span>
-                <span class="legend-label">Processing Errors: <span class="legend-value" th:text="${outflowTransactions['errorTransactions']}"></span></span>
+              <div class="stat-item">
+                <span class="stat-indicator error"></span>
+                <p class="stat-text">Processing Errors: <span th:text="${outflowTransactions['errorTransactions']}"></span></p>
               </div>
             </div>
           </div>
-        </article>
+        </div>
+      </div>
 
-        <article class="payment-issues">
-          <h3 class="section-title">Payment Issues</h3>
-          <div class="issues-list">
-            <div class="issue-item">
-              <span class="issue-dot customer"></span>
-              <span class="issue-label" th:text="'Customer Error: ' + ${paymentIssues['customerError']}"></span>
-            </div>
-            <div class="issue-item">
-              <span class="issue-dot bank"></span>
-              <span class="issue-label" th:text="'Bank Error: ' + ${paymentIssues['bankError']}"></span>
-            </div>
-            <div class="issue-item">
-              <span class="issue-dot fraud"></span>
-              <span class="issue-label" th:text="'Fraud Block: ' + ${paymentIssues['fraudBlock']}"></span>
-            </div>
-            <div class="issue-item">
-              <span class="issue-dot system"></span>
-              <span class="issue-label" th:text="'System Error: ' + ${paymentIssues['systemError']}"></span>
-            </div>
+      <div class="payment-issues-card">
+        <h4 class="card-title">Payment Issues</h4>
+        <div class="issues-list">
+          <div class="issue-item">
+            <span class="issue-indicator customer"></span>
+            <p class="issue-text" th:text="'Customer Error: ' + ${paymentIssues['customerError']}"></p>
           </div>
-        </article>
+          <div class="issue-item">
+            <span class="issue-indicator bank"></span>
+            <p class="issue-text" th:text="'Bank Error: ' + ${paymentIssues['bankError']}">/p>
+          </div>
+          <div class="issue-item">
+            <span class="issue-indicator fraud"></span>
+            <p class="issue-text" th:text="'Fraud Block: ' + ${paymentIssues['fraudBlock']}"></p>
+          </div>
+          <div class="issue-item">
+            <span class="issue-indicator system"></span>
+            <p class="issue-text" th:text="'System Error: ' + ${paymentIssues['systemError']}"></p>
+          </div>
+        </div>
       </div>
-    </section>
-  </section>
-
-  <aside class="dashboard-sidebar">
-    <section class="settlement-section">
-      <div class="settlement-content">
-        <h2 class="sidebar-title">Next Settlement</h2>
-        <p class="amount" th:text="${nextSettlement['amount']}"></p>
-        <p class="date" th:text="${nextSettlement['date']}">Due Monday, March 2025</p>
-      </div>
-      <button class="secondary-button">View past settlements</button>
-    </section>
-
-    <hr class="sidebar-divider">
-
-    <section class="balance-section">
-      <div class="balance-content">
-        <h2 class="sidebar-title">Balance</h2>
-        <p class="amount" th:text="${balance['amount']}"></p>
-        <p class="status" th:text="${balance['status']}"></p>
-      </div>
-      <div class="balance-actions">
-        <button class="secondary-button">View history</button>
-        <button class="secondary-button">Topup</button>
-      </div>
-    </section>
-  </aside>
-</main>
+    </div>
+  </div>
 </div>
 </body>
 </html>
