@@ -195,6 +195,7 @@ input::placeholder {
   z-index: 999;
   overflow-y: scroll;
   overflow-x: hidden;
+  flex-shrink: 0;
 
   ul{
     width: 205px;

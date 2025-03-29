@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <style>
-    .modal-body{
-        padding: 0;
-    }
-    .btn-close{
-        position: absolute;
-        right: 0;
-        padding: 1em;
-    }
-  </style>
-</head>
+
 <body >
 <div layout:fragment="content">
   <div class="notification-banner">
@@ -39,7 +26,7 @@
           <div class="card-content-settlement">
             <h3 class="card-title">Next Settlement</h3>
             <p class="amount-dashboard" th:text="${nextSettlement['amount']}"></p>
-            <p class="date" th:text="${nextSettlement['date']}"></p>
+            <p class="date " th:text="${nextSettlement['date']}"></p>
           </div>
           <a class="action-button view-settlement" th:href="@{/merchant/settlements}">View past settlements</a>
         </article>
