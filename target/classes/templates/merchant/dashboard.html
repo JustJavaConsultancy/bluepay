@@ -1,20 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <style>
-    .modal-body{
-        padding: 0;
-    }
-    .btn-close{
-        position: absolute;
-        right: 0;
-        padding: 1em;
-    }
-  </style>
-</head>
+
 <body >
 <div layout:fragment="content">
   <div class="notification-banner">
@@ -39,9 +26,9 @@
           <div class="card-content-settlement">
             <h3 class="card-title">Next Settlement</h3>
             <p class="amount-dashboard" th:text="${nextSettlement['amount']}"></p>
-            <p class="date" th:text="${nextSettlement['date']}"></p>
+            <p class="date " th:text="${nextSettlement['date']}"></p>
           </div>
-          <button class="action-button">View past settlements</button>
+          <a class="action-button view-settlement" th:href="@{/merchant/settlements}">View past settlements</a>
         </article>
 
         <article class="balance-card">
@@ -54,7 +41,7 @@
 
           </div>
           <div class="balance-actions">
-            <button class="action-button">View history</button>
+            <a class="action-button view-history" th:href="@{/merchant/balance}">View history</a>
             <button class="action-button">Topup</button>
           </div>
         </article>
@@ -81,7 +68,7 @@
 
         <div class="analytics-content">
           <div class="revenue-chart">
-            <section th:replace="/merchant/merchantDashboard :: merchantChart"></section>
+            <section th:replace="~{/merchant/merchantDashboard :: merchantChart}"></section>
           </div>
 
         </div>

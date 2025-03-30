@@ -32,10 +32,13 @@ com\techcrunch\bluepay\invoice\Status.class
 com\techcrunch\bluepay\service\ServiceResource.class
 com\techcrunch\bluepay\config\ControllerConfig.class
 com\techcrunch\bluepay\product\ProductDTO$ProductDTOBuilder.class
+com\techcrunch\bluepay\accounting\JournalLine.class
 com\techcrunch\bluepay\chat\ChatController.class
 com\techcrunch\bluepay\processes\CustomProcessService.class
+com\techcrunch\bluepay\merchant\MerchantRepository.class
 com\techcrunch\bluepay\service\ServiceDTO.class
 com\techcrunch\bluepay\payment\FraudResponse$FraudResponseBuilder.class
+com\techcrunch\bluepay\merchant\MerchantMapper.class
 com\techcrunch\bluepay\HomeController.class
 FormController.class
 com\techcrunch\bluepay\payment\PaymentDTO.class
@@ -58,6 +61,7 @@ com\techcrunch\bluepay\tasks\TaskDTO.class
 com\techcrunch\bluepay\customer\Customer.class
 com\techcrunch\bluepay\payment\AdminApproval.class
 com\techcrunch\bluepay\payment\AuthorizationResponse.class
+com\techcrunch\bluepay\merchant\Merchant.class
 com\techcrunch\bluepay\service\ServiceController.class
 com\techcrunch\bluepay\transaction\TransactionSourceAccountUnique$TransactionSourceAccountUniqueValidator.class
 com\techcrunch\bluepay\service\ServiceCodeUnique$ServiceCodeUniqueValidator.class
@@ -85,6 +89,7 @@ com\techcrunch\bluepay\accounting\AccountMapper.class
 com\techcrunch\bluepay\util\ReferencedException.class
 com\techcrunch\bluepay\merchant\OrderMapper.class
 com\techcrunch\bluepay\config\FlowableConfig.class
+com\techcrunch\bluepay\accounting\AccountEntryType.class
 com\techcrunch\bluepay\service\ServiceRepository.class
 com\techcrunch\bluepay\cloudinary\ImageService.class
 com\techcrunch\bluepay\config\DomainConfig.class
@@ -101,6 +106,7 @@ com\techcrunch\bluepay\cloudinary\CloudinaryService.class
 com\techcrunch\bluepay\transaction\TransactionResource.class
 com\techcrunch\bluepay\transaction\Transaction.class
 com\techcrunch\bluepay\util\CustomMap.class
+com\techcrunch\bluepay\merchant\MerchantMapperImpl.class
 com\techcrunch\bluepay\accounting\AccountRepository.class
 com\techcrunch\bluepay\customer\CustomerEmailUnique.class
 com\techcrunch\bluepay\payment\FraudResponse.class
@@ -111,6 +117,7 @@ com\techcrunch\bluepay\config\LocalDevConfig.class
 com\techcrunch\bluepay\transaction\PaymentType.class
 com\techcrunch\bluepay\tasks\MenuController.class
 com\techcrunch\bluepay\customer\CustomerEmailUnique$CustomerEmailUniqueValidator.class
+com\techcrunch\bluepay\merchant\MerchantDto.class
 com\techcrunch\bluepay\processes\ProcessController.class
 com\techcrunch\bluepay\util\PdfController.class
 com\techcrunch\bluepay\customer\CustomerResource.class

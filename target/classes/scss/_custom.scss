@@ -195,6 +195,7 @@ input::placeholder {
   z-index: 999;
   overflow-y: scroll;
   overflow-x: hidden;
+  flex-shrink: 0;
 
   ul{
     width: 205px;
@@ -345,20 +346,20 @@ input::placeholder {
     overflow: auto;
   }
 
-  .sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100%;
-    transform: translateX(-100%);
-    z-index: 1000;
-  }
-
-  .sidebar.collapsed {
-    transform: translateX(0);
-    width: 250px;
-    padding: 20px;
-  }
+//   .sidebar {
+//     position: fixed;
+//     left: 0;
+//     top: 0;
+//     height: 100%;
+//     transform: translateX(-100%);
+//     z-index: 1000;
+//   }
+//
+//   .sidebar.collapsed {
+//     transform: translateX(0);
+//     width: 250px;
+//     padding: 20px;
+//   }
 
   .header {
     width: 100%;
