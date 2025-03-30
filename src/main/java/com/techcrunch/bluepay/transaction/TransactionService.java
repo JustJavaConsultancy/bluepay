@@ -54,6 +54,7 @@ public class TransactionService {
         transactionDTO.setBeneficiaryAccount(transaction.getBeneficiaryAccount());
         transactionDTO.setSourceAccount(transaction.getSourceAccount());
         transactionDTO.setStatus(transaction.getStatus());
+        transactionDTO.setChannel(transaction.getChannel());
         transactionDTO.setPaymentType(transaction.getPaymentType());
         return transactionDTO;
     }
@@ -67,6 +68,7 @@ public class TransactionService {
         transaction.setSourceAccount(transactionDTO.getSourceAccount());
         transaction.setStatus(transactionDTO.getStatus());
         transaction.setPaymentType(transactionDTO.getPaymentType());
+        transaction.setChannel(transactionDTO.getChannel());
         return transaction;
     }
 

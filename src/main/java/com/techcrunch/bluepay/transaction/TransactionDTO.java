@@ -7,12 +7,16 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
-import lombok.Getter;
-import lombok.Setter;
+
+import lombok.*;
 
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 public class TransactionDTO {
 
     private Long id;
@@ -47,5 +51,7 @@ public class TransactionDTO {
 
     @NotNull
     private PaymentType paymentType;
+
+    private String channel;
 
 }
