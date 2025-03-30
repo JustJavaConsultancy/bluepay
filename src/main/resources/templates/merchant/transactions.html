@@ -1,6 +1,127 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+
+    /* Custom colors to match the original design */
+    .btn-primary {
+      background-color: #0c74b1;
+      border-color: #0c74b1;
+    }
+
+    .btn-primary:hover {
+      background-color: #0a5f91;
+      border-color: #0a5f91;
+    }
+
+    /* Payment badge styling */
+    .payment-badge {
+      padding: 0 8px;
+      font-size: 14px;
+      color: #333c41;
+      border-radius: 100px;
+      border: 1px solid #e6e7e7;
+      background-color: #f9f7f7;
+      display: inline-block;
+    }
+
+    /* Table column widths */
+    .reference-col {
+      width: 186px;
+    }
+
+    .amount-col {
+      width: 200px;
+    }
+
+    .customer-col {
+      width: 215px;
+    }
+
+    .payment-col {
+      width: 171px;
+    }
+
+    .timestamp-col {
+      width: 171px;
+    }
+    .table-row{
+      background-color: white;
+    }
+    .action-col {
+      width: 147px;
+    }
+
+    /* Custom pagination styling to match design */
+    .pagination .page-link {
+      color: #8a8f92;
+      border-radius: 2px;
+    }
+
+    .pagination .page-item.active .page-link {
+      background-color: #0c74b1;
+      border-color: #0c74b1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .reference-col,
+      .amount-col,
+      .customer-col,
+      .payment-col,
+      .timestamp-col,
+      .action-col {
+        width: auto;
+      }
+    }
+
+    /* Mobile view for table */
+    @media (max-width: 640px) {
+      .table-responsive {
+        border: none;
+      }
+
+      /* Custom mobile table view */
+      .table-responsive table {
+        border: none;
+      }
+
+      .table-responsive thead {
+        display: none;
+      }
+
+      .table-responsive tbody tr {
+        display: block;
+        border: 0.2px solid #b0b3b5;
+        margin-bottom: 1rem;
+        padding: 0.5rem;
+      }
+
+      .table-responsive tbody td {
+        display: block;
+        border: none;
+        text-align: left !important;
+        padding: 0.5rem;
+      }
+
+      .table-responsive tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        width: 100px;
+      }
+
+      .table-responsive .btn {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+    }
+
+  </style>
+</head>
 <body>
 <div layout:fragment="content">
   <section class="transactions-container container py-4">
