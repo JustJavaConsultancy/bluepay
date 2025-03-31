@@ -45,7 +45,8 @@
         <select
                 onchange="if(document.getElementById('accNumber').value.length > 0 && !(this.value === 'Select'))
                                 {document.getElementById('next4').disabled = false}
-                         else {document.getElementById('next4').disabled = true}"
+                         else {document.getElementById('next4').disabled = true}
+                        document.getElementById('accName').value='Akinrinde Akinkunmi'"
                 _="on change set #bank-name.textContent to me.options[me.selectedIndex].text" required name="bankName" id="bankName" class="form-select" style="font-size: 0.75rem;background-color: #FAFAFA;" >
           <option value="Select" th:selected="${data !=null ? data['bankName'] == 'Select':''}">Select</option>
           <option value="UBA" th:selected="${data !=null ? data['bankName'] == 'UBA':''}">UBA</option>
@@ -54,7 +55,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label" style="font-size: 0.75rem;color: #405979;" for="accName">Name on Account<span style="color: #EF5350;">*</span></label>
-        <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName" class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
+        <input _="on input set #bank-account-name.textContent to me.value" style="width:100%; background-color: #FAFAFA;font-size: 0.75rem;" type="text" name="accName"  class="form-control" th:value="${data!=null?data['accName']:''}" id="accName" readonly >
       </div>
     </div>
     <button id="next4"
