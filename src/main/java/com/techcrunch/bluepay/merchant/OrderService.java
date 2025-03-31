@@ -1,25 +1,45 @@
 package com.techcrunch.bluepay.merchant;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.techcrunch.bluepay.invoice.InvoiceDTO;
+import com.techcrunch.bluepay.invoice.InvoiceService;
+import com.techcrunch.bluepay.invoice.Status;
 import org.flowable.engine.delegate.DelegateExecution;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service("orderService")
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
+    private final InvoiceService invoiceService;
+    @Autowired
+    ObjectMapper objectMapper;
 
-    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper) {
+    public OrderService(OrderRepository orderRepository, OrderMapper orderMapper, InvoiceService invoiceService) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
+        this.invoiceService = invoiceService;
     }
-
     public OrderDTO get(Long id) {
         return orderMapper.toDto(orderRepository.findById(id).orElseThrow());
     }
 
-    public Long createOrder(DelegateExecution execution) {
-        System.out.println(" execution=="+execution);
-        return 1L;
+    public OrderDTO createOrder(DelegateExecution execution) {
+        Map<String,Object> variables = execution.getVariables();
+        System.out.println(" The execution in createOrder==="+variables);
+        InvoiceDTO invoiceDTO=objectMapper.convertValue(variables.get("invoice"),InvoiceDTO.class);
+        OrderDTO orderDTO=OrderDTO.builder()
+                .merchantId((String) variables.get("merchantId"))
+                .invoice(invoiceDTO)
+                .build();
+        orderDTO=create(orderDTO);
+        invoiceDTO.setStatus(Status.PAID);
+        invoiceService.update(invoiceDTO.getId(),invoiceDTO);
+        System.out.println(" orderDTO after saving=="+orderDTO);
+        return orderDTO;
     }
     public OrderDTO create(OrderDTO orderDTO) {
         return orderMapper.toDto(orderRepository.save(orderMapper.toEntity(orderDTO)));
@@ -36,6 +56,9 @@ public class OrderService {
     }
 
     public OrderDTO getByInvoiceId(Long invoiceId) {
-        return orderMapper.toDto(orderRepository.findByInvoiceId(invoiceId).orElseThrow());
+        return orderMapper.toDto(
+                orderRepository
+                .findByInvoiceId(invoiceId)
+                .orElseThrow());
     }
 }

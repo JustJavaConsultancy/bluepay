@@ -1,13 +1,17 @@
 package com.techcrunch.bluepay.merchant;
 
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 
 /**
  * DTO for {@link Merchant}
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class MerchantDto implements Serializable {
     Long id;
     String businessIdentity;

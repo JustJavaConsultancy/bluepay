@@ -2,6 +2,8 @@ package com.techcrunch.bluepay.product;
 
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.util.NotFoundException;
+
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.flowable.engine.delegate.DelegateExecution;
@@ -35,7 +37,7 @@ public class ProductService {
 
     public Long create(final ProductDTO productDTO) {
         final Product product = new Product();
-        product.setMerchantId((String) authenticationManager.get("sub"));
+        productDTO.setMerchantId((String) authenticationManager.get("sub"));
         mapToEntity(productDTO, product);
         return productRepository.save(product).getId();
     }
@@ -47,7 +49,17 @@ public class ProductService {
         productRepository.save(product);
     }
     public Long updateProduct(DelegateExecution execution) {
-        System.out.println(" Product Updated Here....."+execution);
+        BigDecimal amount= (BigDecimal) execution.getVariable("amount");
+
+        final Product product = productRepository
+                .findById(Long.parseLong(execution
+                        .getVariable("productId").toString()))
+                .orElseThrow(NotFoundException::new);
+        Integer quantity=amount.divide(product.getPrice()).intValue();
+
+        product.setQuantityInStock(product.getQuantityInStock()-quantity);
+        product.setQuantitySold(product.getQuantitySold().intValue()+quantity);
+        System.out.println(" Product Updated Here Variables==....."+execution.getVariables());
         return 1L;
     }
     public void delete(final Long id) {

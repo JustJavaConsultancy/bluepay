@@ -59,7 +59,7 @@ public class Product {
     @CollectionTable(name = "Product_Media", joinColumns = @JoinColumn(name = "product_id"))
     private List<String> media = new ArrayList<>();
 
-    private BigDecimal quantitySold;
+    private Integer quantitySold;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

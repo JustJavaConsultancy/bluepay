@@ -1,7 +1,7 @@
 package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.invoice.InvoiceDTO;
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;
@@ -9,7 +9,10 @@ import java.time.OffsetDateTime;
 /**
  * DTO for {@link Order}
  */
-@Value
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 public class OrderDTO implements Serializable {
     Long id;
     String merchantId;

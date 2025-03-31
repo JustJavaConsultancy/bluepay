@@ -20,7 +20,7 @@ public class Account {
             allocationSize = 1,
             initialValue = 10000)
     @Column(name = "id", nullable = false)
-    private String id;
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -31,5 +31,7 @@ public class Account {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal  balance;
     private String ownerId;
+
+    private String accNumber;
 
 }

@@ -47,18 +47,19 @@ public class InvoiceService {
                 .status(Status.NEW)
                 .dueDate(java.time.LocalDate.now())
                 .build();
-        create(invoiceDTO);
+        invoiceDTO = create(invoiceDTO);
         System.out.println(" Invoice Created Here....."+execution.getVariables());
-        return new InvoiceDTO();
+        return invoiceDTO;
     }
 
     public void updateStatus(DelegateExecution execution){
         System.out.println(" Updating status here....");
     }
-    public Long create(final InvoiceDTO invoiceDTO) {
-        final Invoice invoice = new Invoice();
+    public InvoiceDTO create(final InvoiceDTO invoiceDTO) {
+        Invoice invoice = new Invoice();
         mapToEntity(invoiceDTO, invoice);
-        return invoiceRepository.save(invoice).getId();
+        invoice= invoiceRepository.save(invoice);
+        return mapToDTO(invoice,invoiceDTO);
     }
 
     public void update(final Long id, final InvoiceDTO invoiceDTO) {

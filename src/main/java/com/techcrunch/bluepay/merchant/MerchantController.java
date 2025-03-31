@@ -27,7 +27,7 @@ public class MerchantController {
 
 
     @GetMapping("/new")
-    public String getCompliance(Model model){
+    public String getCompliance(HttpServletRequest request,Model model){
         String loginUser= (String) authenticationManager.get("sub");
 
         Map<String,Object> variables = new HashMap<>();
@@ -36,6 +36,7 @@ public class MerchantController {
         variables.put("businessType","Unregistered/Starterbusiness");
         variables.put("businessName",authenticationManager.get("businessName"));
 
+        request.getSession(true).setAttribute("submitAction","submit");
         System.out.println(" ---The Variables i'm redirecting is====="+variables);
         model.addAttribute("merchantDetails",variables);
         return "/compliance/compliance";
@@ -336,6 +337,7 @@ public class MerchantController {
         Map<String, Object> formData = (Map<String, Object>)request.getSession(true).getAttribute("merchantDetails");
 
         System.out.println("The Submitted Data === " + formData);
+        request.getSession(true).setAttribute("status","submitted");
         merchantService.submitMyDetail(formData);
 
         HttpHeaders headers = new HttpHeaders();
@@ -356,22 +358,40 @@ public class MerchantController {
         return "merchant/merchantPending";
     }
     @GetMapping("/approved")
-    public String getApprovedStatus(){
+    public String getApprovedStatus(Model model){
+
+        String loginUser= (String) authenticationManager.get("sub");
+
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMerchantStatus(loginUser).get("variables");
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantStatus";
     }
     @GetMapping("/successful")
     public String merchantStatus(Model model) {
 
 
-        Map merchantDetails= new HashMap();
-        merchantDetails.put("businessType","Partnership");
-        merchantDetails.put("businessName","Just Java");
-        model.addAttribute("merchantDetails",merchantDetails);
+        String loginUser= (String) authenticationManager.get("sub");
 
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMerchantStatus(loginUser).get("variables");
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantStatus";
     }
     @GetMapping("/declined")
-    public String merchantFailed(Model model) {
+    public String merchantFailed(HttpServletRequest request,Model model) {
+        String loginUser= (String) authenticationManager.get("sub");
+
+        request.getSession(true).setAttribute("submitAction","resubmit");
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMerchantStatus(loginUser).get("variables");
+        request.getSession(true).setAttribute("merchantDetails",variables);
+        //System.out.println(" Inside merchantFailed variables=="+variables);
+        model.addAttribute("merchantDetails",variables);
+
         return "merchant/merchantFailed";
     }
 
@@ -433,6 +453,7 @@ public class MerchantController {
     @PostMapping("/newMerchant/{step}")
     public String saveNewMerchant(@PathVariable Integer step, HttpServletRequest request,
                                   @RequestParam Map<String, Object> formData, Model model) {
+
         Map<String, Object> merchantDetails = (Map<String, Object>)
                 request.getSession(true).getAttribute("merchantDetails");
         if (merchantDetails == null) {
@@ -442,22 +463,26 @@ public class MerchantController {
         merchantDetails.putAll(formData);
         request.getSession(true).setAttribute("merchantDetails", merchantDetails);
 
+        //System.out.println(" Inside the case 1 merchantDetails=="+merchantDetails);
+        model.addAttribute("merchantDetails",merchantDetails);
+        String test = "'saveCompliance'";
         String nextFragment = null;
         switch (step) {
             case 1:
-                nextFragment = "compliance/contact :: form2(data=${test}, complianceButton=${test})";
+
+                nextFragment = "compliance/contact :: form2(data=${merchantDetails}, complianceButton="+test+")";
                 break;
             case 2:
-                nextFragment="compliance/businessOwner :: form3(data=${test},complianceButton=${test})";
+                nextFragment="compliance/businessOwner :: form3(data=${merchantDetails},complianceButton=${test})";
                 break;
             case 3:
-                nextFragment = "compliance/bankAccount :: form4(data=${test}, complianceButton=${test})";
+                nextFragment = "compliance/bankAccount :: form4(data=${merchantDetails}, complianceButton=${test})";
                 break;
             case 4:
-                nextFragment = "compliance/serviceAgreement :: form5(data=${test})";
+                nextFragment = "compliance/serviceAgreement :: form5(data=${merchantDetails})";
                 break;
             case 5:
-                model.addAttribute("merchantDetails", merchantDetails); // Pass collected data
+                //model.addAttribute("merchantDetails", merchantDetails); // Pass collected data
                 nextFragment = "compliance/summary :: form6(showclass='', backButton='null', hideButton='null', data=${merchantDetails},someCondition= true)";
                 break;
         }
@@ -465,7 +490,8 @@ public class MerchantController {
         request.getSession(true).setAttribute("merchantDetails",merchantDetails);
         System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
 
-        System.out.println("Data saved so far: " + merchantDetails);
+
+        //System.out.println("Data saved so far: " + merchantDetails);
 
         return nextFragment;
     }

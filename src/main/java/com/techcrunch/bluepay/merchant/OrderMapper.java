@@ -2,7 +2,7 @@ package com.techcrunch.bluepay.merchant;
 
 import org.mapstruct.*;
 
-@Mapper(componentModel = "spring",unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface OrderMapper {
     Order toEntity(OrderDTO orderDTO);
     OrderDTO toDto(Order order);

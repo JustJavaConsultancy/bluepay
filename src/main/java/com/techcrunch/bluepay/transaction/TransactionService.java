@@ -28,10 +28,10 @@ public class TransactionService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Long create(final TransactionDTO transactionDTO) {
+    public TransactionDTO create(final TransactionDTO transactionDTO) {
         final Transaction transaction = new Transaction();
         mapToEntity(transactionDTO, transaction);
-        return transactionRepository.save(transaction).getId();
+        return mapToDTO(transactionRepository.save(transaction),transactionDTO);
     }
 
     public void update(final Long id, final TransactionDTO transactionDTO) {
@@ -45,7 +45,7 @@ public class TransactionService {
         transactionRepository.deleteById(id);
     }
 
-    private TransactionDTO mapToDTO(final Transaction transaction,
+    public TransactionDTO mapToDTO(final Transaction transaction,
             final TransactionDTO transactionDTO) {
         transactionDTO.setId(transaction.getId());
         transactionDTO.setReference(transaction.getReference());
@@ -54,11 +54,12 @@ public class TransactionService {
         transactionDTO.setBeneficiaryAccount(transaction.getBeneficiaryAccount());
         transactionDTO.setSourceAccount(transaction.getSourceAccount());
         transactionDTO.setStatus(transaction.getStatus());
+        transactionDTO.setChannel(transaction.getChannel());
         transactionDTO.setPaymentType(transaction.getPaymentType());
         return transactionDTO;
     }
 
-    private Transaction mapToEntity(final TransactionDTO transactionDTO,
+    public Transaction mapToEntity(final TransactionDTO transactionDTO,
             final Transaction transaction) {
         transaction.setReference(transactionDTO.getReference());
         transaction.setExternalReference(transactionDTO.getExternalReference());
@@ -67,6 +68,7 @@ public class TransactionService {
         transaction.setSourceAccount(transactionDTO.getSourceAccount());
         transaction.setStatus(transactionDTO.getStatus());
         transaction.setPaymentType(transactionDTO.getPaymentType());
+        transaction.setChannel(transactionDTO.getChannel());
         return transaction;
     }
 

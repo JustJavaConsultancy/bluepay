@@ -39,7 +39,7 @@ public class InvoiceResource {
     @PostMapping
     @ApiResponse(responseCode = "201")
     public ResponseEntity<Long> createInvoice(@RequestBody @Valid final InvoiceDTO invoiceDTO) {
-        final Long createdId = invoiceService.create(invoiceDTO);
+        final Long createdId = invoiceService.create(invoiceDTO).getId();
         return new ResponseEntity<>(createdId, HttpStatus.CREATED);
     }
 
