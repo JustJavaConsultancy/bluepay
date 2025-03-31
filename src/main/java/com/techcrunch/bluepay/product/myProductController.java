@@ -37,7 +37,7 @@ public class myProductController {
     private ObjectMapper objectMapper;
 
     @GetMapping("/manageProduct")
-    public String myProduct( Map<String, Object> model) {
+    public String myProduct(HttpServletRequest request,Map<String, Object> model, Model tempModel) {
         List<ProductDTO> productDTOS=productService.findAll();
         model.put("productList", productDTOS);
         PaymentDTO paymentDTO=PaymentDTO.builder()
@@ -56,6 +56,7 @@ public class myProductController {
         variables.put("productName","Laptop");
         variables.put("merchantId","24424244242424");
         //paymentService.startPaymentProcess(variables,"92002020020");
+        tempModel.addAttribute("currentUrl", request.getRequestURI());
         return "/product/manageProduct";
     }
 

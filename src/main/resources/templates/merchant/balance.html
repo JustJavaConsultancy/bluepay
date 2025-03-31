@@ -24,7 +24,7 @@
 
   <main class="dashboard">
     <section class="balance-section">
-      <p class="balance-text">Available Balance: NGN50,000.00</p>
+      <p class="balance-text" th:text="'Available Balance: ' + ${balanceTotal['total']}"></p>
       <button class="topup-button">Topup</button>
     </section>
 
@@ -178,10 +178,10 @@
               ></path>
             </svg>
           </td>
-          <td th:text="${balanceItem['timestamp']}">Mar 27, 2025, 6 : 00 PM</td>
-          <td th:text="${balanceItem['activity']}"><span class="activity-tag">Transaction</span></td>
-          <td th:text="${balanceItem['change']}">55,000.00</td>
-          <td th:text="${balanceItem['running-balance']}">60,000</td>
+          <td th:text="${balanceItem['timestamp']}"></td>
+          <td th:text="${balanceItem['activity']}"><span class="activity-tag"></span></td>
+          <td th:text="${balanceItem['change']}"></td>
+          <td th:text="${balanceItem['running-balance']}"></td>
           <td><a class="details-button" th:href="@{./transactions/{id}(id=${balanceItem['transactionId']})}">View Details</a></td>
         </tr>
          </tbody>
@@ -206,10 +206,10 @@
       </svg>
       <div class="page-numbers">
         <span class="page-number">1</span>
-        <span class="page-number">2</span>
-        <span class="page-number">3</span>
-        <span class="ellipsis">...</span>
-        <span class="page-number">10</span>
+<!--        <span class="page-number">2</span>-->
+<!--        <span class="page-number">3</span>-->
+<!--        <span class="ellipsis">...</span>-->
+<!--        <span class="page-number">10</span>-->
       </div>
       <svg
               class="next-icon"
