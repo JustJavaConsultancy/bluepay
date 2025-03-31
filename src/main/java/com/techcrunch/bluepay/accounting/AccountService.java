@@ -5,6 +5,7 @@ import com.techcrunch.bluepay.invoice.InvoiceDTO;
 import com.techcrunch.bluepay.invoice.Status;
 import com.techcrunch.bluepay.merchant.MerchantDto;
 import com.techcrunch.bluepay.transaction.PaymentType;
+import com.techcrunch.bluepay.transaction.Transaction;
 import com.techcrunch.bluepay.transaction.TransactionDTO;
 import com.techcrunch.bluepay.transaction.TransactionService;
 import org.flowable.engine.delegate.DelegateExecution;
@@ -13,16 +14,19 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.Map;
+import java.util.Optional;
 
 @Service("accountService")
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final JournalLineRepository journalLineRepository;
     private final AccountMapper accountMapper;
     private final TransactionService transactionService;
     @Autowired
     ObjectMapper objectMapper;
-    public AccountService(AccountRepository accountRepository, AccountMapper accountMapper, TransactionService transactionService) {
+    public AccountService(AccountRepository accountRepository, JournalLineRepository journalLineRepository, AccountMapper accountMapper, TransactionService transactionService) {
         this.accountRepository = accountRepository;
+        this.journalLineRepository = journalLineRepository;
         this.accountMapper = accountMapper;
         this.transactionService = transactionService;
     }
@@ -51,12 +55,70 @@ public class AccountService {
                 .sourceAccount(invoiceDTO.getCustomerName())
                 .status(Status.PAID)
                 .build();
-        System.out.println(" The execution==="+execution);
+        Account pgBnkAccount=getPGClearingAccount();
+        Account payableAccount=getMerchantPayableAccount(invoiceDTO.getMerchantId());
+        transactionDTO=transactionService.create(transactionDTO);
+        //First Entry
+        debitCredit(payableAccount,pgBnkAccount,
+                transactionService.mapToEntity(transactionDTO,new Transaction()));
+        //Second Entry charge 10%
+        charge10(payableAccount,getPGIncomeAccoun(),
+                transactionService.mapToEntity(transactionDTO,new Transaction()));
+    }
+    private void debitCredit(Account debit,Account credit,Transaction transaction){
+
+        JournalLine journalLineDebit=new JournalLine();
+        journalLineDebit.setAccount(debit);
+        journalLineDebit.setAmount(transaction.getAmount());
+        journalLineDebit.setCurrentBalance(debit.getBalance());
+        journalLineDebit.setAccountEntryType(AccountEntryType.DEBIT);
+        journalLineDebit.setTransaction(transaction);
+
+        JournalLine journalLineCredit=new JournalLine();
+        journalLineCredit.setAccount(credit);
+        journalLineCredit.setAmount(transaction.getAmount());
+        journalLineCredit.setAccountEntryType(AccountEntryType.CREDIT);
+        journalLineCredit.setCurrentBalance(credit.getBalance());
+        journalLineCredit.setTransaction(transaction);
+
+        journalLineRepository.save(journalLineDebit);
+        journalLineRepository.save(journalLineCredit);
+        debit.setBalance(debit.getBalance().subtract(transaction.getAmount()));
+        credit.setBalance(credit.getBalance().add(transaction.getAmount()));
+
+        accountRepository.save(debit);
+        accountRepository.save(credit);
+    }
+    private void charge10(Account debit,Account credit,Transaction transaction){
+
+        BigDecimal chargeAmount=transaction.getAmount().multiply(new BigDecimal(0.1));
+        JournalLine journalLineDebit=new JournalLine();
+        journalLineDebit.setAccount(debit);
+        journalLineDebit.setAmount(chargeAmount);
+        journalLineDebit.setCurrentBalance(debit.getBalance());
+        journalLineDebit.setAccountEntryType(AccountEntryType.DEBIT);
+        journalLineDebit.setTransaction(transaction);
+
+        JournalLine journalLineCredit=new JournalLine();
+        journalLineCredit.setAccount(credit);
+        journalLineCredit.setAmount(chargeAmount);
+        journalLineCredit.setAccountEntryType(AccountEntryType.CREDIT);
+        journalLineCredit.setCurrentBalance(credit.getBalance());
+        journalLineCredit.setTransaction(transaction);
+
+        journalLineRepository.save(journalLineDebit);
+        journalLineRepository.save(journalLineCredit);
+        debit.setBalance(debit.getBalance().subtract(chargeAmount));
+        credit.setBalance(credit.getBalance().add(chargeAmount));
+
+        accountRepository.save(debit);
+        accountRepository.save(credit);
     }
     public AccountDTO update(String id, AccountDTO accountDTO) {
         return accountMapper.toDto(accountRepository.save(accountMapper.partialUpdate(accountDTO, accountRepository.findById(id).orElseThrow())));
     }
     public void delete(String id) {
+
         accountRepository.deleteById(id);
     }
 
@@ -68,7 +130,7 @@ public class AccountService {
                 .code("receivable")
                 .currency("NGN")
                 .type("CHART_OF_ACCOUNTS")
-                .ownerId(merchantDto.getId().toString())
+                .ownerId(merchantDto.getBusinessIdentity())
                 .build();
         AccountDTO payable = AccountDTO.builder()
                 .name(merchantDto.getBusinessName()+" Payable")
@@ -97,4 +159,47 @@ public class AccountService {
         accountRepository.save(accountMapper.toEntity(bankAccount));
     }
 
+    public Account getPGClearingAccount(){
+        Optional<Account> pgBankAccount = accountRepository.findByTypeAndOwnerId("BANK",null);
+        if(pgBankAccount.isPresent())
+            return pgBankAccount.get();
+        else {
+            Account account = new Account();
+            account.setAccNumber("0000000000");
+            account.setBalance(new BigDecimal(0.00));
+            account.setCode("PG_CLEARING_ACCOUNT");
+            account.setCurrency("NGN");
+            account.setName("PG Clearing Account");
+            account.setType("BANK");
+            account.setOwnerId(null);
+            account.setDescription("Payment Gateway Clearing Account");
+            account=accountRepository.save(account);
+            return account;
+        }
+    }
+    public Account getPGIncomeAccoun(){
+        Optional<Account> pgIncomeAccount = accountRepository.findByCodeAndOwnerId("PG_INCOME_ACCOUNT",null);
+        if(pgIncomeAccount.isPresent())
+            return pgIncomeAccount.get();
+        else {
+            Account account = new Account();
+            account.setAccNumber("1111111111");
+            account.setBalance(new BigDecimal(0.00));
+            account.setCode("PG_INCOME_ACCOUNT");
+            account.setCurrency("NGN");
+            account.setName("PG Income Account");
+            account.setType("CHART_OF_ACCOUNTS");
+            account.setOwnerId(null);
+            account.setDescription("Payment Gateway Income Account");
+            account=accountRepository.save(account);
+            return account;
+        }
+
+    }
+    public Account getMerchantPayableAccount(String merchantId){
+        return accountRepository.findByCodeAndOwnerId("payable",merchantId.toString()).orElseThrow();
+    }
+    public Account getMerchantBankAccount(String merchantId){
+        return accountRepository.findByTypeAndOwnerId("BANK",merchantId).orElseThrow();
+    }
 }

@@ -166,7 +166,7 @@
             </div>
         </div>
 
-        <form hx-post="/merchant/submit"
+        <form th:attr="hx-post=@{/merchant/{submitAction}(submitAction=${session.submitAction})}"
               hx-trigger="click" type="submit"
               onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';">
             <button
