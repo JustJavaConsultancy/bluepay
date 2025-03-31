@@ -1,6 +1,6 @@
 package com.techcrunch.bluepay.accounting;
 
-import lombok.Value;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -8,12 +8,18 @@ import java.math.BigDecimal;
 /**
  * DTO for {@link Account}
  */
-@Value
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
 public class AccountDTO implements Serializable {
-    String id;
+    Long id;
     String name;
     String code;
     String type;
     String currency;
     BigDecimal balance;
+    private String ownerId;
+    private String accNumber;
 }

@@ -13,6 +13,8 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
+
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -63,6 +65,9 @@ public class Transaction {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private PaymentType paymentType;
+
+    @Column(nullable = true)
+    private String channel;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
