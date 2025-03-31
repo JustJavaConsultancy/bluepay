@@ -391,6 +391,7 @@ public class MerchantController {
         request.getSession(true).setAttribute("merchantDetails",variables);
         //System.out.println(" Inside merchantFailed variables=="+variables);
         model.addAttribute("merchantDetails",variables);
+
         return "merchant/merchantFailed";
     }
 
