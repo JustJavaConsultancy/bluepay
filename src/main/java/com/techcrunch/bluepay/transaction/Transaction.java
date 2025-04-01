@@ -1,16 +1,10 @@
 package com.techcrunch.bluepay.transaction;
 
+import com.techcrunch.bluepay.invoice.Invoice;
 import com.techcrunch.bluepay.invoice.Status;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.SequenceGenerator;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 
@@ -29,7 +23,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Getter
 @Setter
 @ToString
-public class Transaction {
+public class Transaction implements Serializable {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -78,8 +72,15 @@ public class Transaction {
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dateCreated;
 
+    @ToString.Exclude
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
+
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
+
 
 }

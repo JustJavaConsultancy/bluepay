@@ -17,6 +17,7 @@ public class AuthenticationManager {
         return defaultOidcUser.getClaims().get(fieldName);
     }
 
+
     public Boolean isMerchant(){
         List<String> groups = (List<String>) get("group");
         if(groups==null)

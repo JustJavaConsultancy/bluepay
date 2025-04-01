@@ -4,6 +4,8 @@ import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.accounting.Account;
 import com.techcrunch.bluepay.accounting.JournalLine;
 import com.techcrunch.bluepay.compliance.ComplianceService;
+import com.techcrunch.bluepay.transaction.Transaction;
+import com.techcrunch.bluepay.transaction.TransactionDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -138,64 +140,32 @@ public class MerchantController {
 
     @GetMapping("/transactions")
     public String getTransaction(Model model){
+        List<TransactionDTO> myTransactions = merchantService.myTransactions();
 
-        DecimalFormat df = new DecimalFormat("#,##0.00");
+        BigDecimal transactionTotal = myTransactions.stream()
+                        .map(transaction -> transaction.getAmount())
+                                .reduce(BigDecimal.ZERO,BigDecimal::add);
 
-        Map<String, Object> transactionOne = Map.ofEntries(
-                Map.entry("reference-cell", "T123456789234455"),
-                Map.entry("amount-cell", df.format(20000.00)),
-                Map.entry("customer-cell", "Adedapo Tiamiyu"),
-                Map.entry("payment-tag", "Bank Transfer"),
-                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
-        );
+        model.addAttribute("myTransactions", myTransactions);
+        model.addAttribute("transactionsCount", myTransactions.size());
 
-        Map<String, Object> transactionTwo = Map.ofEntries(
-                Map.entry("reference-cell", "T123456789234567"),
-                Map.entry("amount-cell", df.format(40000.00)),
-                Map.entry("customer-cell", "Isiah Thomas"),
-                Map.entry("payment-tag", "Bank Transfer"),
-                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
-        );
-
-        Map<String, Object> transactionThree = Map.ofEntries(
-                Map.entry("reference-cell", "T123456789237892"),
-                Map.entry("amount-cell", df.format(70000.00)),
-                Map.entry("customer-cell", "Jide Adeyanju"),
-                Map.entry("payment-tag", "Bank Transfer"),
-                Map.entry("timestamp-cell", "Mar 27, 2025, 6 : 50 PM")
-        );
-
-        List<Map<String, Object>> transactions = List.of(
-                transactionOne,
-                transactionTwo,
-                transactionThree
-        );
-
-
-        model.addAttribute("transactions", transactions);
-        model.addAttribute("transactionsCount", transactions.size());
 
         return "merchant/transactions";
     }
 
     @GetMapping("/transactions/{id}")
-    public String getTransactionDetails(Model model){
-        System.out.println("\n\n\n transactions detail controller is working");
+    public String getTransactionDetails(@PathVariable("id") Long id,Model model){
+        System.out.println("This is the id: " + id);
+        TransactionDTO singleTransaction = merchantService.singleTransaction(id);
+
         DecimalFormat df = new DecimalFormat("#,##0.00");
         Map<String, Object> transactionItem = Map.ofEntries(
-                Map.entry("status", "Successful"),
-                Map.entry("amount", df.format(50000.00)),
-                Map.entry("reference", "T123456789234567"),
-                Map.entry("channel", "card"),
+
                 Map.entry("fees", df.format(500.00)),
-                Map.entry("timestamp", "Mar 27, 2025, 6 : 50 PM"),
-                Map.entry("products", df.format(40000.00)),
-                Map.entry("customer-name", "Adeyanju Timothy"),
-                Map.entry("customer-email", "tiamiyuadedapo@gmail.com"),
-                Map.entry("customer-phone-code", "+234"),
-                Map.entry("customer-phone-number", "8138482251")
+                Map.entry("customer-phone-code", "+234")
         );
 
+        model.addAttribute("singleTransaction", singleTransaction);
         model.addAttribute("transactionItem", transactionItem);
         return "merchant/transaction-details";
     }
@@ -392,6 +362,7 @@ public class MerchantController {
         });
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
+
         model.addAttribute("totalAmount", df.format(total));
         model.addAttribute("orderCount", myOrders.size());
         model.addAttribute("myOrders", myOrders);

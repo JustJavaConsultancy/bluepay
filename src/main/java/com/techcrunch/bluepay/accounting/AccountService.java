@@ -43,10 +43,13 @@ public class AccountService {
     public AccountDTO getByCode(String code) {
         return accountMapper.toDto(accountRepository.findByCode(code).orElseThrow());
     }
-    public void customerPaymentJournalEntry(DelegateExecution execution) {
+    public Transaction customerPaymentJournalEntry(DelegateExecution execution) {
         Map<String,Object> variables = execution.getVariables();
         System.out.println(" The execution in customerPaymentJournalEntry==="+variables);
         InvoiceDTO invoiceDTO=objectMapper.convertValue(variables.get("invoice"),InvoiceDTO.class);
+
+        System.out.println(" The InvoiceDTO here also==="+invoiceDTO);
+
         TransactionDTO transactionDTO=TransactionDTO.builder()
                 .amount(invoiceDTO.getAmount())
                 .beneficiaryAccount("Payment Gateway Account")
@@ -56,6 +59,7 @@ public class AccountService {
                 .channel(variables.get("channel").toString())
                 .sourceAccount(invoiceDTO.getCustomerName())
                 .transactionOwner(invoiceDTO.getMerchantId())
+                .invoice(invoiceDTO)
                 .status(Status.PAID)
                 .build();
         Transaction transaction=transactionService.createEntity(transactionDTO);
@@ -66,6 +70,7 @@ public class AccountService {
         debitCredit(payableAccount,pgBnkAccount,transaction);
         //Second Entry charge 10%
         charge10(payableAccount,getPGIncomeAccoun(),transaction);
+        return transaction;
     }
     private void debitCredit(Account debit,Account credit,Transaction transaction){
 
