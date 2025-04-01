@@ -2,13 +2,12 @@ package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.invoice.Invoice;
 import com.techcrunch.bluepay.invoice.InvoiceDTO;
-import java.time.OffsetDateTime;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-31T10:51:19+0100",
+    date = "2025-03-31T21:49:45+0100",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
@@ -37,21 +36,15 @@ public class OrderMapperImpl implements OrderMapper {
             return null;
         }
 
-        Long id = null;
-        String merchantId = null;
-        InvoiceDTO invoice = null;
-        OffsetDateTime dateCreated = null;
-        OffsetDateTime lastUpdated = null;
+        OrderDTO.OrderDTOBuilder orderDTO = OrderDTO.builder();
 
-        id = order.getId();
-        merchantId = order.getMerchantId();
-        invoice = invoiceToInvoiceDTO( order.getInvoice() );
-        dateCreated = order.getDateCreated();
-        lastUpdated = order.getLastUpdated();
+        orderDTO.id( order.getId() );
+        orderDTO.merchantId( order.getMerchantId() );
+        orderDTO.invoice( invoiceToInvoiceDTO( order.getInvoice() ) );
+        orderDTO.dateCreated( order.getDateCreated() );
+        orderDTO.lastUpdated( order.getLastUpdated() );
 
-        OrderDTO orderDTO = new OrderDTO( id, merchantId, invoice, dateCreated, lastUpdated );
-
-        return orderDTO;
+        return orderDTO.build();
     }
 
     @Override

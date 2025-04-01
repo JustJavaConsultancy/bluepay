@@ -1,12 +1,11 @@
 package com.techcrunch.bluepay.accounting;
 
-import java.math.BigDecimal;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-31T10:51:19+0100",
+    date = "2025-03-31T21:49:45+0100",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
@@ -26,6 +25,8 @@ public class AccountMapperImpl implements AccountMapper {
         account.setType( accountDTO.getType() );
         account.setCurrency( accountDTO.getCurrency() );
         account.setBalance( accountDTO.getBalance() );
+        account.setOwnerId( accountDTO.getOwnerId() );
+        account.setAccNumber( accountDTO.getAccNumber() );
 
         return account;
     }
@@ -36,23 +37,18 @@ public class AccountMapperImpl implements AccountMapper {
             return null;
         }
 
-        String id = null;
-        String name = null;
-        String code = null;
-        String type = null;
-        String currency = null;
-        BigDecimal balance = null;
+        AccountDTO.AccountDTOBuilder accountDTO = AccountDTO.builder();
 
-        id = account.getId();
-        name = account.getName();
-        code = account.getCode();
-        type = account.getType();
-        currency = account.getCurrency();
-        balance = account.getBalance();
+        accountDTO.id( account.getId() );
+        accountDTO.name( account.getName() );
+        accountDTO.code( account.getCode() );
+        accountDTO.type( account.getType() );
+        accountDTO.currency( account.getCurrency() );
+        accountDTO.balance( account.getBalance() );
+        accountDTO.ownerId( account.getOwnerId() );
+        accountDTO.accNumber( account.getAccNumber() );
 
-        AccountDTO accountDTO = new AccountDTO( id, name, code, type, currency, balance );
-
-        return accountDTO;
+        return accountDTO.build();
     }
 
     @Override
@@ -78,6 +74,12 @@ public class AccountMapperImpl implements AccountMapper {
         }
         if ( accountDTO.getBalance() != null ) {
             account.setBalance( accountDTO.getBalance() );
+        }
+        if ( accountDTO.getOwnerId() != null ) {
+            account.setOwnerId( accountDTO.getOwnerId() );
+        }
+        if ( accountDTO.getAccNumber() != null ) {
+            account.setAccNumber( accountDTO.getAccNumber() );
         }
 
         return account;
