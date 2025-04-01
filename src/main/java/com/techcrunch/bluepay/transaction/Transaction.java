@@ -55,7 +55,7 @@ public class Transaction {
     @Column(nullable = false)
     private String beneficiaryAccount;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String sourceAccount;
 
     @Column(nullable = false)
@@ -68,6 +68,9 @@ public class Transaction {
 
     @Column(nullable = true)
     private String channel;
+
+    @Column(nullable = true)
+    private String transactionOwner;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

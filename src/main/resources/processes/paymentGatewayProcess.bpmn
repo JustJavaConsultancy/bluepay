@@ -5,7 +5,7 @@
     <extensionElements>
       <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
       <design:creationdate><![CDATA[2025-02-25T09:13:59.794Z]]></design:creationdate>
-      <design:modificationdate><![CDATA[2025-03-31T09:17:05.892Z]]></design:modificationdate>
+      <design:modificationdate><![CDATA[2025-03-31T13:16:00.170Z]]></design:modificationdate>
     </extensionElements>
     <serviceTask id="ServiceTask_59" name="Update merchant account" flowable:expression="${accountingService.customerPaymentJournalEntry(execution)}">
       <extensionElements>
@@ -19,7 +19,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_15" name="Send Notification to PG Admin" flowable:expression="${emailService.sendMail}">
+    <serviceTask id="ServiceTask_15" name="Send Notification to PG Admin" flowable:expression="${emailService.sendMail(execution)}">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -31,7 +31,7 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_22" name="Send Notification" flowable:expression="${emailService.sendMail}">
+    <serviceTask id="ServiceTask_22" name="Send Notification" flowable:expression="${emailService.sendMail(execution)}">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -55,13 +55,13 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_42" name="Send mail to PG Admin" flowable:expression="${emailService.sendMail}">
+    <serviceTask id="ServiceTask_42" name="Send mail to PG Admin" flowable:expression="${emailService.sendMail(execution)}">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <userTask id="FormTask_44" name="PG Admin Approval" flowable:assignee="${initiator}" flowable:formFieldValidation="false">
+    <userTask id="FormTask_44" name="PG Admin Approval" flowable:assignee="pgAdmin" flowable:formFieldValidation="false">
       <extensionElements>
         <flowable:task-candidates-type><![CDATA[all]]></flowable:task-candidates-type>
         <design:stencilid><![CDATA[FormTask]]></design:stencilid>
@@ -87,13 +87,13 @@
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_53" name="Send notification to Merchant Inbox" flowable:expression="${emailService.sendMail}">
+    <serviceTask id="ServiceTask_53" name="Send notification to Merchant Inbox" flowable:expression="${emailService.sendMail(execution)}">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
       </extensionElements>
     </serviceTask>
-    <serviceTask id="ServiceTask_57" name="Send mail to Merchant" flowable:expression="${emailService.sendMail}">
+    <serviceTask id="ServiceTask_57" name="Send mail to Merchant" flowable:expression="${emailService.sendMail(execution)}">
       <extensionElements>
         <design:stencilid><![CDATA[ServiceTask]]></design:stencilid>
         <design:stencilsuperid><![CDATA[Task]]></design:stencilsuperid>
@@ -445,7 +445,7 @@
       <bpmndi:BPMNShape bpmnElement="waitForOneDay" id="BPMNShape_waitForOneDay">
         <omgdc:Bounds height="30.0" width="30.0" x="3174.0" y="145.0"></omgdc:Bounds>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="18.0" width="92.0" x="3136.2" y="179.0"></omgdc:Bounds>
+          <omgdc:Bounds height="18.0" width="92.0" x="3143.0" y="179.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="EndNoneEvent_27" id="BPMNShape_EndNoneEvent_27">

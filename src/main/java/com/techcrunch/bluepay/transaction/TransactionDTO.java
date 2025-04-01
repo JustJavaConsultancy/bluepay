@@ -53,5 +53,6 @@ public class TransactionDTO {
     private PaymentType paymentType;
 
     private String channel;
+    private String transactionOwner;
 
 }
