@@ -1,191 +1,118 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
+<head>
+
+  <title>settlements</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border-bottom: 0.2px solid #B0B3B5 !important;/* Light grey border for all cells */
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+    th {
+      border-bottom: 0.5px solid #B0B3B5 !important; /* Thick grey border for header */
+      font-size: 0.85rem;
+      font-weight: 400;
+    }
+
+    .search-container {
+      position: relative;
+      max-width: 400px;
+      border: none;
+      padding: 0px;
+    }
+    .search-icon {
+      position: absolute;
+      top: 50%;
+      left: 15px;
+      transform: translateY(-50%);
+      color:#545C60;
+      font-size: 1rem;
+    }
+  </style>
+</head>
 
 <body>
 <div layout:fragment="content">
-<header class="notification-banner">
-  <div class="notification-content">
-    <svg
-      class="info-icon"
-      width="20"
-      height="20"
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M10.0002 18.3334C14.6002 18.3334 18.3335 14.6 18.3335 10C18.3335 5.40004 14.6002 1.66671 10.0002 1.66671C5.40016 1.66671 1.66683 5.40004 1.66683 10C1.66683 14.6 5.40016 18.3334 10.0002 18.3334ZM9.16683 5.83337L10.8335 5.83337L10.8335 10.8334L9.16683 10.8334L9.16683 5.83337ZM9.16683 12.5L10.8335 12.5L10.8335 14.1667L9.16683 14.1667L9.16683 12.5Z"
-        fill="#0C74B1"
-      ></path>
-    </svg>
-    <p class="notification-text">Complete your KYC process to Go Live!</p>
-  </div>
-</header>
-
-<div class="dashboard-container">
-  <main class="transfer-section">
-    <p class="total-count" th:text="'Total: ' + ${transferTotal['total']}"></p>
-
-    <section class="controls-section">
-      <div class="search-filters">
-        <div class="period-selector">
-          <span>This Month</span>
-          <svg
-            class="dropdown-icon"
-            width="16"
-            height="17"
-            viewBox="0 0 16 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M2.98021 6.76671C3.07396 6.67308 3.20104 6.62048 3.33354 6.62048C3.46604 6.62048 3.59313 6.67308 3.68688 6.76671L7.92954 11.0094C7.94503 11.0249 7.96342 11.0372 7.98367 11.0456C8.00391 11.054 8.02562 11.0583 8.04754 11.0583C8.06947 11.0583 8.09117 11.054 8.11142 11.0456C8.13167 11.0372 8.15006 11.0249 8.16554 11.0094L12.4082 6.76671C12.503 6.67839 12.6284 6.63031 12.7579 6.63259C12.8874 6.63488 13.011 6.68735 13.1026 6.77896C13.1942 6.87057 13.2467 6.99416 13.249 7.12369C13.2513 7.25323 13.2032 7.37859 13.1149 7.47338L8.87221 11.716C8.76387 11.8244 8.63526 11.9103 8.4937 11.969C8.35215 12.0276 8.20043 12.0578 8.04721 12.0578C7.89399 12.0578 7.74227 12.0276 7.60072 11.969C7.45916 11.9103 7.33055 11.8244 7.22221 11.716L2.98021 7.47338C2.88658 7.37963 2.83398 7.25254 2.83398 7.12004C2.83398 6.98754 2.88658 6.86046 2.98021 6.76671Z"
-              fill="#333C41"
-            ></path>
-          </svg>
+  <div class="row mt-4" >
+    <div class="col-xxl-8 col-xl-8 col-lg-8 col-sm-12" style="border: 1px solid #E6E7E7;background-color: white;">
+      <div style="margin: 10px;margin-bottom: 40px;" >
+        <h3 style="font-size: 0.85rem;font-weight:400 ;" th:text="'Total: ' + ${transferTotal['total']}"></h3>
+        <div style="display: flex;justify-content: space-between;margin-top: 30px;">
+          <div style="font-size: 1rem;font-weight: 500;">
+            This Month
+          </div>
+          <div>
+            <div class="search-container">
+              <i class="bi bi-search search-icon"></i>
+              <input style="font-size: 0.85rem;min-width: 200px;padding-left:40px ;" type="text" class="form-control" placeholder="Search by beneficiary and reference">
+            </div>
+          </div>
+          <div>
+            <button class="btn" style="background-color: #0C74B1;color: white;font-size: 0.85rem;">
+              New Transfer
+            </button>
+          </div>
+          <div>
+            <button class="btn" style="background-color: #0C74B1;color: white;font-size: 0.85rem;">
+              Download
+            </button>
+          </div>
         </div>
+        <table class="table" >
+          <thead>
+          <tr>
+            <th>Status</th>
+            <th>Reference</th>
+            <th>Amount (NGN)</th>
+            <th>Beneficiary</th>
+            <th>Timestamp</th>
+            <th>Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="transferItem : ${transferList}">
+            <td>
+              <div style="padding: 4px 8px; border: 1px solid #46A14B; text-align: center; color: #46A14B; background-color: #F4FAF5; border-radius: 12px; font-size: 14px; font-weight: normal;"th:text="${transferItem['status']}">
+                Success
+              </div>
 
-        <div class="search-box">
-          <svg
-            class="search-icon"
-            width="16"
-            height="17"
-            viewBox="0 0 16 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M7.33333 13.1667C10.2789 13.1667 12.6667 10.7789 12.6667 7.83333C12.6667 4.88781 10.2789 2.5 7.33333 2.5C4.38781 2.5 2 4.88781 2 7.83333C2 10.7789 4.38781 13.1667 7.33333 13.1667Z"
-              stroke="#545C60"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-            <path
-              d="M14 14.5L11.1333 11.6333"
-              stroke="#545C60"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-          <input
-            type="text"
-            class="search-input"
-            placeholder="Search by beneficiary and reference"
-          />
-        </div>
+
+            </td>
+            <td th:text="${transferItem['reference']}">20,000.00</td>
+            <td th:text="${transferItem['amount']}">Mar 27, 2025</td>
+            <td th:text="${transferItem['beneficiary']}"></td>
+            <td th:text="${transferItem['timestamp']}"></td>
+            <td>
+              <a th:href="@{./transfers/{id}(id=${transferItem['reference']})}">
+              <button class="btn" style="background-color: #0C74B1;border-radius: 50px;color: white;font-size: 0.85rem;font-weight: 400;">
+                View Details
+              </button></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-
-      <div class="action-buttons">
-        <button class="btn-new-transfer">
-          <svg
-            class="plus-icon"
-            width="16"
-            height="17"
-            viewBox="0 0 16 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M3.3335 8.5H12.6668"
-              stroke="#F4F8FB"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-            <path
-              d="M8 3.83337V13.1667"
-              stroke="#F4F8FB"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-          <span>New Transfer</span>
-        </button>
-        <button class="btn-download">Download</button>
-      </div>
-    </section>
-
-    <table class="transfer-table">
-      <thead>
-        <tr>
-          <th>Status</th>
-          <th>Reference</th>
-          <th>Amount (NGN)</th>
-          <th>Beneficiary</th>
-          <th>Timestamp</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr th:each="transferItem : ${transferList}">
-          <td class="status-cell">
-            <span class="status-badge success" th:text="${transferItem['status']}"></span>
-          </td>
-          <td th:text="${transferItem['reference']}"></td>
-          <td th:text="${transferItem['amount']}"></td>
-          <td th:text="${transferItem['beneficiary']}"></td>
-          <td th:text="${transferItem['timestamp']}"></td>
-          <td><a class="btn-view-details" th:href="@{./transfers/{id}(id=${transferItem['reference']})}">View Details</a></td>
-        </tr>
-
-      </tbody>
-    </table>
-
-    <nav class="pagination">
-      <button class="pagination-arrow prev" aria-label="Previous page">
-        <svg
-          width="24"
-          height="25"
-          viewBox="0 0 24 25"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 6.25L9 12.5L15 18.75"
-            stroke="#E6E7E7"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-        </svg>
-      </button>
-      <div class="pagination-numbers">
-        <button class="page-number">1</button>
-<!--        <button class="page-number">2</button>-->
-<!--        <button class="page-number">3</button>-->
-<!--        <span class="page-ellipsis">...</span>-->
-<!--        <button class="page-number">10</button>-->
-      </div>
-      <button class="pagination-arrow next" aria-label="Next page">
-        <svg
-          width="24"
-          height="23"
-          viewBox="0 0 24 23"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M9 17.25L15 11.5L9 5.75"
-            stroke="#000B11"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></path>
-        </svg>
-      </button>
-    </nav>
-  </main>
-
-  <aside class="balance-sidebar">
-    <header class="currency-header">NGN</header>
-    <div class="balance-content">
-      <h2 class="balance-label">Balance</h2>
-      <p class="balance-amount" th:text="${transferBalance['balance']}"></p>
-      <p class="balance-status">Available</p>
-      <button class="btn-topup">Topup</button>
     </div>
-  </aside>
-</div>
+    <div class="col-xxl-4 col-xl-4 col-lg-4 col-sm-12" style="background-color: #FCFCFC;border-bottom: 1px solid #E6E7E7;border-top: 1px solid #E6E7E7;">
+      <div style="border-bottom: 1px solid #E6E7E7;">
+        <div style="text-align: center;padding: 5px;">
+          <h1 style="font-size: 1rem;">NGN</h1>
+        </div>
+      </div>
+      <div style="text-align: center;height: 100%;padding: 20px;">
+        <h5 style="font-size: 1rem;font-weight: 500;margin-top: 10px;">Balance</h5>
+        <p style="font-size: 1.2rem;font-weight: 500;margin-top: 20px" th:text="${transferBalance['balance']}">50,000.00</p>
+        <h2 style="font-size: 0.85rem;font-weight: 400;color: #545C60;margin-top: 10px" >Available</h2>
+        <button class="btn-topup" >Topup</button>
+      </div>
+    </div>
+  </div>
 </div>
 </body>
 </html>
