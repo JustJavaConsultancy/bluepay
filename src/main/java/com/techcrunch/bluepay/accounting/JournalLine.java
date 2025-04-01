@@ -4,12 +4,14 @@ import com.techcrunch.bluepay.transaction.Transaction;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @Entity
+@ToString
 @Table(name = "journal_line")
 public class JournalLine {
     @Id

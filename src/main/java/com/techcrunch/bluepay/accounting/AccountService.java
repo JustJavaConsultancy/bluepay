@@ -211,4 +211,7 @@ public class AccountService {
     public List<JournalLine> getMerchantJournalLinesByCode(String merchantId, String code){
         return journalLineRepository.findByAccount_CodeAndAccount_OwnerId(code,merchantId);
     }
+    public List<JournalLine> getAllMerchantJournalLines(String merchantId){
+        return journalLineRepository.findByAccount_OwnerId(merchantId);
+    }
 }

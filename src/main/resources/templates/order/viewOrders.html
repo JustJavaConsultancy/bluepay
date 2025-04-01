@@ -292,7 +292,7 @@
             <tr th:each="order : ${myOrders}">
                 <td th:text="${order.id}"></td>
                 <td th:text="${order.invoice.customerName}"></td>
-                <td th:text="${order.invoice.description}"></td>
+                <td th:text="${order.invoice.product.name}"></td>
                 <!--<td th:text="${order.id}"></td>-->
                 <td >2</td>
                 <td th:text="${order.invoice.amount}"></td>

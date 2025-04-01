@@ -24,7 +24,7 @@
 
   <main class="dashboard">
     <section class="balance-section">
-      <p class="balance-text" th:text="'Available Balance: ' + ${balanceTotal['total']}"></p>
+      <p class="balance-text" th:text="'Available Balance: ' + ${balanceTotal}"></p>
       <button class="topup-button">Topup</button>
     </section>
 
@@ -152,7 +152,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr class="transaction-row" th:each="balanceItem: ${balanceList}">
+        <tr class="transaction-row" th:each="balanceItem: ${bankBalances}">
           <td class="status-cell">
             <svg
                     class="status-icon"
@@ -178,11 +178,11 @@
               ></path>
             </svg>
           </td>
-          <td th:text="${balanceItem['timestamp']}"></td>
-          <td th:text="${balanceItem['activity']}"><span class="activity-tag"></span></td>
-          <td th:text="${balanceItem['change']}"></td>
-          <td th:text="${balanceItem['running-balance']}"></td>
-          <td><a class="details-button" th:href="@{./transactions/{id}(id=${balanceItem['transactionId']})}">View Details</a></td>
+          <td th:text="${balanceItem.transaction.dateCreated}"></td>
+          <td ><span class="activity-tag">Transaction</span></td>
+          <td th:text="${balanceItem.amount}"></td>
+          <td th:text="${balanceItem.currentBalance}"></td>
+          <td><a class="details-button" th:href="@{./transactions/{id}(id=${balanceItem.transaction.id})}">View Details</a></td>
         </tr>
          </tbody>
       </table>

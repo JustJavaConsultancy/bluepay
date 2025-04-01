@@ -1,7 +1,9 @@
 package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.account.AuthenticationManager;
+import com.techcrunch.bluepay.accounting.Account;
 import com.techcrunch.bluepay.accounting.AccountService;
+import com.techcrunch.bluepay.accounting.JournalLine;
 import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
@@ -143,5 +145,20 @@ public class MerchantService {
         String loginUser= (String) authenticationManager.get("sub");
         return orderRepository.findByMerchantIdOrderByDateCreatedAsc(loginUser);
     }
-
+    public List<JournalLine> myBalances(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return accountService.getMerchantJournalLinesByCode(loginUser,"payable");
+    }
+    public List<JournalLine> myAllAccountEntries(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return accountService.getAllMerchantJournalLines(loginUser);
+    }
+    public Account myBankAccount(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return accountService.getMerchantBankAccount(loginUser);
+    }
+    public Account myPayableAccount(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return accountService.getMerchantPayableAccount(loginUser);
+    }
 }

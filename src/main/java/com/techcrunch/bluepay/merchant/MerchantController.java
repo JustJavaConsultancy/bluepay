@@ -1,6 +1,8 @@
 package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.account.AuthenticationManager;
+import com.techcrunch.bluepay.accounting.Account;
+import com.techcrunch.bluepay.accounting.JournalLine;
 import com.techcrunch.bluepay.compliance.ComplianceService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,36 +204,16 @@ public class MerchantController {
     public String getBalance(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
-        Map<String, Object> balanceOne = Map.ofEntries(
-                Map.entry("transactionId", "T2343393939386"),
-                Map.entry("timestamp", "Mar 27, 2025, 6 : 00 PM"),
-                Map.entry("activity", "Transfer"),
-                Map.entry("change", df.format(55000.00)),
-                Map.entry("running-balance", df.format(66000.00))
-        );
-        Map<String, Object> balanceTwo = Map.ofEntries(
-                Map.entry("transactionId", "T2343393939393"),
-                Map.entry("timestamp", "Mar 28, 2025, 6 : 00 PM"),
-                Map.entry("activity", "Transaction"),
-                Map.entry("change", df.format(13000.00)),
-                Map.entry("running-balance", df.format(25000.00))
-        );
-        Map<String, Object> balanceThree = Map.ofEntries(
-                Map.entry("transactionId", "T2343393939354"),
-                Map.entry("timestamp", "Mar 25, 2025, 6 : 00 PM"),
-                Map.entry("activity", "Transfer"),
-                Map.entry("change", df.format(40000.00)),
-                Map.entry("running-balance", df.format(60000.00))
+        List<JournalLine> bankBalances=merchantService.myBalances();
+        bankBalances.forEach(journalLine -> {
+            System.out.println(" The lines are==== "+journalLine.toString());
+            }
         );
 
-        List<Map<String, Object>> balanceList = List.of(
-                balanceOne,
-                balanceTwo,
-                balanceThree
-        );
-
-        model.addAttribute("balanceList", balanceList);
-
+        Account payable=merchantService.myPayableAccount();
+        Account bankAccount=merchantService.myBankAccount();
+        model.addAttribute("bankBalances", bankBalances);
+        model.addAttribute("balanceTotal",payable.getBalance().add(bankAccount.getBalance()));
         return "merchant/balance";
     }
 
@@ -410,54 +392,8 @@ public class MerchantController {
         });
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
-
-        Map<String, Object> orderOne = Map.ofEntries(
-                Map.entry("id-col", 1903072),
-                Map.entry("customer-col", "Adedapo Tiamiyu"),
-                Map.entry("product-col", "High Fashion"),
-                Map.entry("quantity-col", 5),
-                Map.entry("amount-col", df.format(20000.00)),
-                Map.entry("timestamp-col", "Mar 27, 2025, 6 : 50 PM"),
-                Map.entry("email-col", "tiamiyuadedapo@gmail.com"),
-                Map.entry("phone-col", "08138482251")
-        );
-
-        Map<String, Object> orderTwo = Map.ofEntries(
-                Map.entry("id-col", 1903502),
-                Map.entry("customer-col", "Oluwaseun Tiamiyu"),
-                Map.entry("product-col", "High Design"),
-                Map.entry("quantity-col", 10),
-                Map.entry("amount-col", df.format(50000.00)),
-                Map.entry("timestamp-col", "Mar 29, 2025, 6 : 50 PM"),
-                Map.entry("email-col", "tiamiyuseun@gmail.com"),
-                Map.entry("phone-col", "08138482731")
-        );
-
-        Map<String, Object> orderThree = Map.ofEntries(
-                Map.entry("id-col", 1903204),
-                Map.entry("customer-col", "Hammed Joshua"),
-                Map.entry("product-col", "Luxury Wears"),
-                Map.entry("quantity-col", 40),
-                Map.entry("amount-col", df.format(60000.00)),
-                Map.entry("timestamp-col", "Mar 28, 2025, 6 : 50 PM"),
-                Map.entry("email-col", "hammedjoshua@gmail.com"),
-                Map.entry("phone-col", "0812282731")
-        );
-
-        List<Map<String, Object>> orders = List.of(
-                orderOne,
-                orderTwo,
-                orderThree
-        );
-
-//        double totalAmount = orders.stream()
-//                .mapToDouble(map -> ((Number) map.get("amount-col")).doubleValue())
-//                .sum();
-
-        double totalAmount = 1000.00;
         model.addAttribute("totalAmount", df.format(total));
         model.addAttribute("orderCount", myOrders.size());
-        model.addAttribute("orders", orders);
         model.addAttribute("myOrders", myOrders);
 
         return "order/viewOrders";
