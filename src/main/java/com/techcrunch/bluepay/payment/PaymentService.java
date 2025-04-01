@@ -27,7 +27,7 @@ public class PaymentService {
     public FraudResponse checkFraud(DelegateExecution execution){
         System.out.println("checkFraud execution====="+execution.getVariables());
         FraudResponse fraudResponse = new FraudResponse();
-        fraudResponse.setCode("01");
+        fraudResponse.setCode("00");
         fraudResponse.setMessage("Successful");
         //execution.setVariable("fraudResponse",fraudResponse);
         return fraudResponse;
@@ -35,7 +35,7 @@ public class PaymentService {
 
     public FraudResponse checkAml(DelegateExecution execution){
         FraudResponse fraudResponse = new FraudResponse();
-        fraudResponse.setCode("01");
+        fraudResponse.setCode("00");
         fraudResponse.setMessage("Successful");
         return fraudResponse;
     }

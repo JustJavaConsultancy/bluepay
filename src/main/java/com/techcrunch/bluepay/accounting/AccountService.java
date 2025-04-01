@@ -13,10 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-@Service("accountService")
+@Service("accountingService")
 public class AccountService {
     private final AccountRepository accountRepository;
     private final JournalLineRepository journalLineRepository;
@@ -49,21 +50,22 @@ public class AccountService {
         TransactionDTO transactionDTO=TransactionDTO.builder()
                 .amount(invoiceDTO.getAmount())
                 .beneficiaryAccount("Payment Gateway Account")
+                .reference(invoiceDTO.getId().toString())
                 .externalReference(invoiceDTO.getId().toString())
                 .paymentType(PaymentType.INFLOW)
                 .channel(variables.get("channel").toString())
                 .sourceAccount(invoiceDTO.getCustomerName())
+                .transactionOwner(invoiceDTO.getMerchantId())
                 .status(Status.PAID)
                 .build();
+        Transaction transaction=transactionService.createEntity(transactionDTO);
         Account pgBnkAccount=getPGClearingAccount();
         Account payableAccount=getMerchantPayableAccount(invoiceDTO.getMerchantId());
-        transactionDTO=transactionService.create(transactionDTO);
+
         //First Entry
-        debitCredit(payableAccount,pgBnkAccount,
-                transactionService.mapToEntity(transactionDTO,new Transaction()));
+        debitCredit(payableAccount,pgBnkAccount,transaction);
         //Second Entry charge 10%
-        charge10(payableAccount,getPGIncomeAccoun(),
-                transactionService.mapToEntity(transactionDTO,new Transaction()));
+        charge10(payableAccount,getPGIncomeAccoun(),transaction);
     }
     private void debitCredit(Account debit,Account credit,Transaction transaction){
 
@@ -138,7 +140,7 @@ public class AccountService {
                 .code("payable")
                 .currency("NGN")
                 .type("CHART_OF_ACCOUNTS")
-                .ownerId(merchantDto.getId().toString())
+                .ownerId(merchantDto.getBusinessIdentity())
                 .build();
         AccountDTO bankAccount  = AccountDTO.builder()
                 .name((String) bankDetail.get("accName"))
@@ -147,7 +149,7 @@ public class AccountService {
                 .currency("NGN")
                 .type("BANK")
                 .accNumber((String) bankDetail.get("accNumber"))
-                .ownerId(merchantDto.getId().toString())
+                .ownerId(merchantDto.getBusinessIdentity())
                 .build();
 
         create(receivable,payable,bankAccount);
@@ -200,6 +202,13 @@ public class AccountService {
         return accountRepository.findByCodeAndOwnerId("payable",merchantId.toString()).orElseThrow();
     }
     public Account getMerchantBankAccount(String merchantId){
-        return accountRepository.findByTypeAndOwnerId("BANK",merchantId).orElseThrow();
+        return accountRepository.findByTypeAndOwnerId("BANK",merchantId)
+                .orElseThrow();
+    }
+    public List<JournalLine> getMerchantJournalLinesByType(String merchantId, String type){
+        return journalLineRepository.findByAccount_TypeAndAccount_OwnerId(type,merchantId);
+    }
+    public List<JournalLine> getMerchantJournalLinesByCode(String merchantId, String code){
+        return journalLineRepository.findByAccount_CodeAndAccount_OwnerId(code,merchantId);
     }
 }

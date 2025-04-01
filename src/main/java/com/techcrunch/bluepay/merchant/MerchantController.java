@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.text.DecimalFormat;
 
@@ -397,6 +398,17 @@ public class MerchantController {
 
     @GetMapping("/orders")
     public String getOrders(Model model){
+        List<Order> myOrders = merchantService.myOrders();
+
+        BigDecimal total = myOrders.stream()
+                .map(order -> order.getInvoice())
+                .map(invoice -> invoice.getAmount())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        System.out.println(" Orders lenght=="+myOrders.size());
+        myOrders.forEach(order-> {
+            System.out.println(" The Order here =="+order);
+        });
+
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         Map<String, Object> orderOne = Map.ofEntries(
@@ -443,9 +455,10 @@ public class MerchantController {
 //                .sum();
 
         double totalAmount = 1000.00;
-        model.addAttribute("totalAmount", df.format(totalAmount));
-        model.addAttribute("orderCount", orders.size());
+        model.addAttribute("totalAmount", df.format(total));
+        model.addAttribute("orderCount", myOrders.size());
         model.addAttribute("orders", orders);
+        model.addAttribute("myOrders", myOrders);
 
         return "order/viewOrders";
     }
@@ -489,8 +502,6 @@ public class MerchantController {
         merchantDetails.putAll(formData);
         request.getSession(true).setAttribute("merchantDetails",merchantDetails);
         System.out.println(" The data sent now inside saveNewMerchant ==="+formData);
-
-
         //System.out.println("Data saved so far: " + merchantDetails);
 
         return nextFragment;

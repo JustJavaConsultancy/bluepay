@@ -57,8 +57,11 @@ public class ProductService {
                 .orElseThrow(NotFoundException::new);
         Integer quantity=amount.divide(product.getPrice()).intValue();
 
+        System.out.println(" Quantity Sold Actually=="+quantity);
+
         product.setQuantityInStock(product.getQuantityInStock()-quantity);
-        product.setQuantitySold(product.getQuantitySold().intValue()+quantity);
+        Integer currentQuantity=product.getQuantitySold()!=null?product.getQuantitySold().intValue():0;
+        product.setQuantitySold(currentQuantity+quantity);
         System.out.println(" Product Updated Here Variables==....."+execution.getVariables());
         return 1L;
     }

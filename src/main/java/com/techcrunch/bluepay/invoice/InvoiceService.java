@@ -1,7 +1,8 @@
 package com.techcrunch.bluepay.invoice;
 
-import com.techcrunch.bluepay.customer.Customer;
 import com.techcrunch.bluepay.customer.CustomerRepository;
+import com.techcrunch.bluepay.product.ProductDTO;
+import com.techcrunch.bluepay.product.ProductService;
 import com.techcrunch.bluepay.util.NotFoundException;
 import java.util.List;
 
@@ -15,27 +16,35 @@ public class InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
     private final CustomerRepository customerRepository;
+    private final ProductService productService;
+    private final InvoiceMapper invoiceMapper;
 
     public InvoiceService(final InvoiceRepository invoiceRepository,
-            final CustomerRepository customerRepository) {
+                          final CustomerRepository customerRepository,
+                          ProductService productService, InvoiceMapper invoiceMapper) {
         this.invoiceRepository = invoiceRepository;
         this.customerRepository = customerRepository;
+        this.productService = productService;
+        this.invoiceMapper = invoiceMapper;
     }
 
     public List<InvoiceDTO> findAll() {
         final List<Invoice> invoices = invoiceRepository.findAll(Sort.by("id"));
         return invoices.stream()
-                .map(invoice -> mapToDTO(invoice, new InvoiceDTO()))
+                .map(invoice -> invoiceMapper.toDto(invoice))
                 .toList();
     }
 
     public InvoiceDTO get(final Long id) {
         return invoiceRepository.findById(id)
-                .map(invoice -> mapToDTO(invoice, new InvoiceDTO()))
+                .map(invoice -> invoiceMapper.toDto(invoice))
                 .orElseThrow(NotFoundException::new);
     }
 
     public InvoiceDTO createInvoice(DelegateExecution execution){
+        System.out.println(" Invoice about to be created Here....."+execution.getVariables());
+
+        ProductDTO product=productService.get((Long) execution.getVariable("productId"));
         InvoiceDTO invoiceDTO=InvoiceDTO.builder()
                 .amount(new java.math.BigDecimal(execution.getVariable("amount").toString()))
                 .customerEmail(execution.getVariable("payerEmail").toString())
@@ -46,6 +55,7 @@ public class InvoiceService {
                 .issueDate(java.time.LocalDate.now())
                 .status(Status.NEW)
                 .dueDate(java.time.LocalDate.now())
+                .product(product)
                 .build();
         invoiceDTO = create(invoiceDTO);
         System.out.println(" Invoice Created Here....."+execution.getVariables());
@@ -57,15 +67,15 @@ public class InvoiceService {
     }
     public InvoiceDTO create(final InvoiceDTO invoiceDTO) {
         Invoice invoice = new Invoice();
-        mapToEntity(invoiceDTO, invoice);
+        invoice = invoiceMapper.toEntity(invoiceDTO);
         invoice= invoiceRepository.save(invoice);
-        return mapToDTO(invoice,invoiceDTO);
+        return invoiceMapper.toDto(invoice);
     }
 
     public void update(final Long id, final InvoiceDTO invoiceDTO) {
-        final Invoice invoice = invoiceRepository.findById(id)
+        Invoice invoice = invoiceRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
-        mapToEntity(invoiceDTO, invoice);
+        invoice = invoiceMapper.toEntity(invoiceDTO);
         invoiceRepository.save(invoice);
     }
 
@@ -73,7 +83,7 @@ public class InvoiceService {
         invoiceRepository.deleteById(id);
     }
 
-    private InvoiceDTO mapToDTO(final Invoice invoice, final InvoiceDTO invoiceDTO) {
+/*    private InvoiceDTO mapToDTO(final Invoice invoice, final InvoiceDTO invoiceDTO) {
         invoiceDTO.setId(invoice.getId());
         invoiceDTO.setIssueDate(invoice.getIssueDate());
         invoiceDTO.setDueDate(invoice.getDueDate());
@@ -84,10 +94,13 @@ public class InvoiceService {
         invoiceDTO.setDescription(invoice.getDescription());
         invoiceDTO.setMerchantId(invoice.getMerchantId());
         invoiceDTO.setStatus(invoice.getStatus());
+        invoiceDTO.setDateCreated(invoice.getDateCreated());
+        invoiceDTO.setLastUpdated(invoice.getLastUpdated());
+        invoiceDTO.setProduct(invoice.getProduct());
         return invoiceDTO;
-    }
+    }*/
 
-    private Invoice mapToEntity(final InvoiceDTO invoiceDTO, final Invoice invoice) {
+/*    private Invoice mapToEntity(final InvoiceDTO invoiceDTO, final Invoice invoice) {
         invoice.setCustomerEmail(invoiceDTO.getCustomerEmail());
         invoice.setCustomerName(invoiceDTO.getCustomerName());
         invoice.setCustomerPhoneNumber(invoiceDTO.getCustomerPhoneNumber());
@@ -98,6 +111,6 @@ public class InvoiceService {
         invoice.setAmount(invoiceDTO.getAmount());
         invoice.setStatus(invoiceDTO.getStatus());
         return invoice;
-    }
+    }*/
 
 }

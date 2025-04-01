@@ -1,8 +1,6 @@
 package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.account.AuthenticationManager;
-import com.techcrunch.bluepay.accounting.Account;
-import com.techcrunch.bluepay.accounting.AccountDTO;
 import com.techcrunch.bluepay.accounting.AccountService;
 import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
@@ -15,7 +13,6 @@ import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +28,7 @@ public class MerchantService {
     private final MerchantRepository merchantRepository;
     private final MerchantMapper merchantMapper;
     private final AccountService accountService;
+    private final OrderRepository orderRepository;
     @Autowired
     JsonFileReaderService jsonFileReaderService;
 
@@ -40,7 +38,7 @@ public class MerchantService {
                            CustomProcessService processService,
                            TaskRepository taskRepository,
                            MerchantRepository merchantRepository,
-                           MerchantMapper merchantMapper, AccountService accountService) {
+                           MerchantMapper merchantMapper, AccountService accountService, OrderRepository orderRepository) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
@@ -48,6 +46,7 @@ public class MerchantService {
         this.merchantRepository = merchantRepository;
         this.merchantMapper = merchantMapper;
         this.accountService = accountService;
+        this.orderRepository = orderRepository;
     }
     public Map<String,Object> getMerchantStatus(String merchantId){
         Map<String,Object> result=new HashMap<String,Object>();
@@ -124,8 +123,6 @@ public class MerchantService {
         + " The merchantDto created =="+merchantDto);*/
     }
     public void createMerchantTest(Map<String,Object> variables) {
-
-
         MerchantDto  merchantDto = MerchantDto.builder()
                 .businessIdentity((String) variables.get("initiator"))
                 .businessName((String) variables.get("businessName"))
@@ -141,6 +138,10 @@ public class MerchantService {
         merchantMapper.partialUpdate(merchantDto, merchant);
         return merchantMapper.toDto(merchantRepository.save(merchant));
 
+    }
+    public List<Order> myOrders(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return orderRepository.findByMerchantIdOrderByDateCreatedAsc(loginUser);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.techcrunch.bluepay.invoice;
 
 import com.techcrunch.bluepay.customer.Customer;
+import com.techcrunch.bluepay.product.Product;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -29,7 +31,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
+@ToString
 public class Invoice {
+
+
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -80,4 +85,8 @@ public class Invoice {
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
 
+    @ToString.Exclude
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
 }
