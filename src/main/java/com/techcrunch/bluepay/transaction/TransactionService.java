@@ -28,12 +28,16 @@ public class TransactionService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Long create(final TransactionDTO transactionDTO) {
+    public TransactionDTO create(final TransactionDTO transactionDTO) {
         final Transaction transaction = new Transaction();
         mapToEntity(transactionDTO, transaction);
-        return transactionRepository.save(transaction).getId();
+        return mapToDTO(transactionRepository.save(transaction),transactionDTO);
     }
-
+    public Transaction createEntity(final TransactionDTO transactionDTO) {
+        final Transaction transaction = new Transaction();
+        mapToEntity(transactionDTO, transaction);
+        return transactionRepository.save(transaction);
+    }
     public void update(final Long id, final TransactionDTO transactionDTO) {
         final Transaction transaction = transactionRepository.findById(id)
                 .orElseThrow(NotFoundException::new);
@@ -45,7 +49,7 @@ public class TransactionService {
         transactionRepository.deleteById(id);
     }
 
-    private TransactionDTO mapToDTO(final Transaction transaction,
+    public TransactionDTO mapToDTO(final Transaction transaction,
             final TransactionDTO transactionDTO) {
         transactionDTO.setId(transaction.getId());
         transactionDTO.setReference(transaction.getReference());
@@ -55,11 +59,12 @@ public class TransactionService {
         transactionDTO.setSourceAccount(transaction.getSourceAccount());
         transactionDTO.setStatus(transaction.getStatus());
         transactionDTO.setChannel(transaction.getChannel());
+        transactionDTO.setTransactionOwner(transaction.getTransactionOwner());
         transactionDTO.setPaymentType(transaction.getPaymentType());
         return transactionDTO;
     }
 
-    private Transaction mapToEntity(final TransactionDTO transactionDTO,
+    public Transaction mapToEntity(final TransactionDTO transactionDTO,
             final Transaction transaction) {
         transaction.setReference(transactionDTO.getReference());
         transaction.setExternalReference(transactionDTO.getExternalReference());
@@ -68,6 +73,7 @@ public class TransactionService {
         transaction.setSourceAccount(transactionDTO.getSourceAccount());
         transaction.setStatus(transactionDTO.getStatus());
         transaction.setPaymentType(transactionDTO.getPaymentType());
+        transaction.setTransactionOwner(transactionDTO.getTransactionOwner());
         transaction.setChannel(transactionDTO.getChannel());
         return transaction;
     }

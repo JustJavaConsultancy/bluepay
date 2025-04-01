@@ -1,5 +1,6 @@
 package com.techcrunch.bluepay.invoice;
 
+import com.techcrunch.bluepay.product.ProductDTO;
 import lombok.*;
 
 import java.io.Serializable;
@@ -28,4 +29,5 @@ public class InvoiceDTO implements Serializable {
     Status status;
     OffsetDateTime dateCreated;
     OffsetDateTime lastUpdated;
+    private ProductDTO product;
 }

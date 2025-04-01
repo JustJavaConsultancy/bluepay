@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 public class EmailService {
 
     public void sendMail(DelegateExecution execution){
-        System.out.println("\n\n" + " Sending mail......"+execution);
+
+        System.out.println("\n\n" + " Sending mail..execution variable=="
+                +execution.getVariables() +" task "+execution.getCurrentActivityName());
     }
 }

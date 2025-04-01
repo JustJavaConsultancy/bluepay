@@ -166,12 +166,11 @@
             </div>
         </div>
 
-        <form hx-post="/merchant/submit"
-              hx-trigger="click" type="submit"
-              onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';">
-            <button
-                    th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
-        </form>
+        <button
+                th:attr="hx-post=@{/merchant/{submitAction}(submitAction=${session.submitAction})}"
+                hx-trigger="click"
+                hx-disabled-elt="this"  th:class="@{'mt-2 saveButton '+${hideButton}}">Submit</button>
+
     </div>
     <!--working-->
     <script th:if="${someCondition}" src="/js/accordion.js"></script>

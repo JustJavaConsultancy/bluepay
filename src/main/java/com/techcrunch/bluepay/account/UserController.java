@@ -27,6 +27,6 @@ public class UserController {
         } catch (ServletException e) {
             throw new RuntimeException(e);
         }
-        return "/";
+        return "redirect:/";
     }
 }
