@@ -185,9 +185,9 @@
                 >
                   <div class="amount-container">
                     <h4 class="text-secondary mb-2 fw-normal">Amount</h4>
-                    <h2 class="amount-value mb-0" th:text="${transactionItem['amount']}">NGN 50,000.00</h2>
+                    <h2 class="amount-value mb-0" th:text="'NGN ' + ${singleTransaction.amount}"></h2>
                   </div>
-                  <span class="badge status-badge successful" th:text="${transactionItem['status']}">Succesful</span>
+                  <span class="badge status-badge successful" th:text="${singleTransaction.status}"></span>
                 </div>
                 <div class="details-container">
                   <div class="details-content">
@@ -200,7 +200,7 @@
                       <div
                               class="col-6 d-flex align-items-center justify-content-end"
                       >
-                        <p class="detail-value mb-0" th:text="${transactionItem['reference']}">T123456789234567</p>
+                        <p class="detail-value mb-0" th:text="${singleTransaction.reference}"></p>
                         <img
                                 src="https://cdn.builder.io/api/v1/image/assets/TEMP/f8d14bfef22116f0e94b731917d77dd47a9ae3cd?placeholderIfAbsent=true"
                                 class="copy-icon ms-2"
@@ -214,7 +214,7 @@
                       </div>
                       <div class="col-6 text-end">
                         <div class="channel-badge d-inline-block">
-                          <span class="channel-text" th:text="${transactionItem['channel']}">Card</span>
+                          <span class="channel-text" th:text="${singleTransaction.channel}"></span>
                         </div>
                       </div>
                     </div>
@@ -223,7 +223,8 @@
                         <h4 class="text-secondary fw-normal mb-0">Fees</h4>
                       </div>
                       <div class="col-6 text-end">
-                        <p class="detail-value mb-0" th:text="${transactionItem['fees']}">NGN 500.00</p>
+<!--                        fees not fetched from db-->
+                        <p class="detail-value mb-0" th:text="'NGN ' + ${transactionItem['fees']}"></p>
                       </div>
                     </div>
                     <div class="row py-2 mt-3">
@@ -233,8 +234,9 @@
                         </h4>
                       </div>
                       <div class="col-6 text-end">
-                        <p class="detail-value mb-0" th:text="${transactionItem['timestamp']}">
-                          Mar 27, 2025, 6 : 50 PM
+<!--                        ${#temporals.format(yourOffsetDateTime, 'yyyy-MM-dd HH:mm:ss Z')}-->
+                        <p class="detail-value mb-0" th:text="${#temporals.format(singleTransaction.invoice.lastUpdated, 'MMMM dd, yyyy HH:mm a')}">
+
                         </p>
                       </div>
                     </div>
@@ -249,8 +251,8 @@
                     <div
                             class="d-flex justify-content-between align-items-center"
                     >
-                      <p class="text-secondary mb-0">High Fashion x 2</p>
-                      <p class="detail-value mb-0" th:text="'NGN' + ${transactionItem['products']}">NGN 40,000</p>
+                      <p class="text-secondary mb-0" th:text="${singleTransaction.invoice.product.name}"></p>
+                      <p class="detail-value mb-0" th:text="'NGN' + ${singleTransaction.invoice.amount}"></p>
                     </div>
                   </div>
                 </div>
@@ -267,7 +269,7 @@
                                 class="customer-icon"
                                 alt="Customer"
                         />
-                        <p class="mb-0 ms-2" th:text="${transactionItem['customer-name']}">Adedapo Tiamiyu</p>
+                        <p class="mb-0 ms-2" th:text="${singleTransaction.invoice.customerName}"></p>
                       </div>
                       <div class="d-flex align-items-center mt-3">
                         <img
@@ -276,7 +278,7 @@
                                 class="customer-icon"
                                 alt="Email"
                         />
-                        <p class="mb-0 ms-2" th:text="${transactionItem['customer-email']}">tiamiyuadedapo@gmail.com</p>
+                        <p class="mb-0 ms-2" th:text="${singleTransaction.invoice.customerEmail}"></p>
                       </div>
                       <div class="d-flex align-items-center mt-3">
                         <img
@@ -284,8 +286,9 @@
                                 class="customer-icon"
                                 alt="Phone"
                         />
-                        <span class="mb-0 ms-2" th:text="${transactionItem['customer-phone-code']}">+234</span>
-                        <span class="mb-0 ms-1" th:text="${transactionItem['customer-phone-number']}">8138482251</span>
+<!--                        phone code not fetched from db-->
+                        <span class="mb-0 ms-2">+234</span>
+                        <span class="mb-0 ms-1" th:text="${singleTransaction.invoice.customerPhoneNumber}"></span>
                       </div>
                     </div>
                   </div>

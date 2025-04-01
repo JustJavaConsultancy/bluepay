@@ -2,12 +2,17 @@ package com.techcrunch.bluepay.merchant;
 
 import com.techcrunch.bluepay.invoice.Invoice;
 import com.techcrunch.bluepay.invoice.InvoiceDTO;
+import com.techcrunch.bluepay.product.Product;
+import com.techcrunch.bluepay.product.ProductDTO;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-03-31T21:49:45+0100",
+    date = "2025-04-01T13:16:57+0100",
     comments = "version: 1.6.3, compiler: javac, environment: Java 21.0.5 (Oracle Corporation)"
 )
 @Component
@@ -75,6 +80,33 @@ public class OrderMapperImpl implements OrderMapper {
         return order;
     }
 
+    protected Product productDTOToProduct(ProductDTO productDTO) {
+        if ( productDTO == null ) {
+            return null;
+        }
+
+        Product product = new Product();
+
+        product.setId( productDTO.getId() );
+        product.setCode( productDTO.getCode() );
+        product.setName( productDTO.getName() );
+        product.setDescription( productDTO.getDescription() );
+        product.setPrice( productDTO.getPrice() );
+        product.setQuantityInStock( productDTO.getQuantityInStock() );
+        product.setContainsPhysicalGoods( productDTO.getContainsPhysicalGoods() );
+        product.setMerchantId( productDTO.getMerchantId() );
+        List<String> list = productDTO.getMedia();
+        if ( list != null ) {
+            product.setMedia( new ArrayList<String>( list ) );
+        }
+        if ( productDTO.getQuantitySold() != null ) {
+            product.setQuantitySold( productDTO.getQuantitySold().intValue() );
+        }
+        product.setDateCreated( productDTO.getDateCreated() );
+
+        return product;
+    }
+
     protected Invoice invoiceDTOToInvoice(InvoiceDTO invoiceDTO) {
         if ( invoiceDTO == null ) {
             return null;
@@ -94,8 +126,36 @@ public class OrderMapperImpl implements OrderMapper {
         invoice.setStatus( invoiceDTO.getStatus() );
         invoice.setDateCreated( invoiceDTO.getDateCreated() );
         invoice.setLastUpdated( invoiceDTO.getLastUpdated() );
+        invoice.setProduct( productDTOToProduct( invoiceDTO.getProduct() ) );
 
         return invoice;
+    }
+
+    protected ProductDTO productToProductDTO(Product product) {
+        if ( product == null ) {
+            return null;
+        }
+
+        ProductDTO.ProductDTOBuilder productDTO = ProductDTO.builder();
+
+        productDTO.id( product.getId() );
+        productDTO.code( product.getCode() );
+        productDTO.name( product.getName() );
+        productDTO.description( product.getDescription() );
+        productDTO.price( product.getPrice() );
+        productDTO.dateCreated( product.getDateCreated() );
+        productDTO.quantityInStock( product.getQuantityInStock() );
+        productDTO.containsPhysicalGoods( product.getContainsPhysicalGoods() );
+        List<String> list = product.getMedia();
+        if ( list != null ) {
+            productDTO.media( new ArrayList<String>( list ) );
+        }
+        if ( product.getQuantitySold() != null ) {
+            productDTO.quantitySold( BigDecimal.valueOf( product.getQuantitySold() ) );
+        }
+        productDTO.merchantId( product.getMerchantId() );
+
+        return productDTO.build();
     }
 
     protected InvoiceDTO invoiceToInvoiceDTO(Invoice invoice) {
@@ -117,8 +177,59 @@ public class OrderMapperImpl implements OrderMapper {
         invoiceDTO.status( invoice.getStatus() );
         invoiceDTO.dateCreated( invoice.getDateCreated() );
         invoiceDTO.lastUpdated( invoice.getLastUpdated() );
+        invoiceDTO.product( productToProductDTO( invoice.getProduct() ) );
 
         return invoiceDTO.build();
+    }
+
+    protected void productDTOToProduct1(ProductDTO productDTO, Product mappingTarget) {
+        if ( productDTO == null ) {
+            return;
+        }
+
+        if ( productDTO.getId() != null ) {
+            mappingTarget.setId( productDTO.getId() );
+        }
+        if ( productDTO.getCode() != null ) {
+            mappingTarget.setCode( productDTO.getCode() );
+        }
+        if ( productDTO.getName() != null ) {
+            mappingTarget.setName( productDTO.getName() );
+        }
+        if ( productDTO.getDescription() != null ) {
+            mappingTarget.setDescription( productDTO.getDescription() );
+        }
+        if ( productDTO.getPrice() != null ) {
+            mappingTarget.setPrice( productDTO.getPrice() );
+        }
+        if ( productDTO.getQuantityInStock() != null ) {
+            mappingTarget.setQuantityInStock( productDTO.getQuantityInStock() );
+        }
+        if ( productDTO.getContainsPhysicalGoods() != null ) {
+            mappingTarget.setContainsPhysicalGoods( productDTO.getContainsPhysicalGoods() );
+        }
+        if ( productDTO.getMerchantId() != null ) {
+            mappingTarget.setMerchantId( productDTO.getMerchantId() );
+        }
+        if ( mappingTarget.getMedia() != null ) {
+            List<String> list = productDTO.getMedia();
+            if ( list != null ) {
+                mappingTarget.getMedia().clear();
+                mappingTarget.getMedia().addAll( list );
+            }
+        }
+        else {
+            List<String> list = productDTO.getMedia();
+            if ( list != null ) {
+                mappingTarget.setMedia( new ArrayList<String>( list ) );
+            }
+        }
+        if ( productDTO.getQuantitySold() != null ) {
+            mappingTarget.setQuantitySold( productDTO.getQuantitySold().intValue() );
+        }
+        if ( productDTO.getDateCreated() != null ) {
+            mappingTarget.setDateCreated( productDTO.getDateCreated() );
+        }
     }
 
     protected void invoiceDTOToInvoice1(InvoiceDTO invoiceDTO, Invoice mappingTarget) {
@@ -161,6 +272,12 @@ public class OrderMapperImpl implements OrderMapper {
         }
         if ( invoiceDTO.getLastUpdated() != null ) {
             mappingTarget.setLastUpdated( invoiceDTO.getLastUpdated() );
+        }
+        if ( invoiceDTO.getProduct() != null ) {
+            if ( mappingTarget.getProduct() == null ) {
+                mappingTarget.setProduct( new Product() );
+            }
+            productDTOToProduct1( invoiceDTO.getProduct(), mappingTarget.getProduct() );
         }
     }
 }

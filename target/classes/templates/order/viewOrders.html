@@ -289,15 +289,16 @@
             </tr>
             </thead>
             <tbody id="orders-table-body">
-            <tr th:each="order : ${orders}">
-                <td th:text="${order['id-col']}"></td>
-                <td th:text="${order['customer-col']}"></td>
-                <td th:text="${order['product-col']}"></td>
-                <td th:text="${order['quantity-col']}"></td>
-                <td th:text="${order['amount-col']}"></td>
-                <td th:text="${order['timestamp-col']}"></td>
-                <td th:text="${order['email-col']}"></td>
-                <td th:text="${order['phone-col']}"></td>
+            <tr th:each="order : ${myOrders}">
+                <td th:text="${order.id}"></td>
+                <td th:text="${order.invoice.customerName}"></td>
+                <td th:text="${order.invoice.description}"></td>
+                <!--<td th:text="${order.id}"></td>-->
+                <td >2</td>
+                <td th:text="${order.invoice.amount}"></td>
+                <td th:text="${order.dateCreated}"></td>
+                <td th:text="${order.invoice.customerEmail}"></td>
+                <td th:text="${order.invoice.customerPhoneNumber}"></td>
             </tr>
 
             </tbody>

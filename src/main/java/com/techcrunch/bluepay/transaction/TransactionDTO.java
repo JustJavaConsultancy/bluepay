@@ -1,14 +1,18 @@
 package com.techcrunch.bluepay.transaction;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.techcrunch.bluepay.invoice.InvoiceDTO;
 import com.techcrunch.bluepay.invoice.Status;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 
 @Getter
@@ -55,4 +59,12 @@ public class TransactionDTO {
     private String channel;
     private String transactionOwner;
 
+//    recent changes
+    @LastModifiedDate
+    private OffsetDateTime lastUpdated;
+
+    @CreatedDate
+    private OffsetDateTime dateCreated;
+
+    private InvoiceDTO invoice;
 }

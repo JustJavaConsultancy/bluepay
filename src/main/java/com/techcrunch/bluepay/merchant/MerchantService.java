@@ -6,6 +6,11 @@ import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
+import com.techcrunch.bluepay.transaction.Transaction;
+import com.techcrunch.bluepay.transaction.TransactionDTO;
+import com.techcrunch.bluepay.transaction.TransactionRepository;
+import com.techcrunch.bluepay.transaction.TransactionService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -29,6 +34,7 @@ public class MerchantService {
     private final MerchantMapper merchantMapper;
     private final AccountService accountService;
     private final OrderRepository orderRepository;
+    private final TransactionService transactionService;
     @Autowired
     JsonFileReaderService jsonFileReaderService;
 
@@ -38,7 +44,8 @@ public class MerchantService {
                            CustomProcessService processService,
                            TaskRepository taskRepository,
                            MerchantRepository merchantRepository,
-                           MerchantMapper merchantMapper, AccountService accountService, OrderRepository orderRepository) {
+                           MerchantMapper merchantMapper, AccountService accountService, OrderRepository orderRepository,
+                           TransactionService transactionService) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
@@ -47,6 +54,7 @@ public class MerchantService {
         this.merchantMapper = merchantMapper;
         this.accountService = accountService;
         this.orderRepository = orderRepository;
+        this.transactionService = transactionService;
     }
     public Map<String,Object> getMerchantStatus(String merchantId){
         Map<String,Object> result=new HashMap<String,Object>();
@@ -144,4 +152,13 @@ public class MerchantService {
         return orderRepository.findByMerchantIdOrderByDateCreatedAsc(loginUser);
     }
 
+    public List<TransactionDTO> myTransactions(){
+        String loginUser = (String) authenticationManager.get("sub");
+//        System.out.println(loginUser);
+        return transactionService.getMerchantTransactions(loginUser);
+    }
+
+    public TransactionDTO singleTransaction(Long id){
+        return transactionService.get(id);
+    }
 }

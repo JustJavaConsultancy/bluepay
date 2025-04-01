@@ -8,7 +8,7 @@
     <style>
         .progressForm{
             display: flex;
-            gap: 80px;
+            gap: 60px;
         }
         .reject{
             display: block;
@@ -121,9 +121,7 @@
                         </li>
                     </ul>
                 </div>
-                <form hx-post="/merchant/resubmit"
-                      onsubmit="this.querySelector('button[type=submit]').disabled=true; this.querySelector('button[type=submit]').innerText='Submitting...';"
-                      style="margin-top: 2%;width: 100%">
+                <div style="width: 100%">
                     <div style="background-color: #EF5350;color: white;padding: 10px;border-radius: 6px;margin-bottom: 20px">
                         <div style="display: flex;gap: 11px">
                             <div style="color:white "><i class="bi bi-x-circle-fill" style="font-size: 2.3rem;"></i></div>
@@ -132,13 +130,20 @@
                             </span></div>
                         </div>
                     </div>
-                    <div th:replace="~{/compliance/profile :: form1(${merchantDetails},'saveCompliance')}"></div>
+
+                    <div id="form-container" hx-target="this" hx-swap="innerHTML">
+                        <!-- Initial content - first step -->
+                        <div th:replace="~{/compliance/profile :: form1(${merchantDetails},'saveCompliance')}"/>
+                        </div>
+                </div>
+                    <!--
                     <div th:replace="~{/compliance/contact :: form2(${merchantDetails},'saveCompliance')}"></div>
                     <div th:replace="~{/compliance/businessOwner :: form3(${merchantDetails},'saveCompliance')}"></div>
                     <div th:replace="~{/compliance/bankAccount :: form4(${merchantDetails},'saveCompliance')}"></div>
                     <div th:replace="~{/compliance/serviceAgreement :: form5(${merchantDetails})}"></div>
-                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',${merchantDetails})}"></div>
-                </form>
+                    <div th:replace="~{/compliance/summary :: form6('hideSummary','null','null',${merchantDetails},false)}"></div>
+-->
+
                 <div class="reject" style="margin-top: 2%;background-color: #B1250C0F;color: #A82220;border-radius: 4px;padding: 10px 15px 10px 15px;width: 70%;max-height: fit-content;font-size: 0.75rem;font-weight: 400 ">
                     <p style="font-weight: 500">Reason for failed compliance</p>
                     <span th:text="${merchantDetails['rejectReason']}"></span>
