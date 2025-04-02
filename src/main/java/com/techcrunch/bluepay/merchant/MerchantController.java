@@ -149,13 +149,12 @@ public class MerchantController {
         model.addAttribute("myTransactions", myTransactions);
         model.addAttribute("transactionsCount", myTransactions.size());
 
-
         return "merchant/transactions";
     }
 
     @GetMapping("/transactions/{id}")
     public String getTransactionDetails(@PathVariable("id") Long id,Model model){
-        System.out.println("This is the id: " + id);
+//        System.out.println("This is the id: " + id);
         TransactionDTO singleTransaction = merchantService.singleTransaction(id);
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -190,35 +189,13 @@ public class MerchantController {
     @GetMapping("/settlements")
     public String getSettlements(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        Map<String, Object> settlement1 = Map.ofEntries(
-               Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(20000)),
-                Map.entry("date", "Mar 24, 2025")
-        );
 
-        Map<String, Object> settlement2 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(40000)),
-                Map.entry("date", "Mar 25, 2025")
-        );
+        List<JournalLine> bankSettlements=merchantService.myBalances();
 
-        Map<String, Object> settlement3 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(60000)),
-                Map.entry("date", "Mar 27, 2025")
-        );
-
-        List<Map<String, Object>> settlementList = List.of(
-                settlement1,
-                settlement2,
-                settlement3
-        );
-
-        Map<String, Object> totalSettlements = Map.of("total", settlementList.size());
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "Mar 29, 2025");
 
-        model.addAttribute("settlementList", settlementList);
-        model.addAttribute("totalSettlements", totalSettlements);
+        model.addAttribute("bankSettlements", bankSettlements);
+        model.addAttribute("totalSettlements", bankSettlements.size());
         model.addAttribute("nextSettlement", nextSettlement);
 
         return "merchant/settlements";
@@ -228,46 +205,23 @@ public class MerchantController {
     public String getTransfers(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
-        Map<String, Object> transfer1 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234567890"),
-                Map.entry("amount", df.format(30000)),
-                Map.entry("beneficiary", "John Smith"),
-                Map.entry("timestamp", "23 Mar, 2025")
-        );
-        Map<String, Object> transfer2 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234567340"),
-                Map.entry("amount", df.format(50000)),
-                Map.entry("beneficiary", "Sarah Doe"),
-                Map.entry("timestamp", "24 Mar, 2025")
-        );
-        Map<String, Object> transfer3 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234532452"),
-                Map.entry("amount", df.format(30000)),
-                Map.entry("beneficiary", "Adebayo Timothy"),
-                Map.entry("timestamp", "27 Mar, 2025")
-        );
+        List<TransactionDTO> myTransfers = merchantService.myTransactions();
+//        myTransfers.forEach(transaction -> System.out.println("This is my transfer" + transaction));
 
-        List<Map<String, Object>> transferList = List.of(
-                transfer1,
-                transfer2,
-                transfer3
-        );
-
-        Map<String, Object> transferTotal = Map.of("total", transferList.size());
         Map<String, Object> transferBalance = Map.of("balance", df.format(60000));
 
-        model.addAttribute("transferList", transferList);
-        model.addAttribute("transferTotal", transferTotal);
+        model.addAttribute("myTransfers", myTransfers);
+        model.addAttribute("transferTotal", myTransfers.size());
         model.addAttribute("transferBalance", transferBalance);
 
         return "merchant/transfers";
     }
 
     @GetMapping("/transfers/{id}")
-    public String getTransferDetails(Model model){
+    public String getTransferDetails(@PathVariable("id") Long id, Model model){
+        TransactionDTO singleTransfer = merchantService.singleTransaction(id);
+
+        System.out.println("This is a single transaction" + singleTransfer);
         DecimalFormat df = new DecimalFormat("#,##0.00");
         Map<String, Object> transferItem = Map.ofEntries(
                 Map.entry("amount", df.format(50000)),
@@ -281,6 +235,7 @@ public class MerchantController {
                 Map.entry("narration", "Feeding Allowance")
         );
 
+        model.addAttribute("singleTransfer", singleTransfer);
         model.addAttribute("transferItem", transferItem);
         return "merchant/transfers-detail";
     }

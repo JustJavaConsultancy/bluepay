@@ -1,1 +1,0 @@
-{"channelType":"outbound","type":"kafka","serializerType":"json","topic":"customer-outbound","name":"Customer Outbound Channel","key":"customerOutboundChannel"}

@@ -185,7 +185,7 @@
                 >
                   <div class="amount-container">
                     <h4 class="text-secondary mb-2 fw-normal">Amount</h4>
-                    <h2 class="amount-value mb-0" th:text="'NGN ' + ${singleTransaction.amount}"></h2>
+                    <h2 class="amount-value mb-0" th:text="'NGN ' + ${#numbers.formatDecimal(singleTransaction.amount, 1, 'COMMA', 2, 'POINT')}"></h2>
                   </div>
                   <span class="badge status-badge successful" th:text="${singleTransaction.status}"></span>
                 </div>
@@ -252,7 +252,7 @@
                             class="d-flex justify-content-between align-items-center"
                     >
                       <p class="text-secondary mb-0" th:text="${singleTransaction.invoice.product.name}"></p>
-                      <p class="detail-value mb-0" th:text="'NGN' + ${singleTransaction.invoice.amount}"></p>
+                      <p class="detail-value mb-0" th:text="'NGN' + ${#numbers.formatDecimal(singleTransaction.invoice.amount, 1, 'COMMA', 2, 'POINT')}"></p>
                     </div>
                   </div>
                 </div>

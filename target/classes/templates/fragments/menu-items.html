@@ -1,8 +1,0 @@
-<div th:fragment="menuItems">
-
-    <a th:each="item : ${menuItems}"
-       th:href="@{${item.url}}"
-       class="list-group-item list-group-item-action">
-        <span th:text="${item.name}"></span>
-    </a>
-</div>
