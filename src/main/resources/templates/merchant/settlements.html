@@ -80,9 +80,11 @@
             <td th:text="${#numbers.formatDecimal(settlement.amount, 1,'COMMA', 2, 'POINT')}"></td>
             <td th:text="${#temporals.format(settlement.transaction.lastUpdated, 'MMMM dd, yyyy HH:mm a')}"></td>
             <td>
+              <a th:href="@{./settlementsDetail}">
               <button class="btn" style="background-color: #0C74B1;border-radius: 50px;color: white;font-size: 0.85rem;font-weight: 400;">
                 View Details
               </button>
+              </a>
             </td>
           </tr>
           </tbody>

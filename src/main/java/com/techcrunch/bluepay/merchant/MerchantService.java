@@ -5,14 +5,15 @@ import com.techcrunch.bluepay.accounting.Account;
 import com.techcrunch.bluepay.accounting.AccountService;
 import com.techcrunch.bluepay.accounting.JournalLine;
 import com.techcrunch.bluepay.processes.CustomProcessService;
+import com.techcrunch.bluepay.product.Product;
+import com.techcrunch.bluepay.product.ProductDTO;
+import com.techcrunch.bluepay.product.ProductRepository;
+import com.techcrunch.bluepay.product.ProductService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
 import com.techcrunch.bluepay.tasks.services.JsonFileReaderService;
-import com.techcrunch.bluepay.transaction.Transaction;
 import com.techcrunch.bluepay.transaction.TransactionDTO;
-import com.techcrunch.bluepay.transaction.TransactionRepository;
 import com.techcrunch.bluepay.transaction.TransactionService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -25,7 +26,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service("merchantService")
 public class MerchantService {
     private final AuthenticationManager authenticationManager;
     private final RuntimeService runtimeService;
@@ -37,6 +38,7 @@ public class MerchantService {
     private final AccountService accountService;
     private final OrderRepository orderRepository;
     private final TransactionService transactionService;
+    private final ProductService productService;
     @Autowired
     JsonFileReaderService jsonFileReaderService;
 
@@ -47,7 +49,7 @@ public class MerchantService {
                            TaskRepository taskRepository,
                            MerchantRepository merchantRepository,
                            MerchantMapper merchantMapper, AccountService accountService,
-                           OrderRepository orderRepository,TransactionService transactionService) {
+                           OrderRepository orderRepository, TransactionService transactionService, ProductRepository productRepository, ProductService productService) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
@@ -57,6 +59,7 @@ public class MerchantService {
         this.accountService = accountService;
         this.orderRepository = orderRepository;
         this.transactionService = transactionService;
+        this.productService = productService;
     }
     public Map<String,Object> getMerchantStatus(String merchantId){
         Map<String,Object> result=new HashMap<String,Object>();
@@ -118,7 +121,7 @@ public class MerchantService {
     public MerchantDto create(MerchantDto merchantDto) {
         return  merchantMapper.toDto(merchantRepository.save(merchantMapper.toEntity(merchantDto)));
     }
-    public void createMerchant(DelegateExecution execution) {
+    public MerchantDto createMerchant(DelegateExecution execution) {
         Map<String,Object> variables = execution.getVariables();
 
         MerchantDto  merchantDto = MerchantDto.builder()
@@ -130,6 +133,7 @@ public class MerchantService {
         accountService.createMerchantRelevantAccounts(merchantDto,variables);
 /*        System.out.println(" The execution at this stage=="+execution.getVariables()
         + " The merchantDto created =="+merchantDto);*/
+        return merchantDto;
     }
     public void createMerchantTest(Map<String,Object> variables) {
         MerchantDto  merchantDto = MerchantDto.builder()
@@ -151,6 +155,10 @@ public class MerchantService {
     public List<Order> myOrders(){
         String loginUser= (String) authenticationManager.get("sub");
         return orderRepository.findByMerchantIdOrderByDateCreatedAsc(loginUser);
+    }
+    public List<ProductDTO> myProducts(){
+        String loginUser= (String) authenticationManager.get("sub");
+        return productService.findAllByMerchantId(loginUser);
     }
     public List<JournalLine> myBalances(){
         String loginUser= (String) authenticationManager.get("sub");
@@ -177,5 +185,12 @@ public class MerchantService {
 
     public TransactionDTO singleTransaction(Long id){
         return transactionService.get(id);
+    }
+    public void monitorReceived(DelegateExecution execution){
+        System.out.println(" The Delegate Task Here " +
+                "in monitoring ===");
+    }
+    public void monitorFire(DelegateExecution execution){
+        System.out.println(" monitoring is fired has it been caught? ==="+execution.getCurrentActivityName());
     }
 }

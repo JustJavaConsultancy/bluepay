@@ -234,6 +234,10 @@ public class MerchantController {
 
         return "merchant/settlements";
     }
+    @GetMapping("/settlementsDetail")
+    public String getSettlementsDetail(Model model){
+        return "merchant/settlements-details";
+    }
 
     @GetMapping("/transfers")
     public String getTransfers(Model model){
