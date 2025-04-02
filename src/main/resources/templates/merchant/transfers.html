@@ -113,7 +113,7 @@
       </div>
       <div style="text-align: center;height: 100%;padding: 20px;">
         <h5 style="font-size: 1rem;font-weight: 500;margin-top: 10px;">Balance</h5>
-        <p style="font-size: 1.2rem;font-weight: 500;margin-top: 20px" th:text="${transferBalance['balance']}">50,000.00</p>
+        <p style="font-size: 1.2rem;font-weight: 500;margin-top: 20px" th:text="${#numbers.formatDecimal(transferBalance, 1, 'COMMA', 2, 'POINT')}"></p>
         <h2 style="font-size: 0.85rem;font-weight: 400;color: #545C60;margin-top: 10px" >Available</h2>
         <button class="btn-topup" >Topup</button>
       </div>
