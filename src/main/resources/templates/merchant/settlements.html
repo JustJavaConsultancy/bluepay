@@ -80,9 +80,11 @@
             <td th:text="${settlement['settledAmount']}">20,000.00</td>
             <td th:text="${settlement['date']}">Mar 27, 2025</td>
             <td>
+              <a th:href="@{./settlementsDetail}">
               <button class="btn" style="background-color: #0C74B1;border-radius: 50px;color: white;font-size: 0.85rem;font-weight: 400;">
                 View Details
               </button>
+              </a>
             </td>
           </tr>
           </tbody>
