@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+
+    <title>settlements</title>
+    <style>
+        /* Custom fonts */
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+
+        .table>:not(caption)>*>* {
+            background-color: var(--bs-table-bg);
+            border-bottom-width: var(--bs-border-width);
+            box-shadow:none;
+            color: var(--bs-table-color-state, var(--bs-table-color-type, var(--bs-table-color)));
+            padding: .5rem;
+        }
+
+        body {
+            font-family:
+                    "Basis Grotesque Pro",
+                    -apple-system,
+                    Roboto,
+                    Helvetica,
+                    sans-serif;
+        }
+
+        /* Custom styles to maintain the original design */
+        .back-button {
+            width: 24px;
+            aspect-ratio: 1;
+            object-fit: contain;
+            object-position: center;
+        }
+
+        /* Summary card customizations */
+        .summary-card {
+            border-radius: 12px;
+            border: 1px solid #e6e7e7;
+        }
+
+        .summary-label {
+            color: #545c60;
+            font-feature-settings:
+                    "liga" off,
+                    "clig" off;
+            line-height: 1.4;
+        }
+
+        .summary-value {
+            color: #000b11;
+            font-feature-settings:
+                    "liga" off,
+                    "clig" off;
+            line-height: 1;
+        }
+
+        .separator {
+            color: rgba(138, 143, 146, 1);
+        }
+
+        /* Transactions table customizations */
+        .transactions-section {
+            border-radius: 12px;
+            border: 1px solid #e6e7e7;
+            font-size: 14px;
+            color: #333c41;
+            line-height: 1.6;
+        }
+
+        .table-header {
+            color: #000b11;
+        }
+
+        .transactions-table th {
+            font-weight: 400;
+            border-bottom: 1px solid #b0b3b5;
+            padding: 8px;
+        }
+
+        .transactions-table td {
+            border-bottom: none;
+            padding: 8px;
+        }
+
+
+        /* Column widths to match original design */
+        .reference,
+        .reference-value {
+            width: 171px;
+        }
+
+        .amount-ngn,
+        .amount-value {
+            width: 186px;
+        }
+
+        .customer,
+        .customer-value {
+            width: 174px;
+        }
+
+        .timestamp,
+        .timestamp-value {
+            width: 215px;
+        }
+
+        .fees-ngn,
+        .fees-value {
+            width: 100px;
+        }
+
+        .settled-amount-ngn,
+        .settled-value {
+            width: 160px;
+        }
+
+        /* Pagination customizations */
+        .pagination {
+            font-size: 14px;
+            color: #8a8f92;
+            line-height: 1.6;
+        }
+
+        .page-item.active .page-link {
+            background-color: #0c74b1;
+            border-color: #0c74b1;
+        }
+
+        .page-link {
+            color: #8a8f92;
+            padding: 0.25rem 0.5rem;
+        }
+
+        .page-item.disabled .page-link {
+            color: #8a8f92;
+            font-size: 12px;
+        }
+
+        /* Media queries */
+        @media (max-width: 991px) {
+            .reference,
+            .reference-value,
+            .customer,
+            .customer-value,
+            .timestamp,
+            .timestamp-value,
+            .fees-ngn,
+            .fees-value,
+            .settled-amount-ngn,
+            .settled-value {
+                width: auto;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+<div layout:fragment="content">
+    <main class="settlement-container container py-3">
+        <header class="header-section mb-3">
+            <div style="cursor: pointer"
+                 onclick="window.history.back()"
+            >
+                <img
+                    src="https://cdn.builder.io/api/v1/image/assets/TEMP/71fe1caf82f7be5dc6fe7d9ae933187a4da2fcfb?placeholderIfAbsent=true"
+                    class="back-button"
+                    alt="Back"
+            />
+            </div>
+
+        </header>
+
+        <section class="card summary-card mb-3">
+            <div class="card-body">
+                <div class="row summary-grid py-2">
+                    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+                        <div class="summary-item">
+                            <p class="summary-label text-muted mb-1">
+                                Total Settled Amount
+                            </p>
+                            <p class="summary-value fw-medium mb-0">NGN 50,000.00</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+                        <div class="summary-item">
+                            <p class="summary-label text-muted mb-1">Date</p>
+                            <p class="summary-value fw-medium mb-0">27 March, 2025</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3 mb-md-0">
+                        <div class="summary-item">
+                            <p class="summary-label text-muted mb-1">Activity</p>
+                            <p class="summary-value fw-medium mb-0">
+                                1 Transaction(s)
+                                <span class="separator">|</span>
+                                0 Deduction(s)
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6">
+                        <div class="summary-item">
+                            <p class="summary-label text-muted mb-1">Batches</p>
+                            <p class="summary-value fw-medium mb-0">1 Batch</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card transactions-section mb-3">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover transactions-table">
+                        <thead>
+                        <tr class="table-header">
+                            <th class="reference">Reference</th>
+                            <th class="amount-ngn">Amount (NGN)</th>
+                            <th class="customer">Customer</th>
+                            <th class="timestamp">Timestamp</th>
+                            <th class="fees-ngn">Fees (NGN)</th>
+                            <th class="settled-amount-ngn">Settled Amount (NGN)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="reference-value">T123456789234567</td>
+                            <td class="amount-value">20,000.00</td>
+                            <td class="customer-value">Adedapo Tiamiyu</td>
+                            <td class="timestamp-value">Mar 27, 2025, 2 : 00 PM</td>
+                            <td class="fees-value">500.00</td>
+                            <td class="settled-value">500,000.00</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <nav aria-label="Page navigation" class="d-flex justify-content-end mt-4">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <img
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/389121001a80c0b8333fd447cb6a9ef66cad7a9f?placeholderIfAbsent=true"
+                                class="prev-page"
+                                alt="Previous page"
+                                width="24"
+                        />
+                    </a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">....</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">10</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <img
+                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/149c9a67b7b18174be2ea0f958399ae6722fca6a?placeholderIfAbsent=true"
+                                class="next-page"
+                                alt="Next page"
+                                width="24"
+                        />
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </main>
+</div>
+</body>
+</html>
