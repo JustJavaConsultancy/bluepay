@@ -16,8 +16,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.text.DecimalFormat;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/merchant")
@@ -52,65 +56,7 @@ public class MerchantController {
         String loginUser= (String) authenticationManager.get("sub");
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
-        Map<String, Object> coordinate1 = Map.ofEntries(
-                Map.entry("class_", "bar-march3"),
-                Map.entry("x", "March 3"),
-                Map.entry("y", 7000)
-        );
-        Map<String, Object> coordinate2 = Map.ofEntries(
-                Map.entry("class_", "bar-march4"),
-                Map.entry("x", "March 4"),
-                Map.entry("y", 32000)
-        );
-        Map<String, Object> coordinate3 = Map.ofEntries(
-                Map.entry("class_", "bar-march10"),
-                Map.entry("x", "March 10"),
-                Map.entry("y", 2500)
-        );
-        Map<String, Object> coordinate4 = Map.ofEntries(
-                Map.entry("class_", "bar-march15"),
-                Map.entry("x", "March 15"),
-                Map.entry("y", 10000)
-        );
-        Map<String, Object> coordinate5 = Map.ofEntries(
-                Map.entry("class_", "bar-march16"),
-                Map.entry("x", "March 16"),
-                Map.entry("y", 3500)
-        );
-        Map<String, Object> coordinate6 = Map.ofEntries(
-                Map.entry("class_", "bar-march17"),
-                Map.entry("x", "March 17"),
-                Map.entry("y", 4500)
-        );
-        Map<String, Object> coordinate7 = Map.ofEntries(
-                Map.entry("class_", "bar-march18"),
-                Map.entry("x", "March 18"),
-                Map.entry("y", 1000)
-        );
-
-        List<Map<String, Object>> revenueList = List.of(
-                coordinate1,
-                coordinate2,
-                coordinate3,
-                coordinate4,
-                coordinate5,
-                coordinate6,
-                coordinate7
-        );
-
         String totalRevenue = df.format(50000.00);
-
-        Map<String, Object> inflowTransactions = Map.ofEntries(
-                Map.entry("chartPercentage", 80),
-                Map.entry("successTransactions", 5),
-                Map.entry("errorTransactions", 2)
-        );
-
-        Map<String, Object> outflowTransactions = Map.ofEntries(
-                Map.entry("chartPercentage", 50),
-                Map.entry("successTransactions", 8),
-                Map.entry("errorTransactions", 0)
-        );
 
         Map<String, Object> paymentIssues = Map.ofEntries(
                 Map.entry("customerError", 0),
@@ -121,12 +67,23 @@ public class MerchantController {
 
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
 
-        Map<String, Object> balance = Map.ofEntries(
-                Map.entry("amount", df.format(30000.00)),
-                Map.entry("status", "Available")
-        );
-
         List<TransactionDTO> myTransactions = merchantService.myTransactions();
+
+        Account payable=merchantService.myPayableAccount();
+        Account bankAccount=merchantService.myBankAccount();
+
+        List<JournalLine> bankBalances=merchantService.myBalances();
+        List<BigDecimal> bankCurrentAmount = bankBalances.stream()
+                .map(balance -> balance.getTransaction().getAmount())
+                        .toList();
+        List<Integer> bankCurrentDate = bankBalances.stream()
+                .map(balance -> balance.getTransaction().getDateCreated().getDayOfMonth())
+                        .toList();
+//                .collect(Collectors.groupingBy(balance -> balance.getTransaction().getDateCreated().getDayOfMonth().toString()))
+//                .toList();
+
+//        System.out.println("This is the bank balance month"+ bankCurrentDate);
+//        System.out.println("This is the bank balance month"+ bankCurrentAmount);
 
         int allInflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("INFLOW"))
                 .toList().size();
@@ -153,10 +110,7 @@ public class MerchantController {
         int successInflowRate = (int) allInflowTransactions != 0 ? (paidInflowTransactions / allInflowTransactions) * 100 : 0;
         int successOutflowRate = (int) allOutflowTransactions != 0 ? (paidOutflowTransactions / allOutflowTransactions) * 100 : 0;
 
-        Account payable=merchantService.myPayableAccount();
-        Account bankAccount=merchantService.myBankAccount();
 
-        model.addAttribute("revenueList", revenueList);
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("paidInflowTransactions", paidInflowTransactions);
         model.addAttribute("errorInflowTransactions", errorInflowTransactions);
@@ -169,6 +123,11 @@ public class MerchantController {
         model.addAttribute("paymentIssues", paymentIssues);
         model.addAttribute("nextSettlement", nextSettlement);
         model.addAttribute("balanceTotal", payable.getBalance().add(bankAccount.getBalance()));
+
+//        new entries
+        model.addAttribute("bankCurrentAmount", bankCurrentAmount);
+        model.addAttribute("bankCurrentDate", bankCurrentDate);
+
 
         return "merchant/dashboard";
     }
@@ -189,7 +148,6 @@ public class MerchantController {
 
     @GetMapping("/transactions/{id}")
     public String getTransactionDetails(@PathVariable("id") Long id,Model model){
-//        System.out.println("This is the id: " + id);
         TransactionDTO singleTransaction = merchantService.singleTransaction(id);
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -208,10 +166,10 @@ public class MerchantController {
     public String getBalance(Model model){
 
         List<JournalLine> bankBalances=merchantService.myBalances();
-//        bankBalances.forEach(journalLine -> {
-//            System.out.println(" The lines are==== "+journalLine.toString());
-//            }
-//        );
+        bankBalances.forEach(journalLine -> {
+            System.out.println(" The lines are==== "+journalLine.toString());
+            }
+        );
 
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
@@ -225,11 +183,14 @@ public class MerchantController {
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         List<JournalLine> bankSettlements=merchantService.myBalances();
+        Account payable=merchantService.myPayableAccount();
+        Account bankAccount=merchantService.myBankAccount();
 
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
 
         model.addAttribute("bankSettlements", bankSettlements);
         model.addAttribute("totalSettlements", bankSettlements.size());
+        model.addAttribute("nextSettlementAmount", payable.getBalance().add(bankAccount.getBalance()));
         model.addAttribute("nextSettlement", nextSettlement);
 
         return "merchant/settlements";
@@ -246,8 +207,6 @@ public class MerchantController {
         List<TransactionDTO> myTransfers = merchantService.myTransactions();
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
-
-        Map<String, Object> transferBalance = Map.of("balance", df.format(60000));
 
         model.addAttribute("myTransfers", myTransfers);
         model.addAttribute("transferTotal", myTransfers.size());
