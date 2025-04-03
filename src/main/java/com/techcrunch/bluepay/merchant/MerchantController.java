@@ -114,7 +114,6 @@ public class MerchantController {
 
         System.out.println(" I'm sending this username here=="+loginUser);
         model.addAttribute("username",loginUser);
-        model.addAttribute("revenueList", revenueList);
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("paidInflowTransactions", paidInflowTransactions);
         model.addAttribute("errorInflowTransactions", errorInflowTransactions);
@@ -212,6 +211,7 @@ public class MerchantController {
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
 
+        System.out.println("This is my transfer" + myTransfers);
         model.addAttribute("myTransfers", myTransfers);
         model.addAttribute("transferTotal", myTransfers.size());
         model.addAttribute("transferBalance",payable.getBalance().add(bankAccount.getBalance()));
