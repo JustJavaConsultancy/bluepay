@@ -24,7 +24,7 @@
 
   <main class="dashboard">
     <section class="balance-section">
-      <p class="balance-text" th:text="'Available Balance: ' + ${balanceTotal}"></p>
+      <p class="balance-text" th:text="'Available Balance: ' + 'NGN' + ${#numbers.formatDecimal(balanceTotal, 1, 'COMMA', 2, 'POINT')}"></p>
       <button class="topup-button">Topup</button>
     </section>
 
@@ -178,10 +178,10 @@
               ></path>
             </svg>
           </td>
-          <td th:text="${balanceItem.transaction.dateCreated}"></td>
+          <td th:text="${#temporals.format(balanceItem.transaction.dateCreated, 'MMMM dd, yyyy HH:mm a')}"></td>
           <td ><span class="activity-tag">Transaction</span></td>
-          <td th:text="${balanceItem.amount}"></td>
-          <td th:text="${balanceItem.currentBalance}"></td>
+          <td th:text="${#numbers.formatDecimal(balanceItem.amount,1,'COMMA', 2, 'POINT') }"></td>
+          <td th:text="${#numbers.formatDecimal(balanceItem.currentBalance, 1,'COMMA', 2, 'POINT')}"></td>
           <td><a class="details-button" th:href="@{./transactions/{id}(id=${balanceItem.transaction.id})}">View Details</a></td>
         </tr>
          </tbody>

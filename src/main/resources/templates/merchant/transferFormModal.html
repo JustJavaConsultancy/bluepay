@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body>
+<div class="transfer-modal" th:fragment="transferForm">
+  <div class="transfer-container">
+    <header class="modal-header">
+      <h1 class="modal-title">New Transfer</h1>
+      <button class="close-button" aria-label="Close modal">
+        <svg
+          class="close-icon"
+          width="24"
+          height="25"
+          viewBox="0 0 24 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M18 6.5L6 18.5"
+            stroke="#333C41"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+          <path
+            d="M6 6.5L18 18.5"
+            stroke="#333C41"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </button>
+    </header>
+
+    <section class="balance-section">
+      <p class="balance-display">Available Balance: NGN50,000.00</p>
+    </section>
+
+    <form class="transfer-form">
+      <div class="form-group">
+        <label class="form-label" for="bank-name">Bank Name</label>
+        <input
+            type="text"
+            id="bank-name"
+            class="form-input"
+            placeholder="Enter bank name"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="account-number">Account Number</label>
+        <input
+          type="text"
+          id="account-number"
+          class="form-input"
+          placeholder="Enter account number"
+        />
+        <p class="account-name">ADEDAPO TIAMIYU</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="amount">Amount to send</label>
+        <input
+          type="text"
+          id="amount"
+          class="form-input"
+          placeholder="Minimum amount to send NGN 100"
+        />
+        <p class="transfer-fee">You will be charged NGN 1 for this transfer</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="narration">Narration</label>
+        <input
+          type="text"
+          id="narration"
+          class="form-input"
+          placeholder="Enter narration"
+        />
+      </div>
+
+      <footer class="form-actions">
+        <button type="button" class="btn-cancel">Cancel</button>
+        <button type="submit" class="btn-transfer">Start Transfer</button>
+      </footer>
+    </form>
+  </div>
+</div>
+  
+</body>
+</html>

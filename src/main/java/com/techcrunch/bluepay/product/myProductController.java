@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.cloudinary.Image;
 import com.techcrunch.bluepay.cloudinary.ImageService;
+import com.techcrunch.bluepay.merchant.MerchantService;
 import com.techcrunch.bluepay.payment.PaymentDTO;
 import com.techcrunch.bluepay.payment.PaymentService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,28 +35,15 @@ public class myProductController {
     private PaymentService paymentService;
 
     @Autowired
+    private MerchantService merchantService;
+
+    @Autowired
     private ObjectMapper objectMapper;
 
     @GetMapping("/manageProduct")
     public String myProduct(HttpServletRequest request,Map<String, Object> model, Model tempModel) {
-        List<ProductDTO> productDTOS=productService.findAll();
+        List<ProductDTO> productDTOS=merchantService.myProducts();
         model.put("productList", productDTOS);
-        PaymentDTO paymentDTO=PaymentDTO.builder()
-                .amount(new BigDecimal(100))
-                .cardCvv("234")
-                .channel("card")
-                .cardExpirationDate("25-03-2025")
-                .cardHolderName("Akinrinde Kazeem")
-                .invoiceId(1L)
-                .cardNumber("4111111111111111")
-                .currency("NIG")
-                .payerEmail("akinrinde@justjava.com.ng")
-                .payerPhoneNumber("07062023181")
-                .build();
-        Map<String,Object> variables=objectMapper.convertValue(paymentDTO,Map.class);
-        variables.put("productName","Laptop");
-        variables.put("merchantId","24424244242424");
-        //paymentService.startPaymentProcess(variables,"92002020020");
         tempModel.addAttribute("currentUrl", request.getRequestURI());
         return "/product/manageProduct";
     }

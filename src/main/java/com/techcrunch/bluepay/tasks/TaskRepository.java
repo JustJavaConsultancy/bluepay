@@ -62,8 +62,9 @@ public class TaskRepository {
     }
 
     public void completeTask(String taskId,Map<String,Object> variables){
-        //System.out.println(" Variable inside the complete task=="+variables);
-        taskService.complete(taskId,variables);
+        System.out.println(" taskService=="+taskService + " taskId=="+taskId);
+        if(taskService!=null && taskId!=null)
+            taskService.complete(taskId,variables);
     }
 
     public List<TaskDTO> getCompletedTaskByAssigneeAndVariable(String assignee,

@@ -20,33 +20,33 @@
         <div class="details-header">
           <div class="amount-section">
             <p class="amount-label">Amount</p>
-            <p class="amount-value" th:text="'NGN ' + ${transferItem['amount']}"></p>
+            <p class="amount-value" th:text="'NGN ' + ${#numbers.formatDecimal(singleTransfer.amount, 1,'COMMA', 2, 'POINT')}"></p>
           </div>
-          <span class="status-badge" th:text="${transferItem['status']}"></span>
+          <span class="status-badge" th:text="${singleTransfer.status}"></span>
         </div>
 
         <div class="details-list">
           <div class="details-grid">
             <div class="detail-row">
               <p class="detail-label">Beneficiary Account</p>
-              <p class="detail-value" th:text="${transferItem['accountNumber']} + ' ' + ${transferItem['accountBank']}">
+              <p class="detail-value" th:text="${singleTransfer.beneficiaryAccount}">
               </p>
             </div>
 
             <div class="detail-row">
               <p class="detail-label">Account Name</p>
-              <p class="detail-value" th:text="${transferItem['accountName']}"></p>
+              <p class="detail-value" th:text="${singleTransfer.sourceAccount}"></p>
             </div>
 
             <div class="detail-row">
               <p class="detail-label">Timestamp</p>
-              <p class="detail-value" th:text="${transferItem['timestamp']}"></p>
+              <p class="detail-value" th:text="${#temporals.format(singleTransfer.lastUpdated, 'MMMM dd, yyyy HH:mm a')}"></p>
             </div>
 
             <div class="detail-row">
               <p class="detail-label">Reference</p>
               <div class="reference-value">
-                <p class="detail-value" th:text="${transferItem['reference']}"></p>
+                <p class="detail-value" th:text="${singleTransfer.reference}"></p>
                 <img
                   src="https://cdn.builder.io/api/v1/image/assets/185f934458864959ac73501406090908/907f7631bc9432bcaeda59a4dad81b7c4fcb2f91?placeholderIfAbsent=true"
                   alt="Copy"
@@ -67,7 +67,7 @@
 
             <div class="detail-row">
               <p class="detail-label">Narration</p>
-              <p class="detail-value" th:text="${transferItem['narration']}">Feeding Allowance</p>
+              <p class="detail-value" th:text="${transferItem['narration']}"></p>
             </div>
           </div>
         </div>

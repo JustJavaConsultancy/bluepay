@@ -206,7 +206,7 @@
           <tbody>
           <tr class="table-row" th:each="transaction: ${myTransactions}">
             <td class="reference-cell" th:text="${transaction.reference}"></td>
-            <td class="amount-cell" th:text="${transaction.amount}"></td>
+            <td class="amount-cell" th:text="${#numbers.formatDecimal(transaction.amount,1,'COMMA', 2, 'POINT')}"></td>
             <td class="customer-cell" th:text="${transaction.sourceAccount}"></td>
             <td class="payment-cell">
               <span class="payment-tag" th:text="${transaction.paymentType}"></span>

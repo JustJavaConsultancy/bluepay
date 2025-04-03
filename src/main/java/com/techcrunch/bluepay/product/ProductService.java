@@ -28,6 +28,12 @@ public class ProductService {
                 .map(product -> mapToDTO(product, new ProductDTO()))
                 .toList();
     }
+    public List<ProductDTO> findAllByMerchantId(String merchantId) {
+        final List<Product> products = productRepository.findByMerchantId(merchantId);
+        return products.stream()
+                .map(product -> mapToDTO(product, new ProductDTO()))
+                .toList();
+    }
 
     public ProductDTO get(final Long id) {
         return productRepository.findById(id)

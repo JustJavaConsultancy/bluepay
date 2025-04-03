@@ -42,7 +42,7 @@
   <div class="row mt-4">
     <div class="col-xxl-8 col-xl-8 col-lg-8 col-sm-12" style="border: 1px solid #E6E7E7;background-color: white;">
       <div style="margin: 10px;margin-bottom: 40px;" >
-        <h3 style="font-size: 0.85rem;font-weight:400 ;">Total: <span class="total-count__number" th:text="${totalSettlements['total']}"></span></h3>
+        <h3 style="font-size: 0.85rem;font-weight:400 ;">Total: <span class="total-count__number" th:text="${totalSettlements}"></span></h3>
         <div style="display: flex;justify-content: space-between;margin-top: 30px;">
           <div style="font-size: 1rem;font-weight: 500;">
             This Month
@@ -69,16 +69,16 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="settlement : ${settlementList}">
+          <tr th:each="settlement : ${bankSettlements}">
             <td>
-              <div style="padding: 4px 8px; border: 1px solid #46A14B; text-align: center; color: #46A14B; background-color: #F4FAF5; border-radius: 12px; font-size: 14px; font-weight: normal;" th:text="${settlement['status']}">
+              <div style="padding: 4px 8px; border: 1px solid #46A14B; text-align: center; color: #46A14B; background-color: #F4FAF5; border-radius: 12px; font-size: 14px; font-weight: normal;" th:text="${settlement.transaction.status}">
                 Success
               </div>
 
 
             </td>
-            <td th:text="${settlement['settledAmount']}">20,000.00</td>
-            <td th:text="${settlement['date']}">Mar 27, 2025</td>
+            <td th:text="${#numbers.formatDecimal(settlement.amount, 1,'COMMA', 2, 'POINT')}"></td>
+            <td th:text="${#temporals.format(settlement.transaction.lastUpdated, 'MMMM dd, yyyy HH:mm a')}"></td>
             <td>
               <a th:href="@{./settlementsDetail}">
               <button class="btn" style="background-color: #0C74B1;border-radius: 50px;color: white;font-size: 0.85rem;font-weight: 400;">

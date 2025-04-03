@@ -114,27 +114,62 @@ public class MerchantController {
         );
 
         Map<String, Object> paymentIssues = Map.ofEntries(
-                Map.entry("customerError", 3),
-                Map.entry("bankError", 2),
-                Map.entry("fraudBlock", 4),
-                Map.entry("systemError", 3)
+                Map.entry("customerError", 0),
+                Map.entry("bankError", 0),
+                Map.entry("fraudBlock", 0),
+                Map.entry("systemError", 0)
         );
-        Map<String, Object> nextSettlement = Map.ofEntries(
-                Map.entry("amount",df.format(40000.00)),
-                Map.entry("date", "Due Monday, March 2025")
-        );
+
+        Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
+
         Map<String, Object> balance = Map.ofEntries(
                 Map.entry("amount", df.format(30000.00)),
                 Map.entry("status", "Available")
         );
 
+        List<TransactionDTO> myTransactions = merchantService.myTransactions();
+
+        int allInflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("INFLOW"))
+                .toList().size();
+
+        int paidInflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("INFLOW"))
+                        .filter(transaction -> transaction.getStatus().toString().equals("PAID"))
+                        .toList().size();
+
+        int errorInflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("INFLOW"))
+                .filter(transaction -> transaction.getStatus().toString().equals("CANCELLED"))
+                .toList().size();
+
+        int allOutflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("OUTFLOW"))
+                .toList().size();
+
+        int paidOutflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("OUTFLOW"))
+                .filter(transaction -> transaction.getStatus().toString().equals("PAID"))
+                .toList().size();
+
+        int errorOutflowTransactions = myTransactions.stream().filter(transaction -> transaction.getPaymentType().toString().equals("OUTFLOW"))
+                .filter(transaction -> transaction.getStatus().toString().equals("CANCELLED"))
+                .toList().size();
+
+        int successInflowRate = (int) allInflowTransactions != 0 ? (paidInflowTransactions / allInflowTransactions) * 100 : 0;
+        int successOutflowRate = (int) allOutflowTransactions != 0 ? (paidOutflowTransactions / allOutflowTransactions) * 100 : 0;
+
+        Account payable=merchantService.myPayableAccount();
+        Account bankAccount=merchantService.myBankAccount();
+
         model.addAttribute("revenueList", revenueList);
         model.addAttribute("totalRevenue", totalRevenue);
-        model.addAttribute("inflowTransactions", inflowTransactions);
-        model.addAttribute("outflowTransactions", outflowTransactions);
+        model.addAttribute("paidInflowTransactions", paidInflowTransactions);
+        model.addAttribute("errorInflowTransactions", errorInflowTransactions);
+        model.addAttribute("successInflowRate", successInflowRate);
+
+        model.addAttribute("paidOutflowTransactions", paidOutflowTransactions);
+        model.addAttribute("errorOutflowTransactions", errorOutflowTransactions);
+        model.addAttribute("successOutflowRate", successOutflowRate);
+
         model.addAttribute("paymentIssues", paymentIssues);
         model.addAttribute("nextSettlement", nextSettlement);
-        model.addAttribute("balance", balance);
+        model.addAttribute("balanceTotal", payable.getBalance().add(bankAccount.getBalance()));
 
         return "merchant/dashboard";
     }
@@ -150,13 +185,12 @@ public class MerchantController {
         model.addAttribute("myTransactions", myTransactions);
         model.addAttribute("transactionsCount", myTransactions.size());
 
-
         return "merchant/transactions";
     }
 
     @GetMapping("/transactions/{id}")
     public String getTransactionDetails(@PathVariable("id") Long id,Model model){
-        System.out.println("This is the id: " + id);
+//        System.out.println("This is the id: " + id);
         TransactionDTO singleTransaction = merchantService.singleTransaction(id);
 
         DecimalFormat df = new DecimalFormat("#,##0.00");
@@ -173,13 +207,12 @@ public class MerchantController {
 
     @GetMapping("/balance")
     public String getBalance(Model model){
-        DecimalFormat df = new DecimalFormat("#,##0.00");
 
         List<JournalLine> bankBalances=merchantService.myBalances();
-        bankBalances.forEach(journalLine -> {
-            System.out.println(" The lines are==== "+journalLine.toString());
-            }
-        );
+//        bankBalances.forEach(journalLine -> {
+//            System.out.println(" The lines are==== "+journalLine.toString());
+//            }
+//        );
 
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
@@ -191,35 +224,13 @@ public class MerchantController {
     @GetMapping("/settlements")
     public String getSettlements(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
-        Map<String, Object> settlement1 = Map.ofEntries(
-               Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(20000)),
-                Map.entry("date", "Mar 24, 2025")
-        );
 
-        Map<String, Object> settlement2 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(40000)),
-                Map.entry("date", "Mar 25, 2025")
-        );
+        List<JournalLine> bankSettlements=merchantService.myBalances();
 
-        Map<String, Object> settlement3 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("settledAmount", df.format(60000)),
-                Map.entry("date", "Mar 27, 2025")
-        );
+        Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
 
-        List<Map<String, Object>> settlementList = List.of(
-                settlement1,
-                settlement2,
-                settlement3
-        );
-
-        Map<String, Object> totalSettlements = Map.of("total", settlementList.size());
-        Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "Mar 29, 2025");
-
-        model.addAttribute("settlementList", settlementList);
-        model.addAttribute("totalSettlements", totalSettlements);
+        model.addAttribute("bankSettlements", bankSettlements);
+        model.addAttribute("totalSettlements", bankSettlements.size());
         model.addAttribute("nextSettlement", nextSettlement);
 
         return "merchant/settlements";
@@ -233,59 +244,33 @@ public class MerchantController {
     public String getTransfers(Model model){
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
-        Map<String, Object> transfer1 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234567890"),
-                Map.entry("amount", df.format(30000)),
-                Map.entry("beneficiary", "John Smith"),
-                Map.entry("timestamp", "23 Mar, 2025")
-        );
-        Map<String, Object> transfer2 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234567340"),
-                Map.entry("amount", df.format(50000)),
-                Map.entry("beneficiary", "Sarah Doe"),
-                Map.entry("timestamp", "24 Mar, 2025")
-        );
-        Map<String, Object> transfer3 = Map.ofEntries(
-                Map.entry("status", "Success"),
-                Map.entry("reference", "T1234532452"),
-                Map.entry("amount", df.format(30000)),
-                Map.entry("beneficiary", "Adebayo Timothy"),
-                Map.entry("timestamp", "27 Mar, 2025")
-        );
+        List<TransactionDTO> myTransfers = merchantService.myTransactions();
+        Account payable=merchantService.myPayableAccount();
+        Account bankAccount=merchantService.myBankAccount();
 
-        List<Map<String, Object>> transferList = List.of(
-                transfer1,
-                transfer2,
-                transfer3
-        );
-
-        Map<String, Object> transferTotal = Map.of("total", transferList.size());
         Map<String, Object> transferBalance = Map.of("balance", df.format(60000));
 
-        model.addAttribute("transferList", transferList);
-        model.addAttribute("transferTotal", transferTotal);
-        model.addAttribute("transferBalance", transferBalance);
+        model.addAttribute("myTransfers", myTransfers);
+        model.addAttribute("transferTotal", myTransfers.size());
+        model.addAttribute("transferBalance",payable.getBalance().add(bankAccount.getBalance()));
 
         return "merchant/transfers";
     }
 
     @GetMapping("/transfers/{id}")
-    public String getTransferDetails(Model model){
+    public String getTransferDetails(@PathVariable("id") Long id, Model model){
+        TransactionDTO singleTransfer = merchantService.singleTransaction(id);
+
+        System.out.println("This is a single transaction" + singleTransfer);
         DecimalFormat df = new DecimalFormat("#,##0.00");
         Map<String, Object> transferItem = Map.ofEntries(
-                Map.entry("amount", df.format(50000)),
-                Map.entry("status", "Successful"),
                 Map.entry("accountNumber", "8138482251"),
                 Map.entry("accountBank", "GTBank Services Ltd"),
-                Map.entry("accountName", "Adeyanju Salem"),
-                Map.entry("timestamp", "Mar 27, 2025, 6 : 50 PM"),
-                Map.entry("reference", "T123457890"),
                 Map.entry("fees", df.format(500)),
                 Map.entry("narration", "Feeding Allowance")
         );
 
+        model.addAttribute("singleTransfer", singleTransfer);
         model.addAttribute("transferItem", transferItem);
         return "merchant/transfers-detail";
     }
