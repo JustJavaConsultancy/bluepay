@@ -156,6 +156,8 @@ public class MerchantController {
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
 
+        System.out.println(" I'm sending this username here=="+loginUser);
+        model.addAttribute("username",loginUser);
         model.addAttribute("revenueList", revenueList);
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("paidInflowTransactions", paidInflowTransactions);
