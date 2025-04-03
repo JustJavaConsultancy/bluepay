@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -111,6 +112,9 @@ public class MerchantController {
         int successOutflowRate = (int) allOutflowTransactions != 0 ? (paidOutflowTransactions / allOutflowTransactions) * 100 : 0;
 
 
+        System.out.println(" I'm sending this username here=="+loginUser);
+        model.addAttribute("username",loginUser);
+        model.addAttribute("revenueList", revenueList);
         model.addAttribute("totalRevenue", totalRevenue);
         model.addAttribute("paidInflowTransactions", paidInflowTransactions);
         model.addAttribute("errorInflowTransactions", errorInflowTransactions);
@@ -166,10 +170,10 @@ public class MerchantController {
     public String getBalance(Model model){
 
         List<JournalLine> bankBalances=merchantService.myBalances();
-        bankBalances.forEach(journalLine -> {
-            System.out.println(" The lines are==== "+journalLine.toString());
-            }
-        );
+//        bankBalances.forEach(journalLine -> {
+//            System.out.println(" The lines are==== "+journalLine.toString());
+//            }
+//        );
 
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
@@ -360,6 +364,14 @@ public class MerchantController {
         //System.out.println("Data saved so far: " + merchantDetails);
 
         return nextFragment;
+    }
+
+     @PostMapping("/addNewTransfer")
+    public String addTransfer(@RequestParam Map<String, String> requestParams) {
+
+        requestParams.forEach((key, value) -> System.out.println(key + ": " + value));
+
+        return "product/sucessfulPayment";
     }
 
 }

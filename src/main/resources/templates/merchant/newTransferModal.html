@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .hidden {
+            display: none;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 0;
+            padding: 1em;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="newTransfer">
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner-border" style="color: #0C74B1;" role="status"></div>
+            <div class="loading-text">Confirming Transfer</div>
+        </div>
+    </div>
+<button type="button" class="btn-close btn-close-black" data-bs-dismiss="modal" aria-label="Close"></button>
+
+    <form hx-post="/merchant/addNewTransfer"
+          id="addTransferForm"
+          onsubmit="document.getElementById('loadingOverlay').style.display = 'flex';"
+          hx-on::after-request="document.getElementById('loadingOverlay').style.display = 'none';">
+
+    <div style="display: flex; padding: 25px; width: 100%;">
+        <div style="width: 100%;">
+
+            <!-- First Section -->
+            <div id="first">
+                <h3 style="font-size: 1rem; font-weight: 500; color: #333C41;">New Transfer</h3>
+                <div style="display: flex; justify-content: center;">
+                    <div style="font-size: 0.85rem; font-weight: 400; background-color: #F4F8FB; border: 1px solid #E6E7E7; padding: 12px; border-radius: 8px;">
+                        Available Balance: NGN50,000.00
+                    </div>
+                </div>
+                <div id="gottenBeneficiary">
+                    <label for="beneficiaryName" class="form-label mt-3" style="font-size: 1rem; color: #333C41; font-weight: 400;">
+                        Beneficiary
+                    </label>
+                    <select id="beneficiaryName" name="beneficiaryName" class="form-select" style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                            onchange="document.getElementById('saveproductButton').disabled = ( document.getElementById('amountToSend').value === '' || document.getElementById('narration').value === '');">
+                        <option value="Select">Select Beneficiary</option>
+                        <option value="Akinrinde">AKINRINDE AKINKUNMI - 8138482251 - First Bank</option>
+                    </select>
+                    <div class="mt-1" style="font-size: 0.85rem;font-weight: 500;color: #0C74B1;cursor: pointer;" onclick="document.getElementById('gottenBeneficiary').classList.toggle('hidden'); document.getElementById('setBeneficiary').classList.toggle('hidden');">
+                        Create new beneficiary
+                    </div>
+                </div>
+                <div id="setBeneficiary" class="hidden">
+                    <label for="bankName" class="form-label mt-3" style="font-size: 1rem; color: #333C41; font-weight: 400;">
+                        Bank Name
+                    </label>
+                    <select id="bankName" name="bankName" class="form-select" style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                            onchange="document.getElementById('saveproductButton').disabled = ( document.getElementById('amountToSend').value === '' || document.getElementById('narration').value === '');">
+                        <option value="Select">Select bank</option>
+                        <option value="UBA">UBA</option>
+                        <option value="WEMA">WEMA</option>
+                    </select>
+                    <label for="accNumber" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+                        Account Number
+                    </label>
+                    <input type="text" class="form-control" name="accNumber" id="accNumber" placeholder="Enter account number"  style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                           oninput="document.getElementById('saveproductButton').disabled = ( document.getElementById('amountToSend').value === '' || document.getElementById('narration').value === '')"/>
+                    <div class="mt-1" style="font-size: 0.85rem;font-weight: 400;color: #357F7B;">Akinrinde Akinkunmi</div>
+                </div>
+
+                <label for="amountToSend" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+                    Amount to send
+                </label>
+                <input type="text" class="form-control" name="amountToSend" id="amountToSend" placeholder="Minimum amount to send NGN 100"  style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                       oninput="document.getElementById('saveproductButton').disabled = ( document.getElementById('amountToSend').value === '' || document.getElementById('narration').value === '')"/>
+                <div class="mt-1" style="font-size: 0.73rem;font-weight: 400;">You will be charged NGN 1 for this transfer</div>
+
+                <label for="narration" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+                    Narration
+                </label>
+                <input type="text" class="form-control" name="narration" id="narration" placeholder="Enter Narration"  style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                       oninput="document.getElementById('saveproductButton').disabled = ( document.getElementById('amountToSend').value === '' || document.getElementById('narration').value === '')"/>
+                <div class="mt-4" style="float: right;">
+                    <button data-bs-dismiss="modal" type="button" class="btn" style="border: 0.5px solid #B0B3B5; background-color: white; color: black; font-weight: 500; font-size: 1rem;">Cancel</button>
+                    <button type="button" id="saveproductButton" class="btn" style="color: white; background-color: #0C74B1; font-weight: 500; font-size: 1rem;" disabled
+                            onclick="document.getElementById('second').classList.toggle('hidden'); document.getElementById('first').classList.toggle('hidden');"
+                    >Start Transfer</button>
+                </div>
+            </div>
+
+
+
+            <!-- Second Section -->
+            <div id="second" class="hidden">
+                <h3 style="font-size: 1rem; font-weight: 500; color: #333C41;">Confirm Transfer</h3>
+                <h4 class="mt-2" style="font-size: 1rem;font-weight: 600;text-align: center;color: #357F7B;">NGN50,000.00 to DAMILOLA OGUNDIPE</h4>
+                <p style="font-size: 0.9rem;font-weight: 400;text-align: center;">8138482251 - GTBANK</p>
+                <p style="font-size: 0.9rem;font-weight: 400;text-align: center;">We sent a confirmation code to
+                    damilolaogundipe@gmail.com. Please enter the code
+                    below to complete this transfer </p>
+                <label for="confirmCode" class="form-label mt-3" style="font-size: 1rem; font-weight: 400;">
+                    Enter Code
+                </label>
+                <input type="text" class="form-control" name="confirmCode" id="confirmCode" placeholder="Confirmation code" required style="font-size: 0.85rem; background-color: #F9F7F7; border: 1px solid #E8E8E8"
+                       oninput="if(this.value === ''){
+                          document.getElementById('confirmTransfer').disabled = true;
+                        }
+                        else if (this.value.length > 0) {
+                          document.getElementById('confirmTransfer').disabled = false;
+                        }
+            "
+                />
+                <div class="mt-1" style="font-size: 0.85rem;font-weight: 500;color: #0C74B1;cursor: pointer;">Resend Code</div>
+                <div class="mt-4" style="float: right;">
+                    <button type="button" class="btn" style="border: 0.5px solid #B0B3B5; background-color: white; color: black; font-weight: 500; font-size: 1rem;" _="on click add .hidden to #second remove .hidden from #first"
+
+                    >Back</button>
+                    <button type="submit" id="confirmTransfer" class="btn" style="color: white; background-color: #0C74B1; font-weight: 500; font-size: 1rem;" disabled>Confirm Transfer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+</body>
+</html>
