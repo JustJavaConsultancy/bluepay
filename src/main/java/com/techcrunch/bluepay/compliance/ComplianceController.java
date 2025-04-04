@@ -148,6 +148,8 @@ public class ComplianceController {
         }*/
         model.addAttribute("verify", verify);
         model.addAttribute("merchantDetails",taskDTO.getVariables());
+        model.addAttribute("addressVerification",false);
+        model.addAttribute("bvnVerification",false);
         return "/complianceOfficer/complianceDetails";
     }
 }
