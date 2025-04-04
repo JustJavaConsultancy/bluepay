@@ -72,6 +72,10 @@ public class AccountService {
         charge10(payableAccount,getPGIncomeAccoun(),transaction);
         return transaction;
     }
+    public void settlementJournalEntry(DelegateExecution execution){
+        Map<String,Object> variables = execution.getVariables();
+        System.out.println(" The execution in settlementJournalEntry==="+variables);
+    }
     private void debitCredit(Account debit,Account credit,Transaction transaction){
 
         JournalLine journalLineDebit=new JournalLine();
