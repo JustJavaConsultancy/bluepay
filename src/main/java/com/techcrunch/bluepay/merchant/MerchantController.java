@@ -67,11 +67,12 @@ public class MerchantController {
         );
 
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
-
         List<TransactionDTO> myTransactions = merchantService.myTransactions();
 
+/*
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
+*/
 
         List<JournalLine> bankBalances=merchantService.myBalances();
         List<BigDecimal> bankCurrentAmount = bankBalances.stream()
@@ -125,7 +126,7 @@ public class MerchantController {
 
         model.addAttribute("paymentIssues", paymentIssues);
         model.addAttribute("nextSettlement", nextSettlement);
-        model.addAttribute("balanceTotal", payable.getBalance().add(bankAccount.getBalance()));
+        model.addAttribute("balanceTotal", 0.00);
 
 //        new entries
         model.addAttribute("bankCurrentAmount", bankCurrentAmount);
@@ -173,11 +174,18 @@ public class MerchantController {
 //            System.out.println(" The lines are==== "+journalLine.toString());
 //            }
 //        );
+        BigDecimal total =new BigDecimal(0.00);
+        try {
+            Account payable=merchantService.myPayableAccount();
+            Account bankAccount=merchantService.myBankAccount();
+            total=payable.getBalance().add(bankAccount.getBalance());
 
-        Account payable=merchantService.myPayableAccount();
-        Account bankAccount=merchantService.myBankAccount();
+        }catch (Exception exception){
+
+        }
+        model.addAttribute("balanceTotal",total);
+
         model.addAttribute("bankBalances", bankBalances);
-        model.addAttribute("balanceTotal",payable.getBalance().add(bankAccount.getBalance()));
         return "merchant/balance";
     }
 
@@ -186,14 +194,19 @@ public class MerchantController {
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         List<JournalLine> bankSettlements=merchantService.myBalances();
-        Account payable=merchantService.myPayableAccount();
-        Account bankAccount=merchantService.myBankAccount();
+        BigDecimal nextSettlementAmount = new BigDecimal(0.00);
+        try {
+            Account payable = merchantService.myPayableAccount();
+            Account bankAccount = merchantService.myBankAccount();
+            nextSettlementAmount = payable.getBalance().add(bankAccount.getBalance());
+        }catch (Exception exception){
 
+        }
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
 
         model.addAttribute("bankSettlements", bankSettlements);
         model.addAttribute("totalSettlements", bankSettlements.size());
-        model.addAttribute("nextSettlementAmount", payable.getBalance().add(bankAccount.getBalance()));
+        model.addAttribute("nextSettlementAmount", nextSettlementAmount);
         model.addAttribute("nextSettlement", nextSettlement);
 
         return "merchant/settlements";
@@ -208,14 +221,19 @@ public class MerchantController {
         DecimalFormat df = new DecimalFormat("#,##0.00");
 
         List<TransactionDTO> myTransfers = merchantService.myTransactions();
-        Account payable=merchantService.myPayableAccount();
-        Account bankAccount=merchantService.myBankAccount();
+        BigDecimal transferTotal = new BigDecimal(0.00);
+        try {
+            Account payable=merchantService.myPayableAccount();
+            Account bankAccount=merchantService.myBankAccount();
+            transferTotal=payable.getBalance().add(bankAccount.getBalance());
+        }catch (Exception exception){
+
+        }
 
         System.out.println("This is my transfer" + myTransfers);
         model.addAttribute("myTransfers", myTransfers);
         model.addAttribute("transferTotal", myTransfers.size());
-        model.addAttribute("transferBalance",payable.getBalance().add(bankAccount.getBalance()));
-
+        model.addAttribute("transferBalance",transferTotal);
         return "merchant/transfers";
     }
 
@@ -260,6 +278,11 @@ public class MerchantController {
     @GetMapping("/submitted")
     public String getSubmittedStatus(Model model){
 
+        String loginUser= (String) authenticationManager.get("sub");
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMerchantStatus(loginUser).get("variables");
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantPending";
     }
     @GetMapping("/approved")

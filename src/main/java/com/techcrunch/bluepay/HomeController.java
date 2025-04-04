@@ -38,9 +38,10 @@ public class HomeController {
 
         variables.put("status",status);
 
-/*        System.out.println("the status now=="+status+
+        System.out.println("the status now=="+status+
                 " ---The Variables i'm redirecting is====="+variables);
-        redirectAttributes.addFlashAttribute("merchantDetails",variables);*/
+        redirectAttributes.addFlashAttribute("merchantDetails",variables);
+
         if(authenticationManager.isMerchant()){
             page="redirect:merchant/"+status.toLowerCase();
             request.getSession(true).setAttribute("chatGroup",loginUser);

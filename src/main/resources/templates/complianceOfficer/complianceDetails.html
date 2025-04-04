@@ -42,9 +42,179 @@
         .btn-group .btn.present {
             background-color: white !important;
             color: #0C74B1 !important;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 600;
         }
+        .verification-card {
+            border-radius: 4px;
+            background-color: rgba(255, 255, 255, 1);
+            border-color: rgba(240, 240, 240, 1);
+            border-style: solid;
+            border-width: 1px;
+            display: flex;
+            /* max-width: 477px; */
+            padding-left: 32px;
+            padding-right: 32px;
+            padding-top: 38px;
+            padding-bottom: 38px;
+            flex-direction: column;
+            align-items: start;
+            justify-content: center;
+        }
+
+        .verification-container {
+            display: flex;
+            align-items: start;
+            gap: 20px;
+            justify-content: start;
+        }
+
+        .timeline {
+            display: flex;
+            min-height: 168px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: start;
+            width: 49px;
+        }
+
+        .success-indicator {
+            border-radius: 16px;
+            background-color: rgba(52, 199, 89, 1);
+            display: flex;
+            min-height: 31px;
+            width: 31px;
+            padding: 6px 5px;
+            align-items: center;
+            justify-content: center;
+            height: 31px;
+        }
+
+        .check-icon {
+            aspect-ratio: 1;
+            object-fit: contain;
+            object-position: center;
+            width: 20px;
+            align-self: stretch;
+            margin: auto;
+        }
+
+        .timeline-connector {
+            border-color: rgba(49, 57, 87, 1);
+            border-style: solid;
+            border-width: 1px;
+            background-color: #313957;
+            align-self: stretch;
+            min-height: 68px;
+            margin-top: 16px;
+            width: 1px;
+        }
+
+        .success-indicator:nth-child(3) {
+            margin-top: 16px;
+        }
+
+        .verification-content {
+            display: flex;
+            flex-direction: column;
+            align-items: start;
+            font-family: "Basis Grotesque Pro", -apple-system, Roboto, Helvetica,
+            sans-serif;
+            line-height: 1;
+            justify-content: start;
+            width: 216px;
+        }
+
+        .verification-step {
+            width: 141px;
+            max-width: 100%;
+        }
+
+        .verification-title {
+            color: #313957;
+            font-feature-settings: "liga" off, "clig" off;
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: -0.48px;
+            margin: 0;
+        }
+
+        .verification-status {
+            color: #828fa3;
+            font-feature-settings: "liga" off, "clig" off;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: -0.36px;
+            margin-top: 8px;
+            margin-bottom: 0;
+            /* width: 300px; */
+        }
+
+        .identity-step {
+            margin-top: 96px;
+        }
+
+        .identity-details {
+            display: flex;
+            margin-top: 8px;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            justify-content: center;
+        }
+
+        .bvn-badge {
+            font-feature-settings: "liga" off, "clig" off;
+            align-self: stretch;
+            border-radius: 2px;
+            background-color: rgba(177, 84, 12, 1);
+            margin-top: auto;
+            margin-bottom: auto;
+            padding: 2px 8px;
+            color: #fff;
+            font-weight: 500;
+            white-space: nowrap;
+            letter-spacing: -0.12px;
+        }
+
+        .identity-details .verification-status {
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+        .back-button-container {
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .back-icon-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: 1px solid #e4e7ec;
+            border-radius: 4px;
+            background-color: #fff;
+        }
+
+        .back-icon {
+            width: 12px;
+            height: 12px;
+        }
+
+        .back-text {
+            color: #313957;
+            font-size: 14px;
+        }
+
     </style>
 </head>
 <body>
@@ -69,8 +239,30 @@
     </div>
     <div style="display: flex; justify-content: center; height: 100vh;margin-top: 20px">
         <div>
-            <div style="display: flex; justify-content: center; align-items: center; ">
+            <div style="display: flex; justify-content: center; align-items: center; flex-direction: column">
                 <div>
+                    <div class="back-button-container"
+                         onclick="window.history.back()"
+                    >
+                        <button class="back-button">
+                            <div class="back-icon-wrapper">
+                                <svg
+                                        class="back-icon"
+                                        width="12"
+                                        height="12"
+                                        viewBox="0 0 12 12"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                            d="M1.14645 6.35355C0.951185 6.15829 0.951185 5.84171 1.14645 5.64645L3.14645 3.64645C3.34171 3.45118 3.65829 3.45118 3.85355 3.64645C4.04882 3.84171 4.04882 4.15829 3.85355 4.35355L2.70711 5.5L10.5 5.5C10.7761 5.5 11 5.72386 11 6C11 6.27614 10.7761 6.5 10.5 6.5L2.70711 6.5L3.85355 7.64645C4.04882 7.84171 4.04882 8.15829 3.85355 8.35355C3.65829 8.54882 3.34171 8.54882 3.14645 8.35355L1.14645 6.35355Z"
+                                            fill="black"
+                                    ></path>
+                                </svg>
+                            </div>
+                            <span class="back-text">Back</span>
+                        </button>
+                    </div>
                     <div class="btn-group">
                         <button id="btn1"
                                 class="btn btn-primary present"
@@ -81,15 +273,50 @@
                                 onclick="document.getElementById('veridetails').style.display='block'
                                  document.getElementById('dets').style.display='none'" >Verification Result</button>
                     </div>
-                    <button _="on click history.back()" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">
-                        <i class="bi bi-arrow-left-circle-fill fs-6"></i>
-                    </button>
-                    <div id="veridetails" class="reject" style="margin-top: 2%; background-color: #0C2CB10F; color: #2050A8; border-radius: 4px; padding: 10px 15px; width: 350px; max-height: fit-content; font-size: 0.75rem; font-weight: 400;display: none">
-                        <p style="font-weight: 500;">Reason for failed compliance</p>
-                        <p style="font-weight: 500;">Reason for failed compliance
-                            Please ensure that the information you provide is correct.
-                            Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. Please ensure that the information you provide is correct. </p>
-                    </div>
+<!--                    <button _="on click history.back()" style="color: #007bff; border: none; background: none; padding: 5px; cursor: pointer; transition: 0.3s;">-->
+<!--                        <i class="bi bi-arrow-left-circle-fill fs-6"></i>-->
+<!--                    </button>-->
+                    <div id="veridetails" class="reject" style="margin-top: 2%; border-radius: 4px; padding: 10px 15px; width: 350px; max-height: fit-content; font-size: 0.75rem; font-weight: 400;display: none">
+
+                        <article class="verification-card">
+                            <div class="verification-container">
+                                <div class="timeline">
+                                    <div class="success-indicator">
+                                        <img
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/752785aa1d1b1487468316e5405189b3b99361ce?placeholderIfAbsent=true&apiKey=3660353ef17a486796013058d48a0a07"
+                                                class="check-icon"
+                                                alt="Success check mark"
+                                        />
+                                    </div>
+                                    <div class="timeline-connector"></div>
+                                    <div class="success-indicator">
+                                        <img
+                                                src="https://cdn.builder.io/api/v1/image/assets/TEMP/7f31284a74667af49928366160d2fb4a3be52ff9?placeholderIfAbsent=true&apiKey=3660353ef17a486796013058d48a0a07"
+                                                class="check-icon"
+                                                alt="Success check mark"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="verification-content">
+                                    <section class="verification-step">
+                                        <h2 class="verification-title">Address Verification</h2>
+                                        <p class="verification-status">Successfully</p>
+                                    </section>
+                                    <section class="verification-step identity-step">
+                                        <h2 class="verification-title">
+                                            Identity Verification
+                                        </h2>
+                                        <div class="identity-details">
+                                            <span class="bvn-badge" th:text="${merchantDetails['identificationDoc']}">BVN</span>
+                                            <p class="verification-status"
+                                            th:text="'Verification'+' '+${verify.get('message')}">
+                                                Verification successful
+                                            </p>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </article>                    </div>
                     <div id="dets">
                     <div th:replace="~{/compliance/summary :: form6('null','hideSummary','hideSummary',${merchantDetails},false)}" />
                     </div>

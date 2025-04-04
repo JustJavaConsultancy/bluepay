@@ -1,5 +1,9 @@
 package com.techcrunch.bluepay.compliance;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.techcrunch.bluepay.processes.CustomProcessService;
 import com.techcrunch.bluepay.tasks.TaskDTO;
 import com.techcrunch.bluepay.tasks.TaskRepository;
@@ -31,6 +35,8 @@ public class ComplianceController {
 
     @Autowired
     TaskRepository taskRepository;
+    @Autowired
+    ObjectMapper objectMapper;
     @GetMapping("/compliance")
     public String getCompliance(){
 
@@ -131,6 +137,16 @@ public class ComplianceController {
     public String getcomplianceDetail(@PathVariable String taskId, Model model){
 
         TaskDTO taskDTO = taskRepository.getSingleTask(taskId);
+        System.out.println(" taskDTO==="+taskDTO.getVariables());
+        ObjectNode verify= (ObjectNode) taskDTO.getVariables().get("bvnResponse");
+        System.out.println(" Verifying Here...."+verify);
+/*        Map<String, Object> verifyResponse = null;
+        try {
+            verifyResponse = objectMapper.readValue(verify, Map.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }*/
+        model.addAttribute("verify", verify);
         model.addAttribute("merchantDetails",taskDTO.getVariables());
         return "/complianceOfficer/complianceDetails";
     }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout}">
 <body >
-<div layout:fragment="content">
+<div layout:fragment="content" >
   <script th:src="@{/js/progressBars.js}"></script>
   <script th:src="@{/js/dashboardChart.js}"></script>
 
@@ -115,6 +115,7 @@
             <div class="transaction-stats">
               <div class="stat-item">
                 <span class="stat-indicator success"></span>
+                <input type="hidden" id="username" th:value="${username}">
                 <p class="stat-text">Successful: <span th:text="${paidOutflowTransactions}"></span></p>
               </div>
               <div class="stat-item">
@@ -125,7 +126,9 @@
           </div>
         </div>
       </div>
+      <div id="messages">
 
+      </div>
       <div class="payment-issues-card">
         <h4 class="card-title">Payment Issues</h4>
         <div class="issues-list">
@@ -149,6 +152,41 @@
       </div>
     </div>
   </div>
+  <script>
+    window.onload = function() {
+      connectStomp();
+    };
+
+    function connectStomp() {
+      const socket = new SockJS('/ws');
+      const stompClient = Stomp.over(socket);
+      stompClient.connect({
+
+      }, function(frame) {
+        const username=document.getElementById("username").value;
+        //alert("Connected: " + username);
+        console.log('Connected: ' + username);
+        stompClient.subscribe('/topic/monitor/'+username, function(message) {
+          const msg = message.body;
+          console.log(msg);
+          const div = document.createElement('div');
+          div.textContent = msg;
+          const messages = document.getElementById('messages');
+          messages.appendChild(div);
+        });
+      });
+      window.stompClient = stompClient; // Expose to global scope
+    }
+
+    function sendMessage() {
+      const message = document.getElementById("messageInput").value;
+      if (window.stompClient) {
+        window.stompClient.send("/app/send", {}, message);
+        document.getElementById("messageInput").value = "";
+      }
+    }
+  </script>
+
 </div>
 </body>
 </html>
