@@ -67,11 +67,12 @@ public class MerchantController {
         );
 
         Map<String, Object> nextSettlement = Map.of("amount", df.format(90000), "date", "April 29, 2025");
-
         List<TransactionDTO> myTransactions = merchantService.myTransactions();
 
+/*
         Account payable=merchantService.myPayableAccount();
         Account bankAccount=merchantService.myBankAccount();
+*/
 
         List<JournalLine> bankBalances=merchantService.myBalances();
         List<BigDecimal> bankCurrentAmount = bankBalances.stream()
@@ -125,7 +126,7 @@ public class MerchantController {
 
         model.addAttribute("paymentIssues", paymentIssues);
         model.addAttribute("nextSettlement", nextSettlement);
-        model.addAttribute("balanceTotal", payable.getBalance().add(bankAccount.getBalance()));
+        model.addAttribute("balanceTotal", 0.00);
 
 //        new entries
         model.addAttribute("bankCurrentAmount", bankCurrentAmount);
