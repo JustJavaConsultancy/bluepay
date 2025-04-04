@@ -307,8 +307,9 @@
                                             Identity Verification
                                         </h2>
                                         <div class="identity-details">
-                                            <span class="bvn-badge">BVN</span>
-                                            <p class="verification-status">
+                                            <span class="bvn-badge" th:text="${merchantDetails['identificationDoc']}">BVN</span>
+                                            <p class="verification-status"
+                                            th:text="'Verification'+' '+${verify.get('message')}">
                                                 Verification successful
                                             </p>
                                         </div>
