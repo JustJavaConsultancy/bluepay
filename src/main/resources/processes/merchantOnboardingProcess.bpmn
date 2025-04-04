@@ -7,8 +7,8 @@
   <process id="merchantOnboardingProcess" name="Merchant Onboarding Process" isExecutable="true" flowable:candidateStarterGroups="flowableUser">
     <extensionElements>
       <design:stencilid><![CDATA[BPMNDiagram]]></design:stencilid>
-      <design:creationdate><![CDATA[2025-03-29T16:18:39.955Z]]></design:creationdate>
-      <design:modificationdate><![CDATA[2025-04-02T14:50:44.857Z]]></design:modificationdate>
+      <design:creationdate><![CDATA[2025-04-04T12:34:07.086Z]]></design:creationdate>
+      <design:modificationdate><![CDATA[2025-04-04T14:21:12.558Z]]></design:modificationdate>
     </extensionElements>
     <userTask id="FormTask_5" name="KYC Check for ${businessName}" flowable:assignee="compliance" flowable:owner="${initiator}" flowable:formKey="complianceVerification" flowable:formFieldValidation="false">
       <extensionElements>
@@ -21,14 +21,12 @@
     </userTask>
     <callActivity id="initialVerification" name="Initial Verification" calledElement="httpVerifyProcess" flowable:processInstanceName="verifySubProcess" flowable:inheritBusinessKey="true" flowable:inheritVariables="true" flowable:sameDeployment="true" flowable:fallbackToDefaultTenant="true">
       <extensionElements>
-        <flowable:in source="bvnId" target="bvnId"></flowable:in>
-        <flowable:in source="cacRegNumber" target="cacRegNumber"></flowable:in>
-        <flowable:in source="ninId" target="ninId"></flowable:in>
-        <flowable:in source="tinId" target="tinId"></flowable:in>
-        <flowable:out source="bvnResponse" target="bvnResponse"></flowable:out>
+        <flowable:in source="idNumber" target="idNumber"></flowable:in>
+        <flowable:in source="identificationDoc" target="identificationDoc"></flowable:in>
+        <flowable:in source="firstname" target="firstname"></flowable:in>
+        <flowable:in source="lastname" target="lastname"></flowable:in>
         <flowable:out source="cacResponse" target="cacResponse"></flowable:out>
-        <flowable:out source="tinResponse" target="tinResponse"></flowable:out>
-        <flowable:out source="ninResponse" target="ninResponse"></flowable:out>
+        <flowable:out source="verifyResponse" target="verifyResponse"></flowable:out>
         <design:stencilid><![CDATA[CallActivity]]></design:stencilid>
       </extensionElements>
     </callActivity>
@@ -125,8 +123,8 @@
       </extensionElements>
     </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_merchantOnboardingProcess">
-    <bpmndi:BPMNPlane bpmnElement="merchantOnboardingProcess" id="BPMNPlane_merchantOnboardingProcess">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_merchantOnboardingProcess1">
+    <bpmndi:BPMNPlane bpmnElement="merchantOnboardingProcess1" id="BPMNPlane_merchantOnboardingProcess1">
       <bpmndi:BPMNShape bpmnElement="FormTask_5" id="BPMNShape_FormTask_5">
         <omgdc:Bounds height="80.0" width="100.0" x="266.47514977824596" y="159.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -180,16 +178,16 @@
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_112" id="BPMNEdge_SequenceFlow_112" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="14.0" flowable:targetDockerY="14.0">
         <omgdi:waypoint x="1025.0" y="199.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1117.758342738509" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1117.0" y="199.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_101" id="BPMNEdge_SequenceFlow_101" flowable:sourceDockerX="20.0" flowable:sourceDockerY="20.0" flowable:targetDockerX="50.0" flowable:targetDockerY="40.0">
-        <omgdi:waypoint x="539.7375126511623" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="539.0" y="199.0"></omgdi:waypoint>
         <omgdi:waypoint x="600.0" y="199.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_111" id="BPMNEdge_SequenceFlow_111" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="15.0" flowable:targetDockerY="15.0">
         <omgdi:waypoint x="700.0" y="199.0"></omgdi:waypoint>
-        <omgdi:waypoint x="741.5" y="199.0"></omgdi:waypoint>
-        <omgdi:waypoint x="741.5" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="741.0" y="199.0"></omgdi:waypoint>
+        <omgdi:waypoint x="741.0" y="199.0"></omgdi:waypoint>
         <omgdi:waypoint x="783.0" y="199.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="SequenceFlow_61" id="BPMNEdge_SequenceFlow_61" flowable:sourceDockerX="50.0" flowable:sourceDockerY="40.0" flowable:targetDockerX="20.0" flowable:targetDockerY="20.0">
