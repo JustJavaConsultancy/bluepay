@@ -278,6 +278,11 @@ public class MerchantController {
     @GetMapping("/submitted")
     public String getSubmittedStatus(Model model){
 
+        String loginUser= (String) authenticationManager.get("sub");
+
+        Map<String,Object> variables = (Map<String, Object>)
+                merchantService.getMerchantStatus(loginUser).get("variables");
+        model.addAttribute("merchantDetails",variables);
         return "merchant/merchantPending";
     }
     @GetMapping("/approved")
