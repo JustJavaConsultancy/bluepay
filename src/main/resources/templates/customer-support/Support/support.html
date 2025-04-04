@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bluepay Support</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* Base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Basis Grotesque Pro", -apple-system, Roboto, Helvetica,
+          sans-serif;
+      }
+
+      /* Website container */
+      .website {
+        background-color: rgba(255, 255, 255, 1);
+        padding-bottom: 7px;
+        overflow: hidden;
+      }
+
+      /* Hero section */
+      .hero-section {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        width: 100%;
+        padding: 35px 80px;
+        align-items: center;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: relative;
+        border-radius: 16px;
+        display: flex;
+        width: 100%;
+        /* max-width: 1240px; */
+        padding: 11px 0;
+        align-items: center;
+        gap: 40px 100px;
+        font-size: 16px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .navbar-container {
+        align-self: stretch;
+        display: flex;
+        min-width: 240px;
+        margin: auto 0;
+        align-items: center;
+        gap: 24px;
+        color: #000b11;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+
+      .navbar-left {
+        align-self: stretch;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 12px;
+        white-space: nowrap;
+        justify-content: start;
+      }
+
+      .logo {
+        aspect-ratio: 3.15;
+        object-fit: contain;
+        object-position: center;
+        width: 101px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .active {
+        color: #0c74b1;
+      }
+
+      .menu-text {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+        text-decoration: none;
+      }
+
+      .dropdown-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+        color: #000b11;
+      }
+
+      .navbar-actions {
+        align-self: stretch;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 21px;
+        font-weight: 500;
+        line-height: 1;
+        justify-content: start;
+      }
+
+      .login-link {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+        gap: 8px;
+        color: #0c74b1;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+
+      .signup-button {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        border-radius: 4px;
+        background-color: #0c74b1;
+        margin: auto 0;
+        padding: 10px;
+        gap: 8px;
+        color: #f4f8fb;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* Conversational Support Banner Styles */
+
+      .support-banner {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 84px 183px;
+        border-radius: 16px;
+        height: 437px;
+        box-sizing: border-box;
+        background-color: #f0faff;
+      }
+
+      .support-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 24px;
+        width: 874px;
+      }
+
+      .support-heading {
+        color: #333c41;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 61px;
+        letter-spacing: -1.44px;
+        margin-bottom: 12px;
+        margin-top: 0;
+      }
+
+      .support-description {
+        color: #333c41;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 141%;
+        letter-spacing: -0.54px;
+        margin: 0;
+      }
+
+      .chat-button {
+        padding: 10px 30px;
+        gap: 8px;
+        border-radius: 4px;
+        color: #f4f8fb;
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        line-height: 100%;
+        cursor: pointer;
+        background-color: #0c74b1;
+        border: none;
+        text-decoration: none;
+      }
+
+      /* Key Features section */
+      .features-section {
+        display: flex;
+        flex-direction: column;
+        gap: 32px;
+        padding: 68px 100px;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 0 auto;
+      }
+
+      .features-heading {
+        color: #0c74b1;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 51.2px;
+        letter-spacing: -0.64px;
+      }
+
+      .features-container {
+        display: flex;
+        align-items: flex-start;
+        gap: 92px;
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .feature-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        width: 308px;
+      }
+
+      .feature-content {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .feature-title {
+        color: #000b11;
+        font-size: 20px;
+        font-weight: 700;
+        line-height: 20px;
+        letter-spacing: -0.6px;
+      }
+
+      .feature-description {
+        color: #000b11;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22.4px;
+      }
+
+      .feature-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      /* Chat container */
+      .chat-container {
+        display: flex;
+        width: 100%;
+        max-width: 1142px;
+        align-items: flex-start;
+        gap: 145px;
+        margin: 0 auto;
+        padding: 91px 0;
+      }
+
+      .chat-section {
+        flex: 1;
+        max-width: 604px;
+      }
+
+      .chat-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 156px;
+        padding: 39px 24px;
+        border-radius: 12px;
+        box-shadow: 0px 1px 59px 0px rgba(0, 0, 0, 0.11);
+        background-color: #fff;
+      }
+
+      .greeting-message {
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 37px;
+        font-weight: 700;
+        line-height: 46px;
+        letter-spacing: -1.11px;
+        background: linear-gradient(
+          272deg,
+          #0c74b1 1.44%,
+          #bb3dc7 67.74%,
+          #fe06dd 98.56%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin: 0;
+      }
+
+      .input-container {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 1px;
+        border: 0.5px solid #b0b3b5;
+        background-color: #f9f7f7;
+      }
+
+      /* Input area */
+      .input-area {
+        width: 100%;
+      }
+
+      /* Placeholder text */
+      .placeholder-text {
+        color: #8a8f92;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.6;
+      }
+
+      /* Textarea */
+      .input-textarea {
+        width: 100%;
+        min-height: 40px;
+        border: none;
+        background-color: transparent;
+        color: #000b11;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        margin-top: 12px;
+        resize: none;
+        font-family: inherit;
+        outline: none;
+      }
+
+      .input-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 8px;
+        border-top: 0.5px solid #b0b3b5;
+      }
+
+      .attachment-button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+      }
+
+      .attachment-text {
+        color: #545c60;
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 22.4px;
+      }
+
+      .send-button {
+        display: flex;
+        width: 32px;
+        height: 32px;
+        padding: 6px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 4px;
+        background: linear-gradient(
+          272deg,
+          #0c74b1 1.44%,
+          #bb3dc7 67.74%,
+          #fe06dd 98.56%
+        );
+        border: none;
+        cursor: pointer;
+      }
+
+      .tips-section {
+        flex: 1;
+        max-width: 393px;
+      }
+      /* 
+
+.tips-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 36px;
+}
+
+.tips-title {
+  color: #0c74b1;
+  font-family: "Basis Grotesque Pro", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 51.2px;
+  letter-spacing: -0.64px;
+  margin: 0;
+}
+
+.tips-subtitle {
+  color: #545c60;
+  font-family: "Basis Grotesque Pro", sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 141%;
+  letter-spacing: -0.54px;
+  margin: 0;
+}
+
+.tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.tip-item {
+  width: 100%;
+} */
+
+      .tips-container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 36px;
+        padding: 24px;
+      }
+
+      /* Header section styles */
+      .tips-header {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .tips-title {
+        width: 100%;
+        color: #0c74b1;
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 32px;
+        font-weight: 700;
+        line-height: 51.2px;
+        letter-spacing: -0.64px;
+        margin: 0;
+      }
+
+      .tips-subtitle {
+        width: 100%;
+        color: #545c60;
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 141%;
+        letter-spacing: -0.54px;
+        margin: 0;
+      }
+
+      /* Tips content section */
+      .tips-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 32px;
+        width: 100%;
+        padding-top: 20px;
+      }
+
+      /* Individual tip card */
+      .tip-card {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        width: 100%;
+      }
+
+      /* Checkmark icon styling */
+      .tip-icon-wrapper {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        position: relative;
+      }
+
+      .checkmark-icon {
+        display: block;
+        width: 18px;
+        height: 18px;
+        background-color: #0c74b1;
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .checkmark-icon::after {
+        content: "";
+        position: absolute;
+        left: 6px;
+        top: 3px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+
+      /* Tip text content */
+      .tip-text-content {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .tip-heading {
+        color: #333c41;
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        margin: 0;
+        padding-bottom: 4px;
+      }
+
+      .tip-description {
+        color: #333c41;
+        font-family: "Basis Grotesque Pro", sans-serif;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 1.4;
+        margin: 0;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: rgba(251, 253, 254, 1);
+        display: flex;
+        width: 100%;
+        padding: 68px 100px;
+        flex-direction: column;
+        overflow: hidden;
+        align-items: center;
+        justify-content: start;
+      }
+
+      .footer-content {
+        align-self: stretch;
+        display: flex;
+        width: 100%;
+        align-items: start;
+        gap: 40px 99px;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        color: #000b11;
+        justify-content: start;
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 124px;
+      }
+
+      .footer-title {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: start;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.54px;
+        line-height: 1;
+      }
+
+      .footer-links {
+        display: flex;
+        margin-top: 16px;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+        list-style: none;
+        gap: 10px;
+      }
+
+      .footer-link {
+        font-feature-settings: "liga" off, "clig" off;
+        display: block;
+        margin-top: 8px;
+        color: #000b11;
+        text-decoration: none;
+      }
+
+      .footer-link:first-child {
+        margin-top: 0;
+      }
+
+      .footer-section {
+        margin-top: 24px;
+      }
+
+      .footer-section:first-child {
+        margin-top: 0;
+      }
+
+      .contact-info {
+        display: flex;
+        margin-top: 16px;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        justify-content: start;
+        margin-top: 8px;
+      }
+
+      .contact-item:first-child {
+        margin-top: 0;
+      }
+
+      .contact-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .contact-text {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+        gap: 8px;
+      }
+
+      .social-links {
+        display: flex;
+        margin-top: 54px;
+        align-items: center;
+        gap: 16px;
+        justify-content: start;
+      }
+
+      .social-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 24px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .footer-divider {
+        border-color: rgba(138, 143, 146, 1);
+        border-style: solid;
+        border-width: 1px;
+        background-color: #8a8f92;
+        min-height: 2px;
+        margin-top: 48px;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .footer-copyright {
+        display: flex;
+        margin-top: 48px;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #333c41;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.6;
+        justify-content: center;
+      }
+
+      .copyright-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .copyright-text {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+      }
+
+      /* Media queries */
+      @media (max-width: 991px) {
+        .hero-section {
+          max-width: 100%;
+          padding: 35px 20px;
+        }
+
+        .navbar {
+          max-width: 100%;
+        }
+
+        .navbar-container {
+          max-width: 100%;
+        }
+
+        .navbar-left {
+          white-space: initial;
+        }
+
+        .menu-item {
+          white-space: initial;
+        }
+
+        .login-link {
+          white-space: initial;
+        }
+
+        .footer {
+          max-width: 100%;
+          padding: 68px 20px;
+        }
+
+        .footer-content {
+          max-width: 100%;
+        }
+
+        .footer-title {
+          white-space: initial;
+        }
+
+        .contact-item {
+          white-space: initial;
+        }
+
+        .social-links {
+          margin-top: 40px;
+        }
+
+        .footer-divider {
+          margin-top: 40px;
+        }
+
+        .footer-copyright {
+          margin-top: 40px;
+        }
+
+        .support-banner {
+          padding: 60px 40px;
+          width: 100%;
+          height: auto;
+        }
+
+        .support-content {
+          width: 100%;
+          max-width: 874px;
+        }
+
+        .support-heading {
+          font-size: 36px;
+          line-height: 46px;
+        }
+
+        .support-description {
+          font-size: 16px;
+        }
+
+        .features-section {
+          max-width: 100%;
+          padding: 68px 20px;
+        }
+
+        .features-container {
+          flex-wrap: wrap;
+          gap: 40px;
+          justify-content: center;
+        }
+
+        .feature-card {
+          width: calc(50% - 20px);
+        }
+
+        .chat-container {
+          flex-direction: column;
+          gap: 60px;
+          padding: 40px 20px;
+        }
+
+        .chat-section {
+          max-width: 100%;
+        }
+
+        .tips-section {
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .support-banner {
+          padding: 40px 20px;
+        }
+
+        .support-heading {
+          font-size: 28px;
+          line-height: 36px;
+        }
+
+        .support-description {
+          font-size: 14px;
+        }
+
+        .chat-button {
+          width: 100%;
+        }
+
+        .features-heading {
+          font-size: 28px;
+          line-height: 40px;
+        }
+
+        .features-container {
+          flex-direction: column;
+          align-items: center;
+          gap: 32px;
+        }
+
+        .feature-card {
+          width: 100%;
+          max-width: 308px;
+        }
+
+        .chat-container {
+          padding: 20px;
+        }
+
+        .chat-box {
+          padding: 20px;
+          gap: 80px;
+        }
+
+        .greeting-message {
+          font-size: 28px;
+          line-height: 34px;
+        }
+
+        .tips-title {
+          font-size: 24px;
+          line-height: 38px;
+        }
+
+        .tips-subtitle {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="website">
+      <section class="hero-section">
+        <nav class="navbar">
+          <div class="navbar-container">
+            <div class="navbar-left">
+              <img
+                src="/images/bluepay-logo.png"
+                class="logo"
+                alt="Bluepay logo"
+              />
+            </div>
+          </div>
+          <div class="navbar-actions">
+            <a href="#" class="login-link">Login</a>
+            <a href="#" class="signup-button">Create free acount</a>
+          </div>
+        </nav>
+      </section>
+
+      <section class="support-banner">
+        <div class="support-content">
+          <h1 class="support-heading">
+            Welcome to Bluepay Conversational Customer Support System
+          </h1>
+          <p class="support-description">
+            Our conversational customer support system uses artificial
+            intelligence to understand your questions or issues, and provide
+            personalized responses. You can ask us anything, from
+            account-related, payments, to disputes and after-purchase questions.
+          </p>
+          <a class="chat-button" href="#chat">Start Chat</a>
+        </div>
+      </section>
+
+      <section class="features-section">
+        <h2 class="features-heading">Key Features</h2>
+        <div class="features-container">
+          <article class="feature-card">
+            <div>
+              <img src="/images/automated-support.png" alt="Support icon" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Automated Support</h3>
+              <p class="feature-description">
+                Get instant answers to common questions and issues
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div>
+              <img src="/images/ticket.png" alt="Ticket " />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Ticket Creation</h3>
+              <p class="feature-description">
+                Our system can automatically create tickets for complex issues
+                that require human assistance.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div>
+              <img src="/images/xp.png" alt="Experience" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Personalized Experience</h3>
+              <p class="feature-description">
+                Responses will be tailored to your specific needs and
+                preferences.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="features-section">
+        <h2 class="features-heading">Key Features</h2>
+        <div class="features-container">
+          <article class="feature-card">
+            <div>
+              <img src="/images/question.png" alt="Question" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Ask a Question</h3>
+              <p class="feature-description">
+                Type your question or issue in the chat window.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div>
+              <img src="/images/chat.png" alt="Chat" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Get a Response</h3>
+              <p class="feature-description">
+                Our system will provide an instant response or ask for more
+                information to clarify your issue.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div>
+              <img src="/images/ticket.png" alt="Ticket" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Ticket Creation</h3>
+              <p class="feature-description">
+                If our system determines that your issue requires human
+                assistance, it will automatically create a ticket and assign it
+                to a support agent.
+              </p>
+            </div>
+          </article>
+
+          <article class="feature-card">
+            <div>
+              <img src="/images/follow-up.png" alt="follow-up" />
+            </div>
+            <div class="feature-content">
+              <h3 class="feature-title">Follow-Up</h3>
+              <p class="feature-description">
+                You can track the status of your ticket and receive updates
+                through email or in-app notifications.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <main class="chat-container" id="chat">
+        <section class="chat-section">
+          <div class="chat-box">
+            <h1 class="greeting-message">
+              Hi there, Let me know how I can help you
+            </h1>
+            <div class="input-container">
+              <div class="input-area">
+                <label for="chat-input" class="placeholder-text"
+                  >Ask me questions or describe your issues</label
+                >
+                <textarea id="chat-input" class="input-textarea" placeholder="">
+I .......</textarea
+                >
+              </div>
+              <div class="input-actions">
+                <button class="attachment-button">
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="attachment-icon"
+                  >
+                    <path
+                      d="M8.82275 13.5013L14.0001 8.19995"
+                      stroke="#545C60"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M10.6665 3.99996L5.05718 9.72396C4.80722 9.974 4.6668 10.3131 4.6668 10.6666C4.6668 11.0202 4.80722 11.3593 5.05718 11.6093C5.30722 11.8593 5.6463 11.9997 5.99985 11.9997C6.3534 11.9997 6.69248 11.8593 6.94252 11.6093L12.5519 5.88529C13.0518 5.38522 13.3326 4.70706 13.3326 3.99996C13.3326 3.29286 13.0518 2.6147 12.5519 2.11463C12.0518 1.6147 11.3736 1.33386 10.6665 1.33386C9.95941 1.33386 9.28126 1.6147 8.78118 2.11463L3.17118 7.83796C2.42097 8.58817 1.99951 9.60567 1.99951 10.6666C1.99951 11.7276 2.42097 12.7451 3.17118 13.4953C3.92139 14.2455 4.93889 14.667 5.99985 14.667C7.06081 14.667 8.07831 14.2455 8.82852 13.4953"
+                      stroke="#545C60"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                  <span class="attachment-text">Add attachement</span>
+                </button>
+                <button class="send-button">
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="send-icon"
+                  >
+                    <path
+                      d="M15 6.66663L18.3333 9.99996L15 13.3333"
+                      stroke="white"
+                      stroke-width="1.45833"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                    <path
+                      d="M1.6665 10H18.3332"
+                      stroke="white"
+                      stroke-width="1.45833"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+        <aside class="tips-section">
+          <header class="tips-header">
+            <h1 class="tips-title">Tips and Best Practices</h1>
+            <p class="tips-subtitle">
+              Do these to quickly and easily get the help you need:
+            </p>
+          </header>
+          <div class="tips-content">
+            <article class="tip-card">
+              <div class="tip-icon-wrapper">
+                <span class="checkmark-icon"></span>
+              </div>
+              <div class="tip-text-content">
+                <h2 class="tip-heading">Be Specific</h2>
+                <p class="tip-description">
+                  Provide clear and concise descriptions of your issue to help
+                  our system understand your problem.
+                </p>
+              </div>
+            </article>
+            <article class="tip-card">
+              <div class="tip-icon-wrapper">
+                <span class="checkmark-icon"></span>
+              </div>
+              <div class="tip-text-content">
+                <h2 class="tip-heading">Use Natural Language</h2>
+                <p class="tip-description">
+                  Feel free to ask questions in your own words. Our system is
+                  designed to understand natural language.
+                </p>
+              </div>
+            </article>
+          </div>
+        </aside>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3 class="footer-title">Why Bluepay</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">Why Choose Bluepay</a></li>
+              <li><a href="#" class="footer-link">Success Rates</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3 class="footer-title">About</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">Company</a></li>
+              <li><a href="#" class="footer-link">The Teams</a></li>
+              <li><a href="#" class="footer-link">Our Value</a></li>
+              <li><a href="#" class="footer-link">Our Story</a></li>
+              <li><a href="#" class="footer-link">Compliance</a></li>
+              <li><a href="#" class="footer-link">Chagelog</a></li>
+              <li><a href="#" class="footer-link">Privacy and Terms</a></li>
+              <li><a href="#" class="footer-link">Teams</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Pricing</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Nigeria</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Customer</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Testimonial</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Developers</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Overview</a></li>
+                <li><a href="#" class="footer-link">Documentation</a></li>
+                <li><a href="#" class="footer-link">Status Page</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Support</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Live Chat</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Contacts</h3>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <img
+                    src="/images/email-logo.png"
+                    class="contact-icon"
+                    alt="Email icon"
+                  />
+                  <a class="contact-text">support@bluepay.com</a>
+                </div>
+                <div class="contact-item">
+                  <img
+                    src="/images/phone-icon.png"
+                    class="contact-icon"
+                    alt="Phone icon"
+                  />
+                  <a class="contact-text">+234 8138 482 251</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" class="social-link facebook"
+                ><img
+                  src="/images/logos_facebook.png"
+                  class="social-icon"
+                  alt="Facebook icon"
+              /></a>
+              <a href="#" class="social-link twitter"
+                ><img
+                  src="/images/prime_twitter.png"
+                  class="social-icon"
+                  alt="Twitter icon"
+              /></a>
+              <a href="#" class="social-link youtube"
+                ><img
+                  src="/images/logos_youtube-icon.png"
+                  class="social-icon"
+                  alt="Youtube icon"
+              /></a>
+              <a href="#" class="social-link linkedin"
+                ><img
+                  src="/images/devicon_linkedin.png"
+                  class="social-icon"
+                  alt="LinkedIn icon"
+              /></a>
+              <a href="#" class="social-link instagram"
+                ><img
+                  src="/images/skill-icons_instagram.png"
+                  class="social-icon"
+                  alt="Instagram icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-copyright">
+          <img
+            src="/images/copyright.png"
+            class="copyright-icon"
+            alt="Copyright icon"
+          />
+          <span class="copyright-text">Copyright, Bluepay 2025</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -57,4 +57,14 @@ public class HomeController {
     public String overview(){
         return "/home/index";
 }
+
+@GetMapping("/bluepay-site")
+    public String bluepaySite(){
+        return "customer-support/index";
 }
+    @GetMapping("/support")
+    public String support(){
+        return "customer-support/Support/support";
+    }
+}
+

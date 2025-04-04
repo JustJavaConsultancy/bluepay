@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bluepay Website</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css"
+    />
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <style>
+      /* Base styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Basis Grotesque Pro", -apple-system, Roboto, Helvetica,
+          sans-serif;
+      }
+
+      a {
+        text-decoration: none;
+        color: #000b11;
+      }
+
+      /* Website container */
+      .website {
+        background-color: rgba(255, 255, 255, 1);
+        padding-bottom: 7px;
+        overflow: hidden;
+      }
+
+      /* Hero section */
+      .hero-section {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        min-height: 720px;
+        width: 100%;
+        padding: 35px 80px 114px;
+        align-items: center;
+      }
+
+      .hero-background {
+        position: absolute;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+      }
+
+      /* Navbar */
+      .navbar {
+        position: relative;
+        border-radius: 16px;
+        display: flex;
+        width: 100%;
+        /* max-width: 1240px; */
+        padding: 11px 0;
+        align-items: center;
+        gap: 40px 100px;
+        font-size: 16px;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .navbar-container {
+        align-self: stretch;
+        display: flex;
+        min-width: 240px;
+        margin: auto 0;
+        align-items: center;
+        gap: 24px;
+        color: #000b11;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+
+      .navbar-left {
+        align-self: stretch;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 12px;
+        white-space: nowrap;
+        justify-content: start;
+      }
+
+      .logo {
+        aspect-ratio: 3.15;
+        object-fit: contain;
+        object-position: center;
+        width: 101px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .country-selector {
+        align-self: stretch;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      .flag-icon {
+        aspect-ratio: 1.36;
+        object-fit: contain;
+        object-position: center;
+        width: 19px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .country-name {
+        align-self: stretch;
+        margin: auto 0;
+        color: #000b11;
+      }
+
+      .navbar-menu {
+        align-self: stretch;
+        display: flex;
+        min-width: 240px;
+        margin: auto 0;
+        align-items: center;
+        gap: 16px;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+
+      .menu-item {
+        align-self: stretch;
+        cursor: pointer;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+        justify-content: center;
+      }
+
+      .active {
+        color: #0c74b1;
+      }
+
+      .menu-text {
+        align-self: stretch;
+        margin: auto 0;
+      }
+
+      .dropdown-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+        color: #000b11;
+      }
+
+      .navbar-actions {
+        align-self: stretch;
+        display: flex;
+        margin: auto 0;
+        align-items: center;
+        gap: 21px;
+        font-weight: 500;
+        line-height: 1;
+        justify-content: start;
+      }
+
+      .login-link {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+        gap: 8px;
+        color: #0c74b1;
+        white-space: nowrap;
+        text-decoration: none;
+      }
+
+      .signup-button {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        border-radius: 4px;
+        background-color: #0c74b1;
+        margin: auto 0;
+        padding: 10px;
+        gap: 8px;
+        color: #f4f8fb;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      /* Company section */
+      .company-section {
+        position: relative;
+        margin-top: 68px;
+        margin-bottom: -23px;
+        width: 100%;
+        /* max-width: 1221px; */
+      }
+
+      .company-container {
+        gap: 20px;
+        display: flex;
+      }
+
+      .company-image-column {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        line-height: normal;
+        /* width: 54%; */
+        width: 602px;
+        margin-left: 0;
+      }
+
+      .company-image {
+        aspect-ratio: 1.35;
+        object-fit: contain;
+        object-position: center;
+        width: 100%;
+        border-radius: 17px;
+        flex-grow: 1;
+      }
+
+      .company-content-column {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        line-height: normal;
+        width: 46%;
+        margin-left: 20px;
+      }
+
+      .company-content {
+        position: relative;
+        display: flex;
+        margin: auto 0;
+        flex-direction: column;
+        align-self: stretch;
+        align-items: stretch;
+        justify-content: start;
+      }
+
+      .section-title {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: start;
+        gap: 8px;
+        font-size: 20px;
+        color: #0c74b1;
+        font-weight: 500;
+        letter-spacing: -0.6px;
+        line-height: 1;
+      }
+
+      .company-description {
+        display: flex;
+        margin-top: 30px;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 16px;
+        color: #000b11;
+        font-weight: 400;
+        line-height: 22px;
+        justify-content: start;
+      }
+
+      .description-text {
+        font-feature-settings: "liga" off, "clig" off;
+        margin-top: 16px;
+        line-height: 1.4;
+      }
+
+      .description-text:first-child {
+        margin-top: 0;
+        align-self: start;
+        width: 478px;
+      }
+
+      /* Footer */
+      .footer {
+        background-color: rgba(251, 253, 254, 1);
+        display: flex;
+        width: 100%;
+        padding: 68px 100px;
+        flex-direction: column;
+        overflow: hidden;
+        align-items: center;
+        justify-content: start;
+      }
+
+      .footer-content {
+        align-self: stretch;
+        display: flex;
+        width: 100%;
+        align-items: start;
+        gap: 40px 99px;
+        justify-content: start;
+        flex-wrap: wrap;
+      }
+
+      .footer-column {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        color: #000b11;
+        justify-content: start;
+        flex-grow: 1;
+        flex-shrink: 1;
+        width: 124px;
+      }
+
+      .footer-title {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: start;
+        gap: 8px;
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.54px;
+        line-height: 1;
+      }
+
+      .footer-links {
+        display: flex;
+        margin-top: 16px;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+        list-style: none;
+        gap: 10px;
+      }
+
+      .footer-link {
+        font-feature-settings: "liga" off, "clig" off;
+        display: block;
+        margin-top: 8px;
+        color: #000b11;
+        text-decoration: none;
+      }
+
+      .footer-link:first-child {
+        margin-top: 0;
+      }
+
+      .footer-section {
+        margin-top: 24px;
+      }
+
+      .footer-section:first-child {
+        margin-top: 0;
+      }
+
+      .contact-info {
+        display: flex;
+        margin-top: 16px;
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.4;
+        justify-content: start;
+      }
+
+      .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        white-space: nowrap;
+        justify-content: start;
+        margin-top: 8px;
+      }
+
+      .contact-item:first-child {
+        margin-top: 0;
+      }
+
+      .contact-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .contact-text {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+        gap: 8px;
+      }
+
+      .social-links {
+        display: flex;
+        margin-top: 54px;
+        align-items: center;
+        gap: 16px;
+        justify-content: start;
+      }
+
+      .social-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 24px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .footer-divider {
+        border-color: rgba(138, 143, 146, 1);
+        border-style: solid;
+        border-width: 1px;
+        background-color: #8a8f92;
+        min-height: 2px;
+        margin-top: 48px;
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .footer-copyright {
+        display: flex;
+        margin-top: 48px;
+        align-items: center;
+        gap: 8px;
+        font-size: 14px;
+        color: #333c41;
+        font-weight: 400;
+        text-align: center;
+        line-height: 1.6;
+        justify-content: center;
+      }
+
+      .copyright-icon {
+        aspect-ratio: 1;
+        object-fit: contain;
+        object-position: center;
+        width: 16px;
+        align-self: stretch;
+        margin: auto 0;
+        flex-shrink: 0;
+      }
+
+      .copyright-text {
+        font-feature-settings: "liga" off, "clig" off;
+        align-self: stretch;
+        margin: auto 0;
+      }
+
+      /* Media queries */
+      @media (max-width: 991px) {
+        .hero-section {
+          max-width: 100%;
+          padding: 35px 20px 100px;
+        }
+
+        .navbar {
+          max-width: 100%;
+        }
+
+        .navbar-container {
+          max-width: 100%;
+        }
+
+        .navbar-left {
+          white-space: initial;
+        }
+
+        .country-selector {
+          white-space: initial;
+        }
+
+        .navbar-menu {
+          max-width: 100%;
+        }
+
+        .menu-item {
+          white-space: initial;
+        }
+
+        .login-link {
+          white-space: initial;
+        }
+
+        .company-section {
+          max-width: 100%;
+          margin-bottom: 10px;
+          margin-top: 40px;
+        }
+
+        .company-container {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0;
+        }
+
+        .company-image-column {
+          width: 100%;
+        }
+
+        .company-image {
+          max-width: 100%;
+          margin-top: 40px;
+        }
+
+        .company-content-column {
+          padding-right: 30px;
+          width: 100%;
+        }
+
+        .company-content {
+          max-width: 100%;
+          margin-top: 40px;
+        }
+
+        .description-text:first-child {
+          max-width: 100%;
+        }
+
+        .footer {
+          max-width: 100%;
+          padding: 68px 20px;
+        }
+
+        .footer-content {
+          max-width: 100%;
+        }
+
+        .footer-title {
+          white-space: initial;
+        }
+
+        .contact-item {
+          white-space: initial;
+        }
+
+        .social-links {
+          margin-top: 40px;
+        }
+
+        .footer-divider {
+          margin-top: 40px;
+        }
+
+        .footer-copyright {
+          margin-top: 40px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="website">
+      <section class="hero-section">
+        <nav class="navbar">
+          <div class="navbar-container">
+            <div class="navbar-left">
+              <img
+                src="/images/bluepay-logo.png"
+                class="logo"
+                alt="Bluepay logo"
+              />
+              <div class="country-selector">
+                <img
+                  src="/images/Nigeria (NG).png"
+                  class="flag-icon"
+                  alt="Nigeria flag"
+                />
+                <span class="country-name">Nigeria</span>
+              </div>
+            </div>
+            <div class="navbar-menu">
+              <div class="menu-item">
+                <a class="menu-text active" href="#"
+                  >About <i class="ti ti-chevron-down active"></i
+                ></a>
+              </div>
+              <div class="menu-item">
+                <a class="menu-text" href="#"
+                  >Why Bluepay <i class="ti ti-chevron-down"></i
+                ></a>
+              </div>
+              <div class="menu-item">
+                <a class="menu-text" href="#">Testimonials</a>
+              </div>
+              <div class="menu-item">
+                <a class="menu-text" href="#">Pricing</a>
+              </div>
+              <div class="menu-item">
+                <a class="menu-text" href="#"
+                  >Developers <i class="ti ti-chevron-down"></i
+                ></a>
+              </div>
+              <div class="menu-item">
+                <a class="menu-text" th:href="@{'/support'}">Support</a>
+              </div>
+            </div>
+          </div>
+          <div class="navbar-actions">
+            <a href="#" class="login-link">Login</a>
+            <a href="#" class="signup-button">Create free acount</a>
+          </div>
+        </nav>
+
+        <section class="company-section">
+          <div class="company-container">
+            <div class="company-image-column">
+              <img
+                src="/images/company logo.png"
+                class="company-image"
+                alt="Company image"
+              />
+            </div>
+            <div class="company-content-column">
+              <div class="company-content">
+                <h2 class="section-title">Our Company</h2>
+                <div class="company-description">
+                  <p class="description-text">
+                    At Bluepay, we are redefining the future of finance with
+                    innovative, secure, and user-friendly solutions. With
+                    cutting-edge technology and a customer-first approach, we
+                    make managing money simpler, faster, and more efficient.
+                  </p>
+                  <p class="description-text">
+                    Our mission is to empower individuals and businesses with
+                    seamless digital financial services,.
+                  </p>
+                  <p class="description-text">
+                    Our mission is to empower individuals and businesses with
+                    seamless digital financial services.
+                  </p>
+                  <p class="description-text">
+                    Founded on the principles of trust, transparency, and
+                    innovation,
+                  </p>
+                  <p class="description-text">
+                    We believe in financial inclusion and accessibility for
+                    everyone.
+                  </p>
+                  <p class="description-text">
+                    Join us today and experience the next generation of
+                    financial services!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-column">
+            <h3 class="footer-title">Why Bluepay</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">Why Choose Bluepay</a></li>
+              <li><a href="#" class="footer-link">Success Rates</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <h3 class="footer-title">About</h3>
+            <ul class="footer-links">
+              <li><a href="#" class="footer-link">Company</a></li>
+              <li><a href="#" class="footer-link">The Teams</a></li>
+              <li><a href="#" class="footer-link">Our Value</a></li>
+              <li><a href="#" class="footer-link">Our Story</a></li>
+              <li><a href="#" class="footer-link">Compliance</a></li>
+              <li><a href="#" class="footer-link">Chagelog</a></li>
+              <li><a href="#" class="footer-link">Privacy and Terms</a></li>
+              <li><a href="#" class="footer-link">Teams</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Pricing</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Nigeria</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Customer</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Testimonial</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Developers</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Overview</a></li>
+                <li><a href="#" class="footer-link">Documentation</a></li>
+                <li><a href="#" class="footer-link">Status Page</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Support</h3>
+              <ul class="footer-links">
+                <li><a href="#" class="footer-link">Live Chat</a></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-column">
+            <div class="footer-section">
+              <h3 class="footer-title">Contacts</h3>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <img
+                    src="/images/email-logo.png"
+                    class="contact-icon"
+                    alt="Email icon"
+                  />
+                  <a class="contact-text">support@bluepay.com</a>
+                </div>
+                <div class="contact-item">
+                  <img
+                    src="/images/phone-icon.png"
+                    class="contact-icon"
+                    alt="Phone icon"
+                  />
+                  <a class="contact-text">+234 8138 482 251</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" class="social-link facebook"
+                ><img
+                  src="/images/logos_facebook.png"
+                  class="social-icon"
+                  alt="Facebook icon"
+              /></a>
+              <a href="#" class="social-link twitter"
+                ><img
+                  src="/images/prime_twitter.png"
+                  class="social-icon"
+                  alt="Twitter icon"
+              /></a>
+              <a href="#" class="social-link youtube"
+                ><img
+                  src="/images/logos_youtube-icon.png"
+                  class="social-icon"
+                  alt="Youtube icon"
+              /></a>
+              <a href="#" class="social-link linkedin"
+                ><img
+                  src="/images/devicon_linkedin.png"
+                  class="social-icon"
+                  alt="LinkedIn icon"
+              /></a>
+              <a href="#" class="social-link instagram"
+                ><img
+                  src="/images/skill-icons_instagram.png"
+                  class="social-icon"
+                  alt="Instagram icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-divider"></div>
+
+        <div class="footer-copyright">
+          <img
+            src="/images/copyright.png"
+            class="copyright-icon"
+            alt="Copyright icon"
+          />
+          <span class="copyright-text">Copyright, Bluepay 2025</span>
+        </div>
+      </footer>
+    </main>
+  </body>
+</html>
