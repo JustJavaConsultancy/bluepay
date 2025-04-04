@@ -94,7 +94,7 @@
   <div class="row mt-4" >
     <div class="col-xxl-8 col-xl-8 col-lg-8 col-sm-12" style="border: 1px solid #E6E7E7;background-color: white;">
       <div style="margin: 10px;margin-bottom: 40px;" >
-        <h3 style="font-size: 0.85rem;font-weight:400 ;" th:text="'Total: ' + ${transferTotal['total']}"></h3>
+        <h3 style="font-size: 0.85rem;font-weight:400 ;" th:text="'Total: ' + ${transferTotal}"></h3>
         <div style="display: flex;justify-content: space-between;margin-top: 30px;">
           <div style="font-size: 1rem;font-weight: 500;">
             This Month
@@ -128,20 +128,20 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="transferItem : ${transferList}">
+          <tr th:each="transferItem : ${myTransfers}">
             <td>
-              <div style="padding: 4px 8px; border: 1px solid #46A14B; text-align: center; color: #46A14B; background-color: #F4FAF5; border-radius: 12px; font-size: 14px; font-weight: normal;"th:text="${transferItem['status']}">
+              <div style="padding: 4px 8px; border: 1px solid #46A14B; text-align: center; color: #46A14B; background-color: #F4FAF5; border-radius: 12px; font-size: 14px; font-weight: normal;"th:text="${transferItem.status}">
                 Success
               </div>
 
 
             </td>
-            <td th:text="${transferItem['reference']}">20,000.00</td>
-            <td th:text="${transferItem['amount']}">Mar 27, 2025</td>
-            <td th:text="${transferItem['beneficiary']}"></td>
-            <td th:text="${transferItem['timestamp']}"></td>
+            <td th:text="${transferItem.reference}"></td>
+            <td th:text="${transferItem.amount}"></td>
+            <td th:text="${transferItem.invoice.customerName}"></td>
+            <td th:text="${#temporals.format(transferItem.lastUpdated, 'MMMM dd, yyyy HH:mm a')}"></td>
             <td>
-              <a th:href="@{./transfers/{id}(id=${transferItem['reference']})}">
+              <a th:href="@{./transfers/{id}(id=${transferItem.id})}">
               <button class="btn" style="background-color: #0C74B1;border-radius: 50px;color: white;font-size: 0.85rem;font-weight: 400;">
                 View Details
               </button></a>
@@ -159,7 +159,7 @@
       </div>
       <div style="text-align: center;height: 100%;padding: 20px;">
         <h5 style="font-size: 1rem;font-weight: 500;margin-top: 10px;">Balance</h5>
-        <p style="font-size: 1.2rem;font-weight: 500;margin-top: 20px" th:text="${transferBalance['balance']}">50,000.00</p>
+        <p style="font-size: 1.2rem;font-weight: 500;margin-top: 20px" th:text="${transferBalance}">50,000.00</p>
         <h2 style="font-size: 0.85rem;font-weight: 400;color: #545C60;margin-top: 10px" >Available</h2>
         <button class="btn-topup" >Topup</button>
       </div>

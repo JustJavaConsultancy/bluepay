@@ -4,8 +4,8 @@ import com.techcrunch.bluepay.account.AuthenticationManager;
 import com.techcrunch.bluepay.accounting.Account;
 import com.techcrunch.bluepay.accounting.AccountService;
 import com.techcrunch.bluepay.accounting.JournalLine;
+import com.techcrunch.bluepay.chat.ChatMessage;
 import com.techcrunch.bluepay.processes.CustomProcessService;
-import com.techcrunch.bluepay.product.Product;
 import com.techcrunch.bluepay.product.ProductDTO;
 import com.techcrunch.bluepay.product.ProductRepository;
 import com.techcrunch.bluepay.product.ProductService;
@@ -19,6 +19,7 @@ import org.flowable.engine.delegate.DelegateExecution;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.task.api.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MerchantService {
     private final OrderRepository orderRepository;
     private final TransactionService transactionService;
     private final ProductService productService;
+    private final SimpMessagingTemplate messagingTemplate;
     @Autowired
     JsonFileReaderService jsonFileReaderService;
 
@@ -49,7 +51,7 @@ public class MerchantService {
                            TaskRepository taskRepository,
                            MerchantRepository merchantRepository,
                            MerchantMapper merchantMapper, AccountService accountService,
-                           OrderRepository orderRepository, TransactionService transactionService, ProductRepository productRepository, ProductService productService) {
+                           OrderRepository orderRepository, TransactionService transactionService, ProductRepository productRepository, ProductService productService, SimpMessagingTemplate messagingTemplate) {
         this.authenticationManager = authenticationManager;
         this.runtimeService = runtimeService;
         this.processService = processService;
@@ -60,6 +62,7 @@ public class MerchantService {
         this.orderRepository = orderRepository;
         this.transactionService = transactionService;
         this.productService = productService;
+        this.messagingTemplate = messagingTemplate;
     }
     public Map<String,Object> getMerchantStatus(String merchantId){
         Map<String,Object> result=new HashMap<String,Object>();
@@ -191,6 +194,14 @@ public class MerchantService {
                 "in monitoring ===");
     }
     public void monitorFire(DelegateExecution execution){
+        System.out.println(" The Variables Here monitorFire==" +execution.getVariables());
+        ChatMessage chatMessage=ChatMessage.builder()
+                .content(execution.getCurrentActivityName())
+                .groupId((String) execution.getVariables().get("merchantId"))
+                .sender("Monitoring Service")
+                .build();
+        String destination = "/topic/monitor/" + chatMessage.getGroupId();
+        messagingTemplate.convertAndSend(destination, chatMessage);
         System.out.println(" monitoring is fired has it been caught? ==="+execution.getCurrentActivityName());
     }
 }
